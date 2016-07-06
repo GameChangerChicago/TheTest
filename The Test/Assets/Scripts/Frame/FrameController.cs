@@ -82,7 +82,10 @@ public class FrameController : MonoBehaviour
 
     public void MovePortraitToFront(bool left)
     {
-        _movingLeftPortrait = left;
-        _changingPortraits = true;
+        if (!_changingPortraits)
+        {
+            _movingLeftPortrait = left;
+            _changingPortraits = true;
+        }
     }
 }
