@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class MapMovementManager : MonoBehaviour
@@ -14,7 +15,7 @@ public class MapMovementManager : MonoBehaviour
     {
         get
         {
-            switch(_theGameManager.CurrentCharacterType)
+            switch(GameManager.CurrentCharacterType)
             {
                 case CharacterType.RED:
                     _currentPlayer = RedPlayerPeg;
@@ -40,18 +41,29 @@ public class MapMovementManager : MonoBehaviour
     private Transform[] _currentMapPaths;
 
     private GameManager _theGameManager;
+    private CameraManager _theCameraManager;
     private int _currentMapIndex = 1,
                 _currentMapTarget = 3;
+    private bool _characterMoving;
 
     void Start()
     {
         _theGameManager = FindObjectOfType<GameManager>();
+        _theCameraManager = FindObjectOfType<CameraManager>();
+        currentPlayer.transform.position = new Vector3(_currentMapPaths[GameManager.CurrentMapPositionIndex].position.x, _currentMapPaths[GameManager.CurrentMapPositionIndex].position.y + 0.7f, 0);
+
+        if (GameManager.CurrentFrame == FrameType.MAPFOLLOW)
+        {
+            _theCameraManager.TargetToFollow = currentPlayer.transform;
+        }
     }
     
     void Update()
     {
-        //Debug.Log(PegMovementHandler());
-        PegMovementHandler();
+        if(_characterMoving)
+        {
+            PegMovementHandler();
+        }
 
         if(Input.GetKeyDown(KeyCode.O))
         {
@@ -60,6 +72,11 @@ public class MapMovementManager : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.P))
         {
             ProceedToMapPoint(7);
+        }
+
+        if(Input.GetKeyDown(KeyCode.G))
+        {
+            SceneManager.LoadScene("Prioritizing");
         }
     }
 
@@ -77,6 +94,11 @@ public class MapMovementManager : MonoBehaviour
         {
             if (_currentMapIndex < _currentMapTarget)
                 _currentMapIndex++;
+            else
+            {
+                _characterMoving = false;
+                GameManager.CurrentMapPositionIndex = _currentMapIndex;
+            }
 
             return true;
         }
@@ -85,5 +107,13 @@ public class MapMovementManager : MonoBehaviour
     public void ProceedToMapPoint(int newMapPointTarget)
     {
         _currentMapTarget = newMapPointTarget;
+    }
+
+    public IEnumerator StartMoving(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+        _theCameraManager.TargetToFollow = currentPlayer.transform;
+        _characterMoving = true;
+
     }
 }

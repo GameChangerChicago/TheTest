@@ -5,8 +5,65 @@ using System.Collections;
 public class FrameController : MonoBehaviour
 {
     public Image[] PlayerPortraits;
+    public GameObject CharacterSelectionFrame,
+                      MapFrame;
+    public Transform RedCameraPosition,
+                     GreenCameraPosition,
+                     PurpleCameraPosistion;
+    public Image FullCharacterImage,
+                 MapPreview,
+                 MapFramePortrait;
+    //Plus the Character name and bio which will eventually need to be images.
+
+    //Temporary Public images for setting which character will be show and their map.
+    //In the future these will be pulled from a resource file but we'll hold off doing that until we have real art assets.
+    public Sprite RedFullBody,
+                  GreenFullBody,
+                  PurpleFullBody,
+                  RedPortrait,
+                  GreenPortrait,
+                  PurplePortrait,
+                  RedMap,
+                  GreenMap,
+                  PurpleMap;
+    //Delete the above
+
+    protected CharacterType currentCharacterType
+    {
+        get
+        {
+            return _currentCharacterType;
+        }
+        set
+        {
+            switch (value)
+            {
+                case CharacterType.RED:
+                    FullCharacterImage.sprite = RedFullBody;
+                    MapPreview.sprite = RedMap;
+                    MapFramePortrait.sprite = RedPortrait;
+                    break;
+                case CharacterType.GREEN:
+                    FullCharacterImage.sprite = GreenFullBody;
+                    //MapPreview.sprite = GreenMap;
+                    MapFramePortrait.sprite = GreenPortrait;
+                    break;
+                case CharacterType.PURPLE:
+                    FullCharacterImage.sprite = PurpleFullBody;
+                    //MapPreview.sprite = PurpleMap;
+                    MapFramePortrait.sprite = PurplePortrait;
+                    break;
+                default:
+                    Debug.LogWarning("I thought we only had three characters. Did something change?");
+                    break;
+            }
+            _currentCharacterType = value;
+        }
+    }
+    private CharacterType _currentCharacterType;
 
     private GameManager _theGameManager;
+    private MapMovementManager _mapMovementManager;
     private float _portraitChangeTimer;
     private bool _changingPortraits,
                  _movingLeftPortrait;
@@ -14,6 +71,22 @@ public class FrameController : MonoBehaviour
     void Start()
     {
         _theGameManager = FindObjectOfType<GameManager>();
+        _mapMovementManager = GetComponent<MapMovementManager>();
+
+        switch (GameManager.CurrentFrame)
+        {
+            case FrameType.CHARACTERSELECTION:
+                CharacterSelectionFrame.SetActive(true);
+                MapFrame.SetActive(false);
+                break;
+            case FrameType.MAPFOLLOW:
+                CharacterSelectionFrame.SetActive(false);
+                MapFrame.SetActive(true);
+                break;
+            default:
+                Debug.LogWarning("Did you add a new frame type?");
+                break;
+        }
     }
 
     void Update()
@@ -77,11 +150,20 @@ public class FrameController : MonoBehaviour
 
             //Tell the game manager which character is the selected char
             if (PlayerPortraits[1].name == "RedPlayer")
-                _theGameManager.CurrentCharacterType = CharacterType.RED;
+            {
+                currentCharacterType = CharacterType.RED;
+                GameManager.CurrentCharacterType = CharacterType.RED;
+            }
             else if (PlayerPortraits[1].name == "GreenPlayer")
-                _theGameManager.CurrentCharacterType = CharacterType.GREEN;
+            {
+                currentCharacterType = CharacterType.GREEN;
+                GameManager.CurrentCharacterType = CharacterType.GREEN;
+            }
             else if (PlayerPortraits[1].name == "PurplePlayer")
-                _theGameManager.CurrentCharacterType = CharacterType.PURPLE;
+            {
+                currentCharacterType = CharacterType.PURPLE;
+                GameManager.CurrentCharacterType = CharacterType.PURPLE;
+            }
         }
     }
 
@@ -91,6 +173,28 @@ public class FrameController : MonoBehaviour
         {
             _movingLeftPortrait = left;
             _changingPortraits = true;
+        }
+    }
+
+    public void ChangeFrame(int frameNumber)
+    {
+        switch (frameNumber)
+        {
+            case 1:
+                CharacterSelectionFrame.SetActive(true);
+                MapFrame.SetActive(false);
+                GameManager.CurrentFrame = FrameType.CHARACTERSELECTION;
+                break;
+            case 2:
+                CharacterSelectionFrame.SetActive(false);
+                MapFrame.SetActive(true);
+                Camera.main.transform.position = RedCameraPosition.position;
+                StartCoroutine(_mapMovementManager.StartMoving(0.5f));
+                GameManager.CurrentFrame = FrameType.MAPFOLLOW;
+                break;
+            default:
+                Debug.LogWarning("Hmm, it doesn't seem like we have something set up for a number " + frameNumber + ". How many frames to we have?");
+                break;
         }
     }
 }

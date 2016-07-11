@@ -7,3 +7,9 @@ public enum CharacterType
     GREEN,
     PURPLE
 }
+
+public enum FrameType
+{
+    CHARACTERSELECTION,
+    MAPFOLLOW
+}
