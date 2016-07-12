@@ -42,6 +42,7 @@ public class MapMovementManager : MonoBehaviour
 
     private GameManager _theGameManager;
     private CameraManager _theCameraManager;
+    private FrameController _theFrameController;
     private int _currentMapIndex = 1,
                 _currentMapTarget = 3;
     private bool _characterMoving;
@@ -50,6 +51,7 @@ public class MapMovementManager : MonoBehaviour
     {
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();
+        _theFrameController = FindObjectOfType<FrameController>();
         currentPlayer.transform.position = new Vector3(_currentMapPaths[GameManager.CurrentMapPositionIndex].position.x, _currentMapPaths[GameManager.CurrentMapPositionIndex].position.y + 0.7f, 0);
 
         if (GameManager.CurrentFrame == FrameType.MAPFOLLOW)
@@ -98,6 +100,7 @@ public class MapMovementManager : MonoBehaviour
             {
                 _characterMoving = false;
                 GameManager.CurrentMapPositionIndex = _currentMapIndex;
+                _theFrameController.ChangeFrame(3);
             }
 
             return true;

@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public static CharacterType CurrentCharacterType;
     public static FrameType CurrentFrame;
-    public static int CurrentMapPositionIndex;
+    public static int CurrentMapPositionIndex,
+                      CurrentConvoIndex;
 
     void Update()
     {

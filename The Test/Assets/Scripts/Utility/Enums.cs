@@ -11,5 +11,7 @@ public enum CharacterType
 public enum FrameType
 {
     CHARACTERSELECTION,
-    MAPFOLLOW
+    MAPFOLLOW,
+    DIALOG,
+    NONE
 }
