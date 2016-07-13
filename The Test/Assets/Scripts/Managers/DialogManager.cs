@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class DialogManager : MonoBehaviour
@@ -17,15 +18,10 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private Vector3 _initialDialogPos;
+    private Vector3 _initialDialogPos = Vector3.zero;
     private float _dialogOffset;
     private int _currentDialogPieceIndex;
     private bool _dialogFinished;
-
-    void Start()
-    {
-        _initialDialogPos = DialogContainer.transform.position;
-    }
 
     void Update()
     {
@@ -41,11 +37,29 @@ public class DialogManager : MonoBehaviour
 
     private void LoadMinigame()
     {
-        
+        switch(GameManager.CurrentCharacterType)
+        {
+            case CharacterType.RED:
+            if(currentConvoIndex == 1)
+                {
+                    SceneManager.LoadScene("Prioritizing");
+                }
+                break;
+            case CharacterType.GREEN:
+                break;
+            case CharacterType.PURPLE:
+                break;
+            default:
+                Debug.LogWarning("Did you add a new character type? You'll have to update a lot of switch statements, you know...");
+                break;
+        }
     }
 
-    public  void LoadPieceOfDialog()
+    public void LoadPieceOfDialog()
     {
+        if(_initialDialogPos == Vector3.zero)
+            _initialDialogPos = DialogContainer.transform.position;
+
         //Creates a gameobject by pulling the correct dialog prefab from the resources folder
         GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
         bool lastPieceOfDialog = false;
@@ -65,7 +79,7 @@ public class DialogManager : MonoBehaviour
         if(!lastPieceOfDialog)
         {
             _currentDialogPieceIndex++;
-            _dialogOffset += ammountToIncreaseOffset + 0.1f;
+            _dialogOffset += ammountToIncreaseOffset;// + 0.1f;
         }
         else //We let the dialog manager know the dialog is finished and tick forward the index of which convo you're on.
         {

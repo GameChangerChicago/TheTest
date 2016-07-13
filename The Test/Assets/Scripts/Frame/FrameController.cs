@@ -6,6 +6,7 @@ public class FrameController : MonoBehaviour
 {
     public Image[] PlayerPortraits;
     public GameObject CharacterSelectionFrame,
+                      DialogFrame,
                       MapFrame;
     public Transform RedCameraPosition,
                      GreenCameraPosition,
@@ -64,6 +65,7 @@ public class FrameController : MonoBehaviour
 
     private GameManager _theGameManager;
     private MapMovementManager _mapMovementManager;
+    private DialogManager _dialogManager;
     private float _portraitChangeTimer;
     private bool _changingPortraits,
                  _movingLeftPortrait;
@@ -72,6 +74,7 @@ public class FrameController : MonoBehaviour
     {
         _theGameManager = FindObjectOfType<GameManager>();
         _mapMovementManager = GetComponent<MapMovementManager>();
+        _dialogManager = GetComponent<DialogManager>();
 
         switch (GameManager.CurrentFrame)
         {
@@ -182,15 +185,24 @@ public class FrameController : MonoBehaviour
         {
             case 1:
                 CharacterSelectionFrame.SetActive(true);
+                DialogFrame.SetActive(false);
                 MapFrame.SetActive(false);
                 GameManager.CurrentFrame = FrameType.CHARACTERSELECTION;
                 break;
             case 2:
                 CharacterSelectionFrame.SetActive(false);
+                DialogFrame.SetActive(false);
                 MapFrame.SetActive(true);
                 Camera.main.transform.position = RedCameraPosition.position;
                 StartCoroutine(_mapMovementManager.StartMoving(0.5f));
                 GameManager.CurrentFrame = FrameType.MAPFOLLOW;
+                break;
+            case 3:
+                CharacterSelectionFrame.SetActive(false);
+                DialogFrame.SetActive(true);
+                MapFrame.SetActive(false);
+                _dialogManager.LoadPieceOfDialog();
+                GameManager.CurrentFrame = FrameType.DIALOG;
                 break;
             default:
                 Debug.LogWarning("Hmm, it doesn't seem like we have something set up for a number " + frameNumber + ". How many frames to we have?");
