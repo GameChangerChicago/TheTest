@@ -15,3 +15,10 @@ public enum FrameType
     DIALOG,
     NONE
 }
+
+public enum SubmarineStates
+{
+    LEFTROW,
+    MIDDLEROW,
+    RIGHTROW
+}
