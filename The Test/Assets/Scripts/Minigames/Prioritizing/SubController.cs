@@ -150,6 +150,20 @@ public class SubController : MonoBehaviour
         _moving = !_moving;
     }
 
+    private void CollectaleHandler(Animator theAnimator, bool isCoin)
+    {
+        //theAnimator.SetBool("Animate", true);
+
+        if (isCoin)
+        {
+            
+        }
+        else
+        {
+            
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Obstacle")
@@ -172,6 +186,16 @@ public class SubController : MonoBehaviour
             {
                 currentSubmarineState = SubmarineStates.MIDDLEROW;
             }
+        }
+
+        if(col.tag == "Coin")
+        {
+            CollectaleHandler(col.GetComponent<Animator>(), true);
+        }
+
+        if(col.tag == "Gem")
+        {
+            CollectaleHandler(col.GetComponent<Animator>(), false);
         }
     }
 }
