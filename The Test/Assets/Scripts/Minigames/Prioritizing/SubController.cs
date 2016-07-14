@@ -40,6 +40,7 @@ public class SubController : MonoBehaviour
         }
     }
     private SubmarineStates _currentSubmarineState = SubmarineStates.MIDDLEROW;
+    private SpriteRenderer _myRenderer;
     private Vector2 _initialPos;
     private float _currentXTarget;
     private bool _moving;
@@ -51,6 +52,7 @@ public class SubController : MonoBehaviour
 
         _myRigidbody = GetComponent<Rigidbody2D>();
         _cameraRigidbody = Camera.main.GetComponent<Rigidbody2D>();
+        _myRenderer = GetComponentInChildren<SpriteRenderer>();
     }
     
     void Update()
@@ -91,7 +93,6 @@ public class SubController : MonoBehaviour
         }
 
         //This manages the lateral movement of the submarine
-        
         if (this.transform.position.x > _currentXTarget + 0.1f)
         {
             if (_myRigidbody.velocity.x > -MaxLateralSpeed)
@@ -118,12 +119,30 @@ public class SubController : MonoBehaviour
 
     private void RotatationHandler()
     {
+        Debug.Log(_myRenderer.transform.localEulerAngles.z);
+        
         if (_myRigidbody.velocity.x > 0)
-            Debug.Log("Rotate Right");
+        {
+            //Rotate Right
+            if (_myRenderer.transform.localEulerAngles.z > 330f || _myRenderer.transform.localEulerAngles.z < 31)
+                _myRenderer.transform.Rotate(new Vector3(0, 0, -5));
+        }
         if (_myRigidbody.velocity.x < 0)
-            Debug.Log("Rotate Left");
+        {
+            //Rotate Left
+            if (_myRenderer.transform.localEulerAngles.z < 30f || _myRenderer.transform.localEulerAngles.z > 329f)
+                _myRenderer.transform.Rotate(new Vector3(0, 0, 5));
+        }
         if (_myRigidbody.velocity.x == 0)
-            Debug.Log("Even out");
+        {
+            //Even out
+            if (_myRenderer.transform.localEulerAngles.z > 300 && _myRenderer.transform.localEulerAngles.z < 359)
+                _myRenderer.transform.Rotate(new Vector3(0, 0, 5));
+            else if (_myRenderer.transform.localEulerAngles.z < 100 && _myRenderer.transform.localEulerAngles.z > 1)
+                _myRenderer.transform.Rotate(new Vector3(0, 0, -5));
+            else
+                _myRenderer.transform.localRotation = Quaternion.identity;
+        }
     }
 
     public void ToggleMovement()
