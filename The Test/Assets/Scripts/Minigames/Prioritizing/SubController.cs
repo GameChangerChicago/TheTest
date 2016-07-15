@@ -1,8 +1,10 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class SubController : MonoBehaviour
-{           
+{
+    public Text Timer;
     public float ForwardAcceleration,
                  LateralAcceleration,
                  MaxForwardSpeed,
@@ -45,7 +47,8 @@ public class SubController : MonoBehaviour
     private CollectablesManager _theCollectablesManager;
     private SpriteRenderer _myRenderer;
     private Vector2 _initialPos;
-    private float _currentXTarget;
+    private float _currentXTarget,
+                  _timer;
     private bool _moving;
     
     void Start()
@@ -65,6 +68,8 @@ public class SubController : MonoBehaviour
         {
             MovementHandler();
             RotatationHandler();
+            _timer += Time.deltaTime;
+            Timer.text = Mathf.RoundToInt(_timer).ToString();
         }
 
         if (Input.GetKeyDown(KeyCode.M))
@@ -85,6 +90,7 @@ public class SubController : MonoBehaviour
             currentSubmarineState = SubmarineStates.RIGHTROW;
         }
 
+        
     }
 
     private void MovementHandler()
@@ -150,31 +156,18 @@ public class SubController : MonoBehaviour
     public void ToggleMovement()
     {
         _moving = !_moving;
+
+        if(!_moving)
+        {
+            _myRigidbody.velocity = Vector2.zero;
+            _cameraRigidbody.velocity = Vector2.zero;
+        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Obstacle")
         {
-            //if(_myRigidbody.velocity.x > 0)
-            //{
-            //    Debug.Log(currentSubmarineState);
-            //    if (currentSubmarineState == SubmarineStates.MIDDLEROW)
-            //        currentSubmarineState = SubmarineStates.LEFTROW;
-            //    if (currentSubmarineState == SubmarineStates.RIGHTROW)
-            //        currentSubmarineState = SubmarineStates.MIDDLEROW;
-            //}
-            //else if(_myRigidbody.velocity.x < 0)
-            //{
-            //    if (currentSubmarineState == SubmarineStates.MIDDLEROW)
-            //        currentSubmarineState = SubmarineStates.RIGHTROW;
-            //    if (currentSubmarineState == SubmarineStates.LEFTROW)
-            //        currentSubmarineState = SubmarineStates.MIDDLEROW;
-            //}
-            //else
-            //{
-            //    currentSubmarineState = SubmarineStates.MIDDLEROW;
-            //}
             currentSubmarineState = _lastSubmarineState;
         }
 
