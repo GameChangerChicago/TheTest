@@ -35,11 +35,14 @@ public class SubController : MonoBehaviour
                         Debug.LogWarning("The only thing I could think of that would cause this to happen is if we add more that three rows in the sub game.");
                         break;
                 }
+                _lastSubmarineState = _currentSubmarineState;
                 _currentSubmarineState = value;
             }
         }
     }
     private SubmarineStates _currentSubmarineState = SubmarineStates.MIDDLEROW;
+    private SubmarineStates _lastSubmarineState;
+    private CollectablesManager _theCollectablesManager;
     private SpriteRenderer _myRenderer;
     private Vector2 _initialPos;
     private float _currentXTarget;
@@ -53,6 +56,7 @@ public class SubController : MonoBehaviour
         _myRigidbody = GetComponent<Rigidbody2D>();
         _cameraRigidbody = Camera.main.GetComponent<Rigidbody2D>();
         _myRenderer = GetComponentInChildren<SpriteRenderer>();
+        _theCollectablesManager = FindObjectOfType<CollectablesManager>();
     }
     
     void Update()
@@ -119,8 +123,6 @@ public class SubController : MonoBehaviour
 
     private void RotatationHandler()
     {
-        Debug.Log(_myRenderer.transform.localEulerAngles.z);
-        
         if (_myRigidbody.velocity.x > 0)
         {
             //Rotate Right
@@ -150,52 +152,42 @@ public class SubController : MonoBehaviour
         _moving = !_moving;
     }
 
-    private void CollectaleHandler(Animator theAnimator, bool isCoin)
-    {
-        //theAnimator.SetBool("Animate", true);
-
-        if (isCoin)
-        {
-            
-        }
-        else
-        {
-            
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Obstacle")
         {
-            if(_myRigidbody.velocity.x > 0)
-            {
-                if (currentSubmarineState == SubmarineStates.MIDDLEROW)
-                    currentSubmarineState = SubmarineStates.LEFTROW;
-                if (currentSubmarineState == SubmarineStates.RIGHTROW)
-                    currentSubmarineState = SubmarineStates.MIDDLEROW;
-            }
-            else if(_myRigidbody.velocity.x < 0)
-            {
-                if (currentSubmarineState == SubmarineStates.MIDDLEROW)
-                    currentSubmarineState = SubmarineStates.RIGHTROW;
-                if (currentSubmarineState == SubmarineStates.LEFTROW)
-                    currentSubmarineState = SubmarineStates.MIDDLEROW;
-            }
-            else
-            {
-                currentSubmarineState = SubmarineStates.MIDDLEROW;
-            }
+            //if(_myRigidbody.velocity.x > 0)
+            //{
+            //    Debug.Log(currentSubmarineState);
+            //    if (currentSubmarineState == SubmarineStates.MIDDLEROW)
+            //        currentSubmarineState = SubmarineStates.LEFTROW;
+            //    if (currentSubmarineState == SubmarineStates.RIGHTROW)
+            //        currentSubmarineState = SubmarineStates.MIDDLEROW;
+            //}
+            //else if(_myRigidbody.velocity.x < 0)
+            //{
+            //    if (currentSubmarineState == SubmarineStates.MIDDLEROW)
+            //        currentSubmarineState = SubmarineStates.RIGHTROW;
+            //    if (currentSubmarineState == SubmarineStates.LEFTROW)
+            //        currentSubmarineState = SubmarineStates.MIDDLEROW;
+            //}
+            //else
+            //{
+            //    currentSubmarineState = SubmarineStates.MIDDLEROW;
+            //}
+            currentSubmarineState = _lastSubmarineState;
         }
 
         if(col.tag == "Coin")
         {
-            CollectaleHandler(col.GetComponent<Animator>(), true);
+            _theCollectablesManager.CoinCollected(col.gameObject);
         }
 
         if(col.tag == "Gem")
         {
-            CollectaleHandler(col.GetComponent<Animator>(), false);
+            _theCollectablesManager.GemCollected(col.gameObject);
+            _myRigidbody.velocity = Vector2.zero;
+            _cameraRigidbody.velocity = Vector2.zero;
         }
     }
 }
