@@ -69,7 +69,10 @@ public class SubController : MonoBehaviour
             MovementHandler();
             RotatationHandler();
             _timer += Time.deltaTime;
-            Timer.text = Mathf.RoundToInt(_timer).ToString();
+            int timerInt = (int)_timer;
+
+            string timerString = timerInt / 60 + ":" + (timerInt / 10) + "" + (timerInt % 10);
+            Timer.text = timerString;
         }
 
         if (Input.GetKeyDown(KeyCode.M))
