@@ -4,6 +4,7 @@ using System.Collections;
 
 public class SubController : MonoBehaviour
 {
+    public BoxCollider2D[] TouchColliders;
     public Text Timer;
     public float ForwardAcceleration,
                  LateralAcceleration,
@@ -75,25 +76,50 @@ public class SubController : MonoBehaviour
             Timer.text = timerString;
         }
 
-        if (Input.GetKeyDown(KeyCode.M))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !_moving)
         {
             ToggleMovement();
         }
 
-        if(Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
-            currentSubmarineState = SubmarineStates.LEFTROW;
-        }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            currentSubmarineState = SubmarineStates.MIDDLEROW;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            currentSubmarineState = SubmarineStates.RIGHTROW;
+            TouchHandler();
+            // && _myBoxCollider.OverlapPoint(_myCamera.ScreenToWorldPoint(Input.mousePosition)))
         }
 
-        
+        //if (Input.GetKeyDown(KeyCode.LeftArrow))
+        //{
+        //}
+        //if (Input.GetKeyDown(KeyCode.DownArrow))
+        //{
+        //}
+        //if (Input.GetKeyDown(KeyCode.RightArrow))
+        //{
+        //}
+    }
+
+    private void TouchHandler()
+    {
+        for(int i = 0; i < TouchColliders.Length; i++)
+        {
+            if(TouchColliders[i].OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
+            {
+                switch (i)
+                {
+                    case 0:
+                        currentSubmarineState = SubmarineStates.LEFTROW;
+                        break;
+                    case 1:
+                        currentSubmarineState = SubmarineStates.MIDDLEROW;
+                        break;
+                    case 2:
+                        currentSubmarineState = SubmarineStates.RIGHTROW;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
     }
 
     private void MovementHandler()
