@@ -1,9 +1,17 @@
 fileFormatVersion: 2
 guid: c58f68bb90f86624b97f96dee66b4d7d
-timeCreated: 1469115418
+timeCreated: 1469206310
 licenseType: Free
 TextureImporter:
-  fileIDToRecycleName: {}
+  fileIDToRecycleName:
+    21300000: CoinSprite_0
+    21300002: CoinSprite_1
+    21300004: CoinSprite_2
+    21300006: CoinSprite_3
+    21300008: CoinSprite_4
+    21300010: CoinSprite_5
+    21300012: CoinSprite_6
+    21300014: CoinSprite_7
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -30,26 +38,179 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     filterMode: -1
-    aniso: -1
+    aniso: 16
     mipBias: -1
-    wrapMode: -1
-  nPOTScale: 1
+    wrapMode: 1
+  nPOTScale: 0
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
-  alphaIsTransparency: 0
-  textureType: -1
+  alphaIsTransparency: 1
+  textureType: 8
   buildTargetSettings: []
   spriteSheet:
-    sprites: []
+    sprites:
+    - name: CoinSprite_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 41.5}
+        - {x: -41, y: 28.5}
+        - {x: -41, y: -21.5}
+        - {x: -22, y: -30.5}
+        - {x: 23, y: -30.5}
+        - {x: 31, y: -22.5}
+        - {x: 31, y: 19.5}
+        - {x: 23, y: 41.5}
+    - name: CoinSprite_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -26, y: 40.5}
+        - {x: -36, y: 31.5}
+        - {x: -41, y: 18.5}
+        - {x: -41, y: -11.5}
+        - {x: -25, y: -30.5}
+        - {x: 11, y: -30.5}
+        - {x: 28, y: -19.5}
+        - {x: 28, y: 34.5}
+        - {x: 7, y: 40.5}
+    - name: CoinSprite_2
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -38, y: 40.5}
+        - {x: -38, y: -30.5}
+        - {x: 16, y: -30.5}
+        - {x: 26, y: -14.5}
+        - {x: 26, y: 34.5}
+        - {x: 9, y: 40.5}
+    - name: CoinSprite_3
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: 8, y: 37.5}
+        - {x: -23, y: 37.5}
+        - {x: -35, y: 25.5}
+        - {x: -35, y: -22.5}
+        - {x: -14, y: -30.5}
+        - {x: 17, y: -30.5}
+        - {x: 25, y: -10.5}
+        - {x: 25, y: 18.5}
+        - {x: 17, y: 34.5}
+    - name: CoinSprite_4
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -19, y: 31.5}
+        - {x: -28, y: 16.5}
+        - {x: -28, y: -13.5}
+        - {x: -12, y: -30.5}
+        - {x: 8, y: -30.5}
+        - {x: 19, y: -13.5}
+        - {x: 19, y: 17.5}
+        - {x: 13, y: 31.5}
+    - name: CoinSprite_5
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -16, y: 37.5}
+        - {x: -23, y: 35.5}
+        - {x: -23, y: -16.5}
+        - {x: -20, y: -30.5}
+        - {x: 18, y: -30.5}
+        - {x: 37, y: -9.5}
+        - {x: 37, y: 23.5}
+        - {x: 24, y: 37.5}
+    - name: CoinSprite_6
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -8, y: 40.5}
+        - {x: -26, y: 31.5}
+        - {x: -26, y: -18.5}
+        - {x: -12, y: -30.5}
+        - {x: 8, y: -30.5}
+        - {x: 28, y: -25.5}
+        - {x: 38, y: -13.5}
+        - {x: 38, y: 22.5}
+        - {x: 31, y: 40.5}
+    - name: CoinSprite_7
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline:
+      - - {x: -21, y: 40.5}
+        - {x: -27, y: 27.5}
+        - {x: -27, y: -26.5}
+        - {x: -19, y: -30.5}
+        - {x: 28, y: -30.5}
+        - {x: 42, y: -16.5}
+        - {x: 42, y: 21.5}
+        - {x: 36, y: 40.5}
     outline: []
   spritePackingTag: 
   userData: 
