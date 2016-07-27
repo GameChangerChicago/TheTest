@@ -21,11 +21,12 @@ public class DialogManager : MonoBehaviour
     private Vector3 _initialDialogPos = Vector3.zero;
     private float _dialogOffset;
     private int _currentDialogPieceIndex;
-    private bool _dialogFinished;
+    private bool _dialogFinished,
+                 _dialogActive;
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Q))
+        if(Input.GetKeyDown(KeyCode.Mouse0) && _dialogActive)
         {
             if (!_dialogFinished)
                 LoadPieceOfDialog();
@@ -57,8 +58,11 @@ public class DialogManager : MonoBehaviour
 
     public void LoadPieceOfDialog()
     {
-        if(_initialDialogPos == Vector3.zero)
+        if (_initialDialogPos == Vector3.zero)
+        {
             _initialDialogPos = DialogContainer.transform.position;
+            _dialogActive = true;
+        }
 
         //Creates a gameobject by pulling the correct dialog prefab from the resources folder
         GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
@@ -70,10 +74,11 @@ public class DialogManager : MonoBehaviour
         }
 
         //Instatiates the gameobject at the initial position plus the current offset and puts it inside of the DialogContainer
+        _dialogOffset += pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y;
         pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(_initialDialogPos.x, _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
         pieceOfDialogToLoad.transform.parent = DialogContainer.transform;
         //Calculates how much the next dialog box should be offset
-        float ammountToIncreaseOffset = Vector3.Distance(Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMin))) / 2;
+        float ammountToIncreaseOffset = pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2;//Vector3.Distance(Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMin))) / 2;
         
         //This ticks forward the index of currenct convo unless it's the last dialog piece in which case...
         if(!lastPieceOfDialog)
@@ -84,6 +89,7 @@ public class DialogManager : MonoBehaviour
         else //We let the dialog manager know the dialog is finished and tick forward the index of which convo you're on.
         {
             _dialogFinished = true;
+            _dialogActive = false;
             currentConvoIndex++;
         }
     }

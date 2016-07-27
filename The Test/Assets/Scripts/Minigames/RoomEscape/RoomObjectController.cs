@@ -3,18 +3,16 @@ using System.Collections;
 
 public class RoomObjectController : MonoBehaviour
 {
-    public GameObject ObjectToMove;
+    public RoomObject ObjectToMove;
+    public Transform TopLeftCornerPos;
+    public Vector2 CurrentGridCount;
 
     private Vector2 _initialTouchPos,
                     _initialObjectPos,
                     _touchDelta;
     private bool _horizontalLock,
-                 _verticalLock;
-
-    void Start()
-    {
-
-    }
+                 _verticalLock,
+                 _snappingToPosition;
     
     void Update()
     {
@@ -28,14 +26,20 @@ public class RoomObjectController : MonoBehaviour
             _initialTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _initialObjectPos = ObjectToMove.transform.position;
         }
-        if(Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             DragHandler();
+        }
+        else if (_snappingToPosition)
+        {
+            SnapToPosition();
         }
         if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             _horizontalLock = false;
             _verticalLock = false;
+            ObjectToMove.UpdatePosition();
+            _snappingToPosition = true;
         }
     }
 
@@ -60,5 +64,11 @@ public class RoomObjectController : MonoBehaviour
         {
             ObjectToMove.transform.position = new Vector3(_initialObjectPos.x, _initialObjectPos.y + _touchDelta.y, ObjectToMove.transform.position.z);
         }
+    }
+
+    private void SnapToPosition()
+    {
+        Vector2 targetLoc = ObjectToMove.GetTargetPos();
+        Debug.Log(targetLoc);
     }
 }
