@@ -39,7 +39,6 @@ public class RoomObject : MonoBehaviour
 
     public Vector2 GetTargetPos()
     {
-        Debug.Log(_myController.TopLeftCornerPos.position.y + " - " + "(" + _singleSquareDimensions.y + " * " + _gridPositions[0].y + ")");
         return new Vector2((_myController.TopLeftCornerPos.position.x + (_singleSquareDimensions.x * _gridPositions[0].x)) + (this.transform.position.x - PositionCheckers[0].position.x),
                            (_myController.TopLeftCornerPos.position.y - (_singleSquareDimensions.y * _gridPositions[0].y)) + (this.transform.position.y - PositionCheckers[0].position.y));
     }

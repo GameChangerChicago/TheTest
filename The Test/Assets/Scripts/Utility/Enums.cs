@@ -22,3 +22,11 @@ public enum SubmarineStates
     MIDDLEROW,
     RIGHTROW
 }
+
+public enum CardinalDirections
+{
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT
+}
