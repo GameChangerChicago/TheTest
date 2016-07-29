@@ -9,6 +9,8 @@ public class RoomObject : MonoBehaviour
     private List<Vector2> _gridPositions = new List<Vector2>();
     private Vector2 _singleSquareDimensions;
 
+    public bool PlayerObject;
+
     void Start()
     {
         _myController = FindObjectOfType<RoomObjectController>();
@@ -22,7 +24,7 @@ public class RoomObject : MonoBehaviour
 
     public void UpdatePosition()
     {
-        if(_singleSquareDimensions == Vector2.zero)
+        if (_singleSquareDimensions == Vector2.zero)
         {
             SpriteRenderer Floor = GameObject.Find("Floor").GetComponent<SpriteRenderer>();
 
@@ -41,5 +43,17 @@ public class RoomObject : MonoBehaviour
     {
         return new Vector2((_myController.TopLeftCornerPos.position.x + (_singleSquareDimensions.x * _gridPositions[0].x)) + (this.transform.position.x - PositionCheckers[0].position.x),
                            (_myController.TopLeftCornerPos.position.y - (_singleSquareDimensions.y * _gridPositions[0].y)) + (this.transform.position.y - PositionCheckers[0].position.y));
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (PlayerObject && col.tag == "Exit")
+        {
+            //EndGame
+        }
+        else if(!PlayerObject && col.tag != "Entrance")
+        {
+            _myController.LoseControl();
+        }
     }
 }
