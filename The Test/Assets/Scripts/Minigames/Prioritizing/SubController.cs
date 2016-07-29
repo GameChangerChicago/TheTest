@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
 
 public class SubController : MonoBehaviour
 {
     public BoxCollider2D[] TouchColliders;
+    public SpriteRenderer CameraMask;
     public Text Timer;
     public float ForwardAcceleration,
                  LateralAcceleration,
@@ -72,8 +74,15 @@ public class SubController : MonoBehaviour
             _timer += Time.deltaTime;
             int timerInt = (int)_timer;
 
-            string timerString = timerInt / 60 + ":" + (timerInt / 10) + "" + (timerInt % 10);
-            Timer.text = timerString;
+            string timerString = (5 - timerInt).ToString();
+
+            if (5 - timerInt > 0)
+                Timer.text = timerString;
+            else
+            {
+                Timer.text = "0";
+                FadeOut();
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !_moving)
@@ -84,18 +93,7 @@ public class SubController : MonoBehaviour
         if (Input.GetKey(KeyCode.Mouse0))
         {
             TouchHandler();
-            // && _myBoxCollider.OverlapPoint(_myCamera.ScreenToWorldPoint(Input.mousePosition)))
         }
-
-        //if (Input.GetKeyDown(KeyCode.LeftArrow))
-        //{
-        //}
-        //if (Input.GetKeyDown(KeyCode.DownArrow))
-        //{
-        //}
-        //if (Input.GetKeyDown(KeyCode.RightArrow))
-        //{
-        //}
     }
 
     private void TouchHandler()
@@ -191,6 +189,18 @@ public class SubController : MonoBehaviour
             _myRigidbody.velocity = Vector2.zero;
             _cameraRigidbody.velocity = Vector2.zero;
         }
+    }
+
+    private void FadeOut()
+    {
+        if (CameraMask != null)
+        {
+            CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
+            if (CameraMask.color.a > 0.9f)
+                SceneManager.LoadScene("Frame");
+        }
+        else
+            SceneManager.LoadScene("Frame");
     }
 
     void OnTriggerEnter2D(Collider2D col)
