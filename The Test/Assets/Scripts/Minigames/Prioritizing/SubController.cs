@@ -53,7 +53,8 @@ public class SubController : MonoBehaviour
     private Vector2 _initialPos;
     private float _currentXTarget,
                   _timer;
-    private bool _moving;
+    private bool _moving,
+                  _movingLateral;
     
     void Start()
     {
@@ -91,7 +92,7 @@ public class SubController : MonoBehaviour
             ToggleMovement();
         }
 
-        if (Input.GetKey(KeyCode.Mouse0))
+        if (Input.GetKeyDown(KeyCode.Mouse0) && !_movingLateral)
         {
             TouchHandler();
         }
@@ -131,27 +132,34 @@ public class SubController : MonoBehaviour
         }
 
         //This manages the lateral movement of the submarine
-        if (this.transform.position.x > _currentXTarget + 0.1f)
+        if (this.transform.position.x != _currentXTarget)
         {
-            if (_myRigidbody.velocity.x > -MaxLateralSpeed)
-                _myRigidbody.AddForce(new Vector2(-LateralAcceleration, 0));
-        }
-        else if(this.transform.position.x < _currentXTarget - 0.1f)
-        {
-            if (_myRigidbody.velocity.x < MaxLateralSpeed)
-                _myRigidbody.AddForce(new Vector2(LateralAcceleration, 0));
-        }
-        else
-        {
-            _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
-            _cameraRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+            _movingLateral = true;
 
-            if (currentSubmarineState == SubmarineStates.LEFTROW)
-                this.transform.position = new Vector2(_initialPos.x - 3.25f, this.transform.position.y);
-            if (currentSubmarineState == SubmarineStates.RIGHTROW)
-                this.transform.position = new Vector2(_initialPos.x + 3.25f, this.transform.position.y);
-            if (currentSubmarineState == SubmarineStates.MIDDLEROW)
-                this.transform.position = new Vector2(_initialPos.x, this.transform.position.y);
+            if (this.transform.position.x > _currentXTarget + 0.1f)
+            {
+                if (_myRigidbody.velocity.x > -MaxLateralSpeed)
+                    _myRigidbody.AddForce(new Vector2(-LateralAcceleration, 0));
+            }
+            else if (this.transform.position.x < _currentXTarget - 0.1f)
+            {
+                if (_myRigidbody.velocity.x < MaxLateralSpeed)
+                    _myRigidbody.AddForce(new Vector2(LateralAcceleration, 0));
+            }
+            else
+            {
+                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                _cameraRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+
+                if (currentSubmarineState == SubmarineStates.LEFTROW)
+                    this.transform.position = new Vector2(_initialPos.x - 3.25f, this.transform.position.y);
+                if (currentSubmarineState == SubmarineStates.RIGHTROW)
+                    this.transform.position = new Vector2(_initialPos.x + 3.25f, this.transform.position.y);
+                if (currentSubmarineState == SubmarineStates.MIDDLEROW)
+                    this.transform.position = new Vector2(_initialPos.x, this.transform.position.y);
+
+                _movingLateral = false;
+            }
         }
     }
 
