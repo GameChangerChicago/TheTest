@@ -50,16 +50,11 @@ public class RoomObject : MonoBehaviour
         Debug.Log(PlayerObject + " " + col.tag);
         if(PlayerObject || col.tag == "RoomGoal")
         {
-            //EndGame
+            _myController.GameOver = true;
         }
         else
         {
             _myController.LoseControl();
         }
-    }
-
-    private void FadeOut()
-    {
-        
     }
 }

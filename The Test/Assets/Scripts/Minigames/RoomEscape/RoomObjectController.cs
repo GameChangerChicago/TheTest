@@ -1,11 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class RoomObjectController : MonoBehaviour
 {
     public RoomObject ObjectToMove;
+    public SpriteRenderer CameraMask;
     public Transform TopLeftCornerPos;
     public Vector2 CurrentGridCount;
+    public bool GameOver;
 
     private Vector2 _initialTouchPos,
                     _initialObjectPos,
@@ -24,6 +27,11 @@ public class RoomObjectController : MonoBehaviour
         else if (ObjectToMove)
         {
             InputManager();
+        }
+
+        if(GameOver)
+        {
+            FadeOut();
         }
     }
 
@@ -144,5 +152,17 @@ public class RoomObjectController : MonoBehaviour
     {
         ObjectToMove.UpdatePosition();
         _snappingToPosition = true;
+    }
+
+    private void FadeOut()
+    {
+        if (CameraMask != null)
+        {
+            CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
+            if (CameraMask.color.a > 0.9f)
+                SceneManager.LoadScene("Frame");
+        }
+        else
+            SceneManager.LoadScene("Frame");
     }
 }
