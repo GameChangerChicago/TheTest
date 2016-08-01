@@ -47,13 +47,19 @@ public class RoomObject : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (PlayerObject && col.tag == "Exit")
+        Debug.Log(PlayerObject + " " + col.tag);
+        if(PlayerObject || col.tag == "RoomGoal")
         {
             //EndGame
         }
-        else if(!PlayerObject && col.tag != "Entrance")
+        else
         {
             _myController.LoseControl();
         }
+    }
+
+    private void FadeOut()
+    {
+        
     }
 }
