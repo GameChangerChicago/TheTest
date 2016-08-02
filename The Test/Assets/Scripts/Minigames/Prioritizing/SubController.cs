@@ -11,7 +11,9 @@ public class SubController : MonoBehaviour
     public float ForwardAcceleration,
                  LateralAcceleration,
                  MaxForwardSpeed,
-                 MaxLateralSpeed;
+                 MaxLateralSpeed,
+                 LeftMoveDistance,
+                 RightMoveDistance;
     public int TimerLenght;
     private Rigidbody2D _myRigidbody,
                         _cameraRigidbody;
@@ -29,13 +31,13 @@ public class SubController : MonoBehaviour
                 switch (value)
                 {
                     case SubmarineStates.LEFTROW:
-                        _currentXTarget = _initialPos.x - 3.25f;
+                        _currentXTarget = _initialPos.x - LeftMoveDistance;
                         break;
                     case SubmarineStates.MIDDLEROW:
                         _currentXTarget = _initialPos.x;
                         break;
                     case SubmarineStates.RIGHTROW:
-                        _currentXTarget = _initialPos.x + 3.25f;
+                        _currentXTarget = _initialPos.x + RightMoveDistance;
                         break;
                     default:
                         Debug.LogWarning("The only thing I could think of that would cause this to happen is if we add more that three rows in the sub game.");
@@ -152,9 +154,9 @@ public class SubController : MonoBehaviour
                 _cameraRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
 
                 if (currentSubmarineState == SubmarineStates.LEFTROW)
-                    this.transform.position = new Vector2(_initialPos.x - 3.25f, this.transform.position.y);
+                    this.transform.position = new Vector2(_initialPos.x - LeftMoveDistance, this.transform.position.y);
                 if (currentSubmarineState == SubmarineStates.RIGHTROW)
-                    this.transform.position = new Vector2(_initialPos.x + 3.25f, this.transform.position.y);
+                    this.transform.position = new Vector2(_initialPos.x + RightMoveDistance, this.transform.position.y);
                 if (currentSubmarineState == SubmarineStates.MIDDLEROW)
                     this.transform.position = new Vector2(_initialPos.x, this.transform.position.y);
 
