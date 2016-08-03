@@ -17,15 +17,15 @@ public class MapMovementManager : MonoBehaviour
         {
             switch(GameManager.CurrentCharacterType)
             {
-                case CharacterType.RED:
+                case CharacterType.Felix:
                     _currentPlayer = RedPlayerPeg;
                     _currentMapPaths = RedMapPaths;
                     break;
-                case CharacterType.GREEN:
+                case CharacterType.Isaac:
                     _currentPlayer = GreenPlayerPeg;
                     _currentMapPaths = GreenMapPaths;
                     break;
-                case CharacterType.PURPLE:
+                case CharacterType.Marlon:
                     _currentPlayer = PurplePlayerPeg;
                     _currentMapPaths = PurpleMapPaths;
                     break;

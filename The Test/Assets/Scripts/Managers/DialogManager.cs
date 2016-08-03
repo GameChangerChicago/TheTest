@@ -38,17 +38,17 @@ public class DialogManager : MonoBehaviour
 
     private void LoadMinigame()
     {
-        switch(GameManager.CurrentCharacterType)
+        switch (GameManager.CurrentCharacterType)
         {
-            case CharacterType.RED:
-            if(currentConvoIndex == 1)
+            case CharacterType.Felix:
+                if (currentConvoIndex == 1)
                 {
                     SceneManager.LoadScene("Prioritizing");
                 }
                 break;
-            case CharacterType.GREEN:
+            case CharacterType.Isaac:
                 break;
-            case CharacterType.PURPLE:
+            case CharacterType.Marlon:
                 break;
             default:
                 Debug.LogWarning("Did you add a new character type? You'll have to update a lot of switch statements, you know...");

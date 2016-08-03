@@ -3,9 +3,9 @@ using System.Collections;
 
 public enum CharacterType
 {
-    RED,
-    GREEN,
-    PURPLE
+    Felix,
+    Isaac,
+    Marlon
 }
 
 public enum FrameType

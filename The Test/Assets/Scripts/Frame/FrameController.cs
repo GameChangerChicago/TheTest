@@ -39,17 +39,17 @@ public class FrameController : MonoBehaviour
         {
             switch (value)
             {
-                case CharacterType.RED:
+                case CharacterType.Felix:
                     FullCharacterImage.sprite = RedFullBody;
                     MapPreview.sprite = RedMap;
                     MapFramePortrait.sprite = RedPortrait;
                     break;
-                case CharacterType.GREEN:
+                case CharacterType.Isaac:
                     FullCharacterImage.sprite = GreenFullBody;
                     //MapPreview.sprite = GreenMap;
                     MapFramePortrait.sprite = GreenPortrait;
                     break;
-                case CharacterType.PURPLE:
+                case CharacterType.Marlon:
                     FullCharacterImage.sprite = PurpleFullBody;
                     //MapPreview.sprite = PurpleMap;
                     MapFramePortrait.sprite = PurplePortrait;
@@ -154,18 +154,18 @@ public class FrameController : MonoBehaviour
             //Tell the game manager which character is the selected char
             if (PlayerPortraits[1].name == "RedPlayer")
             {
-                currentCharacterType = CharacterType.RED;
-                GameManager.CurrentCharacterType = CharacterType.RED;
+                currentCharacterType = CharacterType.Felix;
+                GameManager.CurrentCharacterType = CharacterType.Felix;
             }
             else if (PlayerPortraits[1].name == "GreenPlayer")
             {
-                currentCharacterType = CharacterType.GREEN;
-                GameManager.CurrentCharacterType = CharacterType.GREEN;
+                currentCharacterType = CharacterType.Isaac;
+                GameManager.CurrentCharacterType = CharacterType.Isaac;
             }
             else if (PlayerPortraits[1].name == "PurplePlayer")
             {
-                currentCharacterType = CharacterType.PURPLE;
-                GameManager.CurrentCharacterType = CharacterType.PURPLE;
+                currentCharacterType = CharacterType.Marlon;
+                GameManager.CurrentCharacterType = CharacterType.Marlon;
             }
         }
     }
