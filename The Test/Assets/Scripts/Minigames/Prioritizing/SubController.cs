@@ -14,7 +14,7 @@ public class SubController : MonoBehaviour
                  MaxLateralSpeed,
                  LeftMoveDistance,
                  RightMoveDistance;
-    public int TimerLenght;
+    public int TimerLength;
     private Rigidbody2D _myRigidbody,
                         _cameraRigidbody;
 
@@ -78,9 +78,9 @@ public class SubController : MonoBehaviour
             _timer += Time.deltaTime;
             int timerInt = (int)_timer;
 
-            string timerString = (TimerLenght - timerInt).ToString();
+            string timerString = (TimerLength - timerInt).ToString();
 
-            if (TimerLenght - timerInt > 0)
+            if (TimerLength - timerInt > 0)
                 Timer.text = timerString;
             else
             {

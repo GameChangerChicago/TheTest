@@ -5,6 +5,9 @@ using System.Collections;
 public class DialogManager : MonoBehaviour
 {
     public GameObject DialogContainer;
+    public Transform BottomPoint,
+                     LeftPoint,
+                     RightPoint;
 
     protected int currentConvoIndex
     {
@@ -74,11 +77,27 @@ public class DialogManager : MonoBehaviour
         }
 
         //Instatiates the gameobject at the initial position plus the current offset and puts it inside of the DialogContainer
-        _dialogOffset += pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y;
-        pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(_initialDialogPos.x, _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
+        _dialogOffset += (pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f;
+
+        if (pieceOfDialogToLoad.tag == "LeftSideDialog")
+            pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(LeftPoint.position.x + ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.x / 2) / 0.7f), _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
+        else if (pieceOfDialogToLoad.tag == "RightSideDialog")
+            pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(RightPoint.position.x - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.x / 2) / 0.7f), _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
+        else
+            Debug.LogWarning("You need to tag all dialog pieces with either LeftSideDialog or RightSideDialog.");
+
         pieceOfDialogToLoad.transform.parent = DialogContainer.transform;
+
+        if(pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f) < BottomPoint.position.y)
+        {
+            float containerOffset = Vector2.Distance(new Vector2(0, pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f)), new Vector2(0,BottomPoint.position.y));
+            Debug.Log(containerOffset);
+            DialogContainer.transform.position = new Vector3(DialogContainer.transform.position.x, DialogContainer.transform.position.y + containerOffset, pieceOfDialogToLoad.transform.position.z);
+            _dialogOffset -= containerOffset;
+        }
+
         //Calculates how much the next dialog box should be offset
-        float ammountToIncreaseOffset = pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2;//Vector3.Distance(Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMin))) / 2;
+        float ammountToIncreaseOffset = (pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f;//Vector3.Distance(Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMax)), Camera.main.ScreenToWorldPoint(new Vector3(0, pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.rect.yMin))) / 2;
         
         //This ticks forward the index of currenct convo unless it's the last dialog piece in which case...
         if(!lastPieceOfDialog)
