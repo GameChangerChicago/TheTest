@@ -76,15 +76,25 @@ public class FrameController : MonoBehaviour
         _mapMovementManager = GetComponent<MapMovementManager>();
         _dialogManager = GetComponent<DialogManager>();
 
+        //HACK: Remove once we finish the SAT thing
+        GameManager.CurrentFrame = FrameType.DIALOG;
+
         switch (GameManager.CurrentFrame)
         {
             case FrameType.CHARACTERSELECTION:
                 CharacterSelectionFrame.SetActive(true);
                 MapFrame.SetActive(false);
+                DialogFrame.SetActive(false);
                 break;
             case FrameType.MAPFOLLOW:
                 CharacterSelectionFrame.SetActive(false);
                 MapFrame.SetActive(true);
+                DialogFrame.SetActive(false);
+                break;
+            case FrameType.DIALOG:
+                CharacterSelectionFrame.SetActive(false);
+                MapFrame.SetActive(false);
+                DialogFrame.SetActive(true);
                 break;
             default:
                 Debug.LogWarning("Did you add a new frame type?");

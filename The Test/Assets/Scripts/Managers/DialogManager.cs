@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class DialogManager : MonoBehaviour
 {
@@ -21,21 +22,31 @@ public class DialogManager : MonoBehaviour
         }
     }
 
-    private Vector3 _initialDialogPos = Vector3.zero;
+    private Vector3 _initialDialogPos = Vector3.zero,
+                    _initialTopPointPos;//This field will only be needed for this SAT dialog test thing
     private float _dialogOffset;
     private int _currentDialogPieceIndex;
     private bool _dialogFinished,
                  _dialogActive;
 
+    void Start()
+    {
+        _initialTopPointPos = DialogContainer.transform.position;
+    }
+
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Mouse0) && _dialogActive)
+        
+        if(Input.GetKeyDown(KeyCode.Mouse0))// && _dialogActive) This should be added back in once we're done with the SAT dialog test
         {
             if (!_dialogFinished)
                 LoadPieceOfDialog();
             else
-                LoadMinigame();
-
+            {
+                //LoadMinigame();
+                ClearDialogContainer();
+                _dialogFinished = false;
+            }
         }
     }
 
@@ -77,7 +88,13 @@ public class DialogManager : MonoBehaviour
         }
 
         //Instatiates the gameobject at the initial position plus the current offset and puts it inside of the DialogContainer
-        _dialogOffset += (pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f;
+        if (pieceOfDialogToLoad)
+            _dialogOffset += (pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f;
+        else
+        {
+            Debug.Log("GameOver");
+            return;
+        }
 
         if (pieceOfDialogToLoad.tag == "LeftSideDialog")
             pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(LeftPoint.position.x + ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.x / 2) / 0.7f), _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
@@ -91,7 +108,6 @@ public class DialogManager : MonoBehaviour
         if(pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f) < BottomPoint.position.y)
         {
             float containerOffset = Vector2.Distance(new Vector2(0, pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f)), new Vector2(0,BottomPoint.position.y));
-            Debug.Log(containerOffset);
             DialogContainer.transform.position = new Vector3(DialogContainer.transform.position.x, DialogContainer.transform.position.y + containerOffset, pieceOfDialogToLoad.transform.position.z);
             _dialogOffset -= containerOffset;
         }
@@ -111,5 +127,18 @@ public class DialogManager : MonoBehaviour
             _dialogActive = false;
             currentConvoIndex++;
         }
+    }
+
+    //This method is only needed for this SAT dialog test thing.
+    private void ClearDialogContainer()
+    {
+        _currentDialogPieceIndex++;
+        for (int i = 0; i < _currentDialogPieceIndex; i++)
+        {
+            GameObject.Destroy(DialogContainer.transform.GetChild(i + 2).gameObject);
+        }
+        _currentDialogPieceIndex = 0;
+        DialogContainer.transform.position = _initialTopPointPos;
+        _dialogOffset = 0;
     }
 }
