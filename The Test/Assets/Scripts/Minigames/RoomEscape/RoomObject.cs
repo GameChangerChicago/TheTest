@@ -26,7 +26,7 @@ public class RoomObject : MonoBehaviour
     {
         if (_singleSquareDimensions == Vector2.zero)
         {
-            SpriteRenderer Floor = GameObject.Find("Floor").GetComponent<SpriteRenderer>();
+            SpriteRenderer Floor = GameObject.Find("Grid").GetComponent<SpriteRenderer>();
 
             _singleSquareDimensions = new Vector2((Floor.sprite.bounds.max.x - Floor.sprite.bounds.min.x) / _myController.CurrentGridCount.x, (Floor.sprite.bounds.max.y - Floor.sprite.bounds.min.y) / _myController.CurrentGridCount.y);
         }
@@ -47,14 +47,12 @@ public class RoomObject : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        Debug.Log(PlayerObject + " " + col.tag);
-        if(PlayerObject || col.tag == "RoomGoal")
+        if(PlayerObject && col.tag == "RoomGoal")
         {
             _myController.GameOver = true;
         }
-        else
+        else if(!PlayerObject || (PlayerObject && col.tag != "Door"))
         {
-            Debug.Log(this.name);
             _myController.LoseControl();
         }
     }
