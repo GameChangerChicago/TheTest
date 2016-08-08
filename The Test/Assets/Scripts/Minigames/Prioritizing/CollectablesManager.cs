@@ -6,8 +6,7 @@ using System.Collections.Generic;
 
 public class CollectablesManager : MonoBehaviour
 {
-    public Transform CoinCollectionSpot,
-                     Bloom;
+    public Transform CoinCollectionSpot;
     public Image CoinCounter;
 
     protected int coinCount
@@ -25,7 +24,13 @@ public class CollectablesManager : MonoBehaviour
 
     private List<Transform> _coinsToMove = new List<Transform>();
     private List<float> _initalDistances = new List<float>();
+    private Transform _bloom;
     private bool _gemCollected;
+
+    void Start()
+    {
+        _bloom = GameObject.Find("Bloom").transform;
+    }
 
     void Update()
     {
@@ -64,10 +69,13 @@ public class CollectablesManager : MonoBehaviour
 
     private void GameEndHandler()
     {
-        if (Bloom.localScale.x < 75)
-            Bloom.localScale = new Vector3(Bloom.localScale.x + ((25 + Bloom.localScale.x) * Time.deltaTime), Bloom.localScale.y + ((25 + Bloom.localScale.y) * Time.deltaTime), Bloom.localScale.z);
+        if (_bloom.localScale.x < 75)
+            _bloom.localScale = new Vector3(_bloom.localScale.x + ((25 + _bloom.localScale.x) * Time.deltaTime), _bloom.localScale.y + ((25 + _bloom.localScale.y) * Time.deltaTime), _bloom.localScale.z);
         else
-            SceneManager.LoadScene("Frame");
+        {
+            //SceneManager.LoadScene("Frame");
+            FindObjectOfType<GameManager>().HACKENDGAME();
+        }
 
     }
 

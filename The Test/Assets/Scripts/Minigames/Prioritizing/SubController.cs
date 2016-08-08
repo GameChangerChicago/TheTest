@@ -67,6 +67,7 @@ public class SubController : MonoBehaviour
         _cameraRigidbody = Camera.main.GetComponent<Rigidbody2D>();
         _myRenderer = GetComponentInChildren<SpriteRenderer>();
         _theCollectablesManager = FindObjectOfType<CollectablesManager>();
+        _moving = true;
     }
     
     void Update()
@@ -89,10 +90,11 @@ public class SubController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !_moving)
-        {
-            ToggleMovement();
-        }
+        //Disabled for actual builds
+        //if (Input.GetKeyDown(KeyCode.Mouse0) && !_moving)
+        //{
+        //    ToggleMovement();
+        //}
 
         if (Input.GetKeyDown(KeyCode.Mouse0) && !_movingLateral)
         {
@@ -204,6 +206,11 @@ public class SubController : MonoBehaviour
 
     private void FadeOut()
     {
+        if(GameManager.CurrentConvoIndex == 4)
+        {
+            GameManager.CurrentConvoIndex = 0;
+        }
+        
         if (CameraMask != null)
         {
             CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
