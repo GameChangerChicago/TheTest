@@ -54,6 +54,7 @@ public class RoomObject : MonoBehaviour
         }
         else
         {
+            Debug.Log(this.name);
             _myController.LoseControl();
         }
     }
