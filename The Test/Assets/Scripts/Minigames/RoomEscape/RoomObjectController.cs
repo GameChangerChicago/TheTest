@@ -41,6 +41,8 @@ public class RoomObjectController : MonoBehaviour
         {
             _initialTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             _initialObjectPos = ObjectToMove.transform.position;
+            if (ObjectToMove.PlayerObject)
+                ObjectToMove.GetComponent<Animator>().SetBool("Walking", true);
         }
         if (Input.GetKey(KeyCode.Mouse0))
         {
@@ -49,6 +51,9 @@ public class RoomObjectController : MonoBehaviour
         if(Input.GetKeyUp(KeyCode.Mouse0))
         {
             LoseControl();
+
+            if (ObjectToMove.PlayerObject)
+                ObjectToMove.GetComponent<Animator>().SetBool("Walking", false);
         }
     }
 
@@ -152,6 +157,9 @@ public class RoomObjectController : MonoBehaviour
     {
         ObjectToMove.UpdatePosition();
         _snappingToPosition = true;
+
+        if (ObjectToMove.PlayerObject)
+            ObjectToMove.GetComponent<Animator>().SetBool("Walking", false);
     }
 
     private void FadeOut()

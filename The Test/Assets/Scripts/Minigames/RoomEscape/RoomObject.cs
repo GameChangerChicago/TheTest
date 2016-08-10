@@ -35,7 +35,7 @@ public class RoomObject : MonoBehaviour
         for (int i = 0; i < PositionCheckers.Length; i++)
         {
             _gridPositions.Add(new Vector2(Mathf.RoundToInt((PositionCheckers[i].position.x - _myController.TopLeftCornerPos.position.x) / _singleSquareDimensions.x),
-                                            Mathf.RoundToInt((PositionCheckers[i].position.y - _myController.TopLeftCornerPos.position.y) / -_singleSquareDimensions.y)));
+                                           Mathf.RoundToInt((PositionCheckers[i].position.y - _myController.TopLeftCornerPos.position.y) / -_singleSquareDimensions.y)));
         }
     }
 
@@ -51,7 +51,7 @@ public class RoomObject : MonoBehaviour
         {
             _myController.GameOver = true;
         }
-        else if(!PlayerObject || (PlayerObject && col.tag != "Door"))
+        else if((!PlayerObject && col.tag != "RoomGoal") || (PlayerObject && col.tag != "Door"))
         {
             _myController.LoseControl();
         }
