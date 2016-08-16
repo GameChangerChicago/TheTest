@@ -76,9 +76,6 @@ public class FrameController : MonoBehaviour
         _mapMovementManager = GetComponent<MapMovementManager>();
         _dialogManager = GetComponent<DialogManager>();
 
-        //HACK: Remove once we finish the SAT thing
-        GameManager.CurrentFrame = FrameType.DIALOG;
-
         switch (GameManager.CurrentFrame)
         {
             case FrameType.CHARACTERSELECTION:

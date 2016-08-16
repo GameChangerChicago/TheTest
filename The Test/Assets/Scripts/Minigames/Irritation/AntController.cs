@@ -19,27 +19,72 @@ public class AntController : MonoBehaviour
         }
     }
     private bool _eating;
-    
+    protected bool dragging
+    {
+        get
+        {
+            return _dragging;
+        }
+        set
+        {
+            if (value != _dragging)
+            {
+                if (value)
+                {
+                    _myRigidBody.drag = 0;
+                }
+                else
+                {
+                    _myRigidBody.AddForce(_deltaPosition);
+                }
+
+                _dragging = value;
+            }
+        }
+    }
+    private bool _dragging;
+
     private Animator _myAnimator;
+    private Rigidbody2D _myRigidBody;
     private CookieManager _theCookieManager;
     private Transform _cookie;
-    private bool _dragging;
+    private Vector2 _lastPosition,
+                    _deltaPosition;
 
     void Start()
     {
         _myAnimator = this.GetComponent<Animator>();
+        _myRigidBody = this.GetComponent<Rigidbody2D>();
         _theCookieManager = FindObjectOfType<CookieManager>();
         _cookie = _theCookieManager.transform;
     }
 
     void Update()
     {
-        eating = Physics2D.OverlapPoint(this.transform.position, 512);
+        eating = Physics2D.OverlapPoint(this.transform.position, LayerMask.GetMask("Cookie"));
 
-        if(_dragging)
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            dragging = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), LayerMask.GetMask("Ant")) == this.GetComponent<Collider2D>();
+            Debug.Log(dragging);
+        }
+
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            dragging = false;
+        }
+
+        if(!dragging && _myRigidBody.drag < 5)
+        {
+            _myRigidBody.drag += Time.deltaTime * 5;
+        }
+
+        if(dragging)
         {
             Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             this.transform.position = new Vector3(currentPosition.x, currentPosition.y, this.transform.position.z);
+            _deltaPosition = new Vector2((currentPosition.x - _lastPosition.x) * Time.deltaTime, (currentPosition.y - _lastPosition.y) * Time.deltaTime);
+            _lastPosition = currentPosition;
         }
         else if(!eating)
         {
@@ -82,13 +127,13 @@ public class AntController : MonoBehaviour
         _theCookieManager.PercentEaten += Time.deltaTime;
     }
 
-    void OnMouseDown()
-    {
-        _dragging = true;
-    }
+    //void OnMouseDown()
+    //{
+    //    _dragging = true;
+    //}
 
-    void OnMouseUp()
-    {
-        _dragging = false;
-    }
+    //void OnMouseUp()
+    //{
+    //    _dragging = false;
+    //}
 }

@@ -28,13 +28,6 @@ public class CookieManager : MonoBehaviour
                     }
                 }
 
-                //AntController[] allAnts = FindObjectsOfType<AntController>();
-
-                //for (int i = 0; i < allAnts.Length; i++)
-                //{
-                //    allAnts[i].StartMoving();
-                //}
-
                 _currentCookieIndex = value;
             }
         }
