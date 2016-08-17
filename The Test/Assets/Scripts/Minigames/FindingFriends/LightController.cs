@@ -3,7 +3,7 @@ using System.Collections;
 
 public class LightController : MonoBehaviour
 {
-    public float AmmoutToChangeLight;    
+    public float AmoutToChangeLight;    
 
     protected bool lightIncreasing
     {
@@ -17,12 +17,14 @@ public class LightController : MonoBehaviour
             {
                 if(value)
                 {
-                    _targetLightSize = _myLight.LightRadius + AmmoutToChangeLight;
+                    _targetLightSize = _myLight.LightRadius + AmoutToChangeLight;
                 }
                 else
                 {
-                    Debug.Log(_myLight.LightRadius - AmmoutToChangeLight);
-                    _targetLightSize = _myLight.LightRadius - AmmoutToChangeLight;
+                    _targetLightSize = _myLight.LightRadius - AmoutToChangeLight;
+
+                    //if (this.transform.parent.name == "Player")
+                    //    Debug.Log("Current Light: " + _myLight.LightRadius + " Change Ammount: " + AmoutToChangeLight);
                 }
 
                 _lightIncreasing = value;
@@ -33,11 +35,13 @@ public class LightController : MonoBehaviour
 
     private DynamicLight _myLight;
     private float _targetLightSize;
+    private int _friendCount;
+    private bool _fadingOut;
 
     void Start()
     {
         _myLight = this.GetComponent<DynamicLight>();
-        _targetLightSize = _myLight.LightRadius + AmmoutToChangeLight;
+        _targetLightSize = _myLight.LightRadius + AmoutToChangeLight;
     }
     
     void Update()
@@ -55,21 +59,50 @@ public class LightController : MonoBehaviour
             }
             else
             {
-                Debug.Log("sadf");
                 lightIncreasing = false;
             }
         }
         else
         {
-            Debug.Log(_targetLightSize);
             if (_myLight.LightRadius > _targetLightSize + 0.1f)
             {
-                _myLight.LightRadius -= Time.deltaTime * (AmmoutToChangeLight - (_myLight.LightRadius - AmmoutToChangeLight));
+                float shrinkRate;
+
+                if (_myLight.LightRadius - (_myLight.LightRadius - _targetLightSize) < 0.1f)
+                    shrinkRate = 0.1f;
+                else
+                    shrinkRate = _myLight.LightRadius - (_myLight.LightRadius - _targetLightSize);
+
+                if (_friendCount > 0)
+                    _myLight.LightRadius -= Time.deltaTime * (shrinkRate * (5 / _friendCount));
+                else
+                    _myLight.LightRadius -= Time.deltaTime * (shrinkRate * 5);
+
             }
-            else
+            else if(!_fadingOut)
             {
                 lightIncreasing = true;
             }
+            else
+            {
+                GameObject.Destroy(this.gameObject);
+            }
         }
+    }
+
+    public void GainedAFriend()
+    {
+        lightIncreasing = true;
+        _friendCount++;
+        _targetLightSize += 0.5f;
+    }
+
+    public IEnumerator FadeAway()
+    {
+        yield return new WaitForSeconds(1);
+        
+        lightIncreasing = false;
+        _targetLightSize = 0;
+        _fadingOut = true;
     }
 }
