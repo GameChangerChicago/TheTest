@@ -66,7 +66,6 @@ public class AntController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             dragging = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), LayerMask.GetMask("Ant")) == this.GetComponent<Collider2D>();
-            Debug.Log(dragging);
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))

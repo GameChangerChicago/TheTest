@@ -3,7 +3,8 @@ using System.Collections;
 
 public class LightController : MonoBehaviour
 {
-    public float AmoutToChangeLight;    
+    public float AmoutToChangeLight;
+    public int FriendCountGoal;
 
     protected bool lightIncreasing
     {
@@ -34,19 +35,36 @@ public class LightController : MonoBehaviour
     private bool _lightIncreasing = true;
 
     private DynamicLight _myLight;
+    private FireFlyCameraManager _theCameraManager;
     private float _targetLightSize;
     private int _friendCount;
-    private bool _fadingOut;
+    private bool _fadingOut,
+                 _pulsing;
 
     void Start()
     {
         _myLight = this.GetComponent<DynamicLight>();
+        _theCameraManager = FindObjectOfType<FireFlyCameraManager>();
         _targetLightSize = _myLight.LightRadius + AmoutToChangeLight;
+        if (this.transform.parent.name == "Player")
+        {
+            StartPulsing();
+        }
+        else
+        {
+            Invoke("StartPulsing", Random.Range(0.5f, 1.5f));
+        }
     }
     
     void Update()
     {
-        LightPulse();
+        if (_pulsing)
+            LightPulse();
+
+        if(_friendCount == FriendCountGoal)
+        {
+            //Begin FadeOut
+        }
     }
 
     private void LightPulse()
@@ -90,11 +108,17 @@ public class LightController : MonoBehaviour
         }
     }
 
+    private void StartPulsing()
+    {
+        _pulsing = true;
+    }
+
     public void GainedAFriend()
     {
         lightIncreasing = true;
         _friendCount++;
         _targetLightSize += 0.5f;
+        _theCameraManager.IncreaseSize();
     }
 
     public IEnumerator FadeAway()
