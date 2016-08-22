@@ -5,14 +5,43 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
+    public static PhoneTypes CurrentPhoneType;
     public static CharacterType CurrentCharacterType;
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
                       CurrentConvoIndex;
     
-    void Start()
+    void Awake()
     {
-        if(SceneManager.GetActiveScene().name == "Prioritizing")
+        #region DeviceResolution
+        if (Camera.main.aspect > 0.74f) //iPad
+        {
+            CurrentPhoneType = PhoneTypes.IPAD;
+        }
+        else if (Camera.main.aspect > 0.6665f) //iPhone 4
+        {
+            CurrentPhoneType = PhoneTypes.IPHONE4;
+        }
+        else if (Camera.main.aspect > 0.624f) //Android 1
+        {
+            CurrentPhoneType = PhoneTypes.ANDROID1;
+        }
+        else if (Camera.main.aspect > 0.5859374f) //Android 2
+        {
+            CurrentPhoneType = PhoneTypes.ANDROID2;
+        }
+        else if (Camera.main.aspect > 0.5624f) //iPhone5
+        {
+            CurrentPhoneType = PhoneTypes.IPHONE5;
+        }
+        else //Android 3
+        {
+            CurrentPhoneType = PhoneTypes.ANDROID3;
+        }
+        #endregion
+
+        //CurrentConvoIndex = 1;
+        if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
             if(CurrentConvoIndex == 1)
             {

@@ -5,7 +5,6 @@ using System.Collections;
 
 public class SubController : MonoBehaviour
 {
-    public BoxCollider2D[] TouchColliders;
     public SpriteRenderer CameraMask;
     public Text Timer;
     public float ForwardAcceleration,
@@ -18,7 +17,7 @@ public class SubController : MonoBehaviour
     private Rigidbody2D _myRigidbody,
                         _cameraRigidbody;
 
-    protected SubmarineStates currentSubmarineState
+    public SubmarineStates currentSubmarineState
     {
         get
         {
@@ -95,35 +94,6 @@ public class SubController : MonoBehaviour
         //{
         //    ToggleMovement();
         //}
-
-        if (Input.GetKeyDown(KeyCode.Mouse0) && !_movingLateral)
-        {
-            TouchHandler();
-        }
-    }
-
-    private void TouchHandler()
-    {
-        for(int i = 0; i < TouchColliders.Length; i++)
-        {
-            if(TouchColliders[i].OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition)))
-            {
-                switch (i)
-                {
-                    case 0:
-                        currentSubmarineState = SubmarineStates.LEFTROW;
-                        break;
-                    case 1:
-                        currentSubmarineState = SubmarineStates.MIDDLEROW;
-                        break;
-                    case 2:
-                        currentSubmarineState = SubmarineStates.RIGHTROW;
-                        break;
-                    default:
-                        break;
-                }
-            }
-        }
     }
 
     private void MovementHandler()

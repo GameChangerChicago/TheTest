@@ -30,3 +30,14 @@ public enum CardinalDirections
     LEFT,
     RIGHT
 }
+
+public enum PhoneTypes
+{
+    ANDROID1,
+    ANDROID2,
+    ANDROID3,
+    IPHONE4,
+    IPHONE5,
+    IPAD,
+    UNIDENTIFIED
+}
