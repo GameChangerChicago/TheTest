@@ -6,10 +6,13 @@ public class BackgroundManager : MonoBehaviour
     public GameObject Background;
     private GameObject _currentBackground,
                        _lastBackground;
+    private SpriteRenderer _currentBackgroundSR,
+                           _lastBackgroundSR;
 
     void Start()
     {
         _currentBackground = (GameObject)Instantiate(Background, this.transform.position, Quaternion.identity);
+        _currentBackgroundSR = _currentBackground.GetComponent<SpriteRenderer>();
 
         switch(GameManager.CurrentPhoneType)
         {
@@ -38,18 +41,17 @@ public class BackgroundManager : MonoBehaviour
     
     void Update()
     {
-        float camTopBackTopDiff = (_currentBackground.transform.position.y + _currentBackground.GetComponent<SpriteRenderer>().bounds.extents.y) -
+        float camTopBackTopDiff = (_currentBackground.transform.position.y + _currentBackgroundSR.bounds.extents.y) -
                                   Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelRect.yMax, 0)).y,
               camBottomBackBottomDiff = 0;
 
         if (_lastBackground)
-            camBottomBackBottomDiff = (_lastBackground.transform.position.y + _lastBackground.GetComponent<SpriteRenderer>().bounds.extents.y) -
+            camBottomBackBottomDiff = (_lastBackground.transform.position.y + _lastBackgroundSR.bounds.extents.y) -
                                       Camera.main.ScreenToWorldPoint(new Vector3(0, Camera.main.pixelRect.yMin, 0)).y;
-
-        Debug.Log(camTopBackTopDiff);
 
         if(camBottomBackBottomDiff < 0 && _lastBackground)
         {
+            //Delete old background
             GameObject.Destroy(_lastBackground);
         }
 
@@ -57,8 +59,9 @@ public class BackgroundManager : MonoBehaviour
         {
             //Spawn new background
             _lastBackground = _currentBackground;
-            //Debug.Log((_lastBackground.GetComponent<SpriteRenderer>().sprite.bounds.extents.y * 2));
-            _currentBackground = (GameObject)Instantiate(Background, new Vector2(_lastBackground.transform.position.x, _lastBackground.transform.position.y + (_currentBackground.GetComponent<SpriteRenderer>().bounds.max.y - _currentBackground.GetComponent<SpriteRenderer>().bounds.min.y)), Quaternion.identity);
+            _lastBackgroundSR = _lastBackground.GetComponent<SpriteRenderer>();
+            _currentBackground = (GameObject)Instantiate(Background, new Vector2(_lastBackground.transform.position.x, _lastBackground.transform.position.y + (_currentBackgroundSR.bounds.max.y - _currentBackgroundSR.bounds.min.y)), Quaternion.identity);
+            _currentBackgroundSR = _currentBackground.GetComponent<SpriteRenderer>();
             _currentBackground.transform.localScale = new Vector3(_lastBackground.transform.localScale.x, -_lastBackground.transform.localScale.y, _lastBackground.transform.localScale.z);
         }
     }

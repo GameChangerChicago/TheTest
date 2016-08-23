@@ -57,7 +57,7 @@ public class CollectablesManager : MonoBehaviour
             else
                 _coinsToMove[i].Translate((CoinCollectionSpot.position.x - _coinsToMove[i].position.x) * Time.deltaTime, (CoinCollectionSpot.position.y - _coinsToMove[i].position.y) * Time.deltaTime, 0);
 
-            if (distance < 0.3f)
+            if (distance < 0.5f)
             {
                 GameObject objectToDestroy = _coinsToMove[i].gameObject;
                 _coinsToMove.Remove(_coinsToMove[i].transform);

@@ -2,13 +2,14 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SubController : MonoBehaviour
 {
     public SpriteRenderer CameraMask;
     public Text Timer;
-    public float ForwardAcceleration,
-                 LateralAcceleration,
+    public float ForwardAccelerationRate,
+                 LateralAccelerationRate,
                  MaxForwardSpeed,
                  MaxLateralSpeed,
                  LeftMoveDistance,
@@ -51,11 +52,14 @@ public class SubController : MonoBehaviour
     private SubmarineStates _lastSubmarineState;
     private CollectablesManager _theCollectablesManager;
     private SpriteRenderer _myRenderer;
-    private Vector2 _initialPos;
+    private Vector2 _initialPos,
+                    _deltaDistance,
+                    _currentMoveDistance,
+                    _lastPos;
     private float _currentXTarget,
                   _timer;
     private bool _moving,
-                  _movingLateral;
+                 _movingLateral;
     
     void Start()
     {
@@ -98,32 +102,48 @@ public class SubController : MonoBehaviour
 
     private void MovementHandler()
     {
-        //This keeps the constant forward speed of the sub
-        if (_myRigidbody.velocity.y < MaxForwardSpeed)
+        if (_lastPos.y != 0)
         {
-            _myRigidbody.AddForce(new Vector2(0, ForwardAcceleration));
-            _cameraRigidbody.AddForce(new Vector2(0, ForwardAcceleration));
+            _deltaDistance = new Vector2(this.transform.position.x - _lastPos.x, this.transform.position.y - _lastPos.y);
+            _lastPos = this.transform.position;
         }
+        else
+            _lastPos = this.transform.position;
+
+        if(_deltaDistance.y < MaxForwardSpeed)
+        {
+            _currentMoveDistance.y += ForwardAccelerationRate * Time.deltaTime;
+        }
+
+        this.transform.Translate(0, _currentMoveDistance.y, 0);
+        Camera.main.transform.Translate(0, _currentMoveDistance.y, 0);
 
         //This manages the lateral movement of the submarine
         if (this.transform.position.x != _currentXTarget)
         {
             _movingLateral = true;
 
-            if (this.transform.position.x > _currentXTarget + 0.1f)
+            if (this.transform.position.x > _currentXTarget + 0.5f)
             {
-                if (_myRigidbody.velocity.x > -MaxLateralSpeed)
-                    _myRigidbody.AddForce(new Vector2(-LateralAcceleration, 0));
+                if (_deltaDistance.x < MaxLateralSpeed)
+                {
+                    _currentMoveDistance.x += LateralAccelerationRate * Time.deltaTime;
+                }
+
+                this.transform.Translate(-_currentMoveDistance.x, 0, 0);
             }
-            else if (this.transform.position.x < _currentXTarget - 0.1f)
+            else if (this.transform.position.x < _currentXTarget - 0.5f)
             {
-                if (_myRigidbody.velocity.x < MaxLateralSpeed)
-                    _myRigidbody.AddForce(new Vector2(LateralAcceleration, 0));
+                if (_deltaDistance.x < 0.2)
+                {
+                    _currentMoveDistance.x += LateralAccelerationRate * Time.deltaTime;
+                }
+
+                this.transform.Translate(_currentMoveDistance.x, 0, 0);
             }
             else
             {
-                _myRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
-                _cameraRigidbody.velocity = new Vector2(0, _myRigidbody.velocity.y);
+                _currentMoveDistance.x = 0;
 
                 if (currentSubmarineState == SubmarineStates.LEFTROW)
                     this.transform.position = new Vector2(_initialPos.x - LeftMoveDistance, this.transform.position.y);
@@ -139,19 +159,19 @@ public class SubController : MonoBehaviour
 
     private void RotatationHandler()
     {
-        if (_myRigidbody.velocity.x > 0)
+        if (_deltaDistance.x > 0)
         {
             //Rotate Right
             if (_myRenderer.transform.localEulerAngles.z > 330f || _myRenderer.transform.localEulerAngles.z < 31)
                 _myRenderer.transform.Rotate(new Vector3(0, 0, -5));
         }
-        if (_myRigidbody.velocity.x < 0)
+        if (_deltaDistance.x < 0)
         {
             //Rotate Left
             if (_myRenderer.transform.localEulerAngles.z < 30f || _myRenderer.transform.localEulerAngles.z > 329f)
                 _myRenderer.transform.Rotate(new Vector3(0, 0, 5));
         }
-        if (_myRigidbody.velocity.x == 0)
+        if (_deltaDistance.x == 0)
         {
             //Even out
             if (_myRenderer.transform.localEulerAngles.z > 300 && _myRenderer.transform.localEulerAngles.z < 359)
