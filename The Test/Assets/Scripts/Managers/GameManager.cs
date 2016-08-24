@@ -40,23 +40,20 @@ public class GameManager : MonoBehaviour
         }
         #endregion
 
-        //CurrentConvoIndex = 1;
+        CurrentConvoIndex = 1;
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
-            if(CurrentConvoIndex == 1)
+            if (CurrentConvoIndex == 1)
             {
-                GameObject LevelToLoad = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/Level 1");
-                Instantiate(LevelToLoad);
+                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 1-1");
             }
             if(CurrentConvoIndex == 2)
             {
-                GameObject LevelToLoad = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/Level 2");
-                Instantiate(LevelToLoad);
+                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 2-1");
             }
             if (CurrentConvoIndex == 3)
             {
-                GameObject LevelToLoad = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/Level 3");
-                Instantiate(LevelToLoad);
+                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 3-1");
             }
         }
     }

@@ -226,8 +226,7 @@ public class SubController : MonoBehaviour
         if(col.tag == "Gem")
         {
             _theCollectablesManager.GemCollected(col.gameObject);
-            _myRigidbody.velocity = Vector2.zero;
-            _cameraRigidbody.velocity = Vector2.zero;
+            _moving = false;
         }
     }
 }
