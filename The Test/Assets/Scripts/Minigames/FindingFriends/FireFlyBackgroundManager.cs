@@ -183,8 +183,8 @@ public class FireFlyBackgroundManager : MonoBehaviour
 
     private void DestroyBackground(SpriteRenderer backgroundToDestroy)
     {
-        Vector2 backgroundToDestroyIndex = new Vector2((backgroundToDestroy.transform.position.x - _initalBackgroundPos.x) / (backgroundToDestroy.bounds.extents.x * 2),
-                                                       (backgroundToDestroy.transform.position.y - _initalBackgroundPos.y) / (backgroundToDestroy.bounds.extents.y * 2));
+        Vector2 backgroundToDestroyIndex = new Vector2(Mathf.Round((backgroundToDestroy.transform.position.x - _initalBackgroundPos.x) / (backgroundToDestroy.bounds.extents.x * 2)),
+                                                       Mathf.Round((backgroundToDestroy.transform.position.y - _initalBackgroundPos.y) / (backgroundToDestroy.bounds.extents.y * 2)));
                                                        
         _activeBackgrounds.Remove(new Vector2(backgroundToDestroyIndex.x, backgroundToDestroyIndex.y));
         _allBackgrounds.Remove(backgroundToDestroy);
