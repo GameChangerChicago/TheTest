@@ -137,8 +137,8 @@ public class FireFlyBackgroundManager : MonoBehaviour
 
     private void CreateNewBackground(SpriteRenderer lastBackground, CardinalDirections direction)
     {
-        Vector2 lastBackgroundIndex = new Vector2(Vector2.Distance(new Vector2(0, lastBackground.transform.position.x), new Vector2(0, _initalBackgroundPos.x)) / (lastBackground.bounds.extents.x * 2),
-                                          Vector2.Distance(new Vector2(lastBackground.transform.position.y, 0), new Vector2(_initalBackgroundPos.y, 0)) / (lastBackground.bounds.extents.y * 2));
+        Vector2 lastBackgroundIndex = new Vector2(Mathf.Round((lastBackground.transform.position.x -  _initalBackgroundPos.x) / (lastBackground.bounds.extents.x * 2)),
+                                                  Mathf.Round((lastBackground.transform.position.y - _initalBackgroundPos.y) / (lastBackground.bounds.extents.y * 2)));
         GameObject newBackground;
 
         switch (direction)
@@ -148,7 +148,7 @@ public class FireFlyBackgroundManager : MonoBehaviour
                 {
                     newBackground = (GameObject)Instantiate(Background1, new Vector3(lastBackground.transform.position.x, lastBackground.transform.position.y + (lastBackground.bounds.extents.y * 2), 0), Quaternion.identity);
                     _allBackgrounds.Add(newBackground.GetComponent<SpriteRenderer>());
-                    _activeBackgrounds.Add(new Vector2(lastBackgroundIndex.x, lastBackgroundIndex.y + 1));
+                    _activeBackgrounds.Add(new Vector2(Mathf.Round(lastBackgroundIndex.x), Mathf.Round(lastBackgroundIndex.y + 1)));
                 }
                 break;
             case CardinalDirections.DOWN:
@@ -156,8 +156,7 @@ public class FireFlyBackgroundManager : MonoBehaviour
                 {
                     newBackground = (GameObject)Instantiate(Background1, new Vector3(lastBackground.transform.position.x, lastBackground.transform.position.y - (lastBackground.bounds.extents.y * 2), 0), Quaternion.identity);
                     _allBackgrounds.Add(newBackground.GetComponent<SpriteRenderer>());
-                    _activeBackgrounds.Add(new Vector2(lastBackgroundIndex.x, lastBackgroundIndex.y - 1));
-                    Debug.Log(new Vector2(lastBackgroundIndex.x, lastBackgroundIndex.y - 1));
+                    _activeBackgrounds.Add(new Vector2(Mathf.Round(lastBackgroundIndex.x), Mathf.Round(lastBackgroundIndex.y - 1)));
                 }
                 break;
             case CardinalDirections.LEFT:
@@ -165,7 +164,7 @@ public class FireFlyBackgroundManager : MonoBehaviour
                 {
                     newBackground = (GameObject)Instantiate(Background1, new Vector3(lastBackground.transform.position.x - (lastBackground.bounds.extents.x * 2), lastBackground.transform.position.y, 0), Quaternion.identity);
                     _allBackgrounds.Add(newBackground.GetComponent<SpriteRenderer>());
-                    _activeBackgrounds.Add(new Vector2(lastBackgroundIndex.x - 1, lastBackgroundIndex.y));
+                    _activeBackgrounds.Add(new Vector2(Mathf.Round(lastBackgroundIndex.x - 1), Mathf.Round(lastBackgroundIndex.y)));
                 }
                 break;
             case CardinalDirections.RIGHT:
@@ -173,7 +172,7 @@ public class FireFlyBackgroundManager : MonoBehaviour
                 {
                     newBackground = (GameObject)Instantiate(Background1, new Vector3(lastBackground.transform.position.x + (lastBackground.bounds.extents.x * 2), lastBackground.transform.position.y, 0), Quaternion.identity);
                     _allBackgrounds.Add(newBackground.GetComponent<SpriteRenderer>());
-                    _activeBackgrounds.Add(new Vector2(lastBackgroundIndex.x + 1, lastBackgroundIndex.y));
+                    _activeBackgrounds.Add(new Vector2(Mathf.Round(lastBackgroundIndex.x + 1), Mathf.Round(lastBackgroundIndex.y)));
                 }
                 break;
             default:
@@ -186,7 +185,7 @@ public class FireFlyBackgroundManager : MonoBehaviour
         Vector2 backgroundToDestroyIndex = new Vector2(Mathf.Round((backgroundToDestroy.transform.position.x - _initalBackgroundPos.x) / (backgroundToDestroy.bounds.extents.x * 2)),
                                                        Mathf.Round((backgroundToDestroy.transform.position.y - _initalBackgroundPos.y) / (backgroundToDestroy.bounds.extents.y * 2)));
                                                        
-        _activeBackgrounds.Remove(new Vector2(backgroundToDestroyIndex.x, backgroundToDestroyIndex.y));
+        _activeBackgrounds.Remove(backgroundToDestroyIndex);
         _allBackgrounds.Remove(backgroundToDestroy);
         GameObject.Destroy(backgroundToDestroy.gameObject);
     }
