@@ -3,6 +3,7 @@ using System.Collections;
 
 public class FireFlyController : MonoBehaviour
 {
+    public BoxCollider2D MyInstantiator;
     private Rigidbody2D _myRigidbody,
                         _playerRigidbody;
     private LightController _myLight,

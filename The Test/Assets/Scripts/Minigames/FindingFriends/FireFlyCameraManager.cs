@@ -4,11 +4,13 @@ using System.Collections;
 public class FireFlyCameraManager : MonoBehaviour
 {
     private Camera _secondaryCamera;
+    private BoxCollider2D _detectionBox;
     private float _goalSize;
 
     void Start()
     {
         _goalSize = Camera.main.orthographicSize;
+        _detectionBox = this.GetComponent<BoxCollider2D>();
         _secondaryCamera = this.GetComponentInChildren<Camera>();
     }
 
@@ -33,6 +35,8 @@ public class FireFlyCameraManager : MonoBehaviour
     
     public void IncreaseSize()
     {
+        float preGoalSize = _goalSize;
         _goalSize += 0.3f;
+        _detectionBox.size = new Vector2(_detectionBox.size.x * (_goalSize / preGoalSize), _detectionBox.size.y * (_goalSize / preGoalSize));
     }
 }
