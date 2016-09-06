@@ -56,6 +56,7 @@ public class PlayerFireFlyController : MonoBehaviour
     {
         if (col.tag == "Impassable")
         {
+            Debug.Log(this.gameObject.name);
             _playerRigidbody.velocity = new Vector2(-_playerRigidbody.velocity.x * 1.5f, -_playerRigidbody.velocity.y * 1.5f);
             _colliding = true;
             _hasControl = false;

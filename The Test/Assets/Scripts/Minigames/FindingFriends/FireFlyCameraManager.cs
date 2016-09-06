@@ -3,6 +3,7 @@ using System.Collections;
 
 public class FireFlyCameraManager : MonoBehaviour
 {
+    private GameObject _player;
     private Camera _secondaryCamera;
     private BoxCollider2D _detectionBox;
     private float _goalSize;
@@ -12,6 +13,7 @@ public class FireFlyCameraManager : MonoBehaviour
         _goalSize = Camera.main.orthographicSize;
         _detectionBox = this.GetComponent<BoxCollider2D>();
         _secondaryCamera = this.GetComponentInChildren<Camera>();
+        _player = GameObject.Find("Player");
     }
 
     void Update()
@@ -31,6 +33,7 @@ public class FireFlyCameraManager : MonoBehaviour
             Camera.main.orthographicSize = _goalSize;
             _secondaryCamera.orthographicSize = _goalSize;
         }
+        this.transform.position = new Vector3(_player.transform.position.x, _player.transform.position.y, this.transform.position.z);
     }
     
     public void IncreaseSize()
