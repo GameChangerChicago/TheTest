@@ -58,8 +58,7 @@ public class SubController : MonoBehaviour
                     _lastPos;
     private float _currentXTarget,
                   _timer;
-    private bool _moving,
-                 _movingLateral;
+    private bool _moving;
     
     void Start()
     {
@@ -121,8 +120,6 @@ public class SubController : MonoBehaviour
         //This manages the lateral movement of the submarine
         if (this.transform.position.x != _currentXTarget)
         {
-            _movingLateral = true;
-
             if (this.transform.position.x > _currentXTarget + 0.5f)
             {
                 if (_deltaDistance.x < MaxLateralSpeed)
@@ -151,8 +148,6 @@ public class SubController : MonoBehaviour
                     this.transform.position = new Vector2(_initialPos.x + RightMoveDistance, this.transform.position.y);
                 if (currentSubmarineState == SubmarineStates.MIDDLEROW)
                     this.transform.position = new Vector2(_initialPos.x, this.transform.position.y);
-
-                _movingLateral = false;
             }
         }
     }

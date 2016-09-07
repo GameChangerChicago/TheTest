@@ -10,7 +10,11 @@ public class GameManager : MonoBehaviour
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
                       CurrentConvoIndex;
-    
+
+    public SpriteRenderer FadeMask;
+    public int MiniGameTimer;
+    public bool GameOn;
+
     void Awake()
     {
         #region DeviceResolution
@@ -58,10 +62,74 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if(GameOn)
+        {
+            MiniGameTimer += Mathf.RoundToInt(Time.deltaTime);
+            string currentSceneName = SceneManager.GetActiveScene().name;
+
+            switch(currentSceneName)
+            {
+                case "Prioritizing":
+                    if(MiniGameTimer > 29)
+                    {
+                        FadeHandler(false, "RoomEscape");
+                    }
+                    break;
+                case "RoomEscape":
+                    if (MiniGameTimer > 29)
+                    {
+                        FadeHandler(false, "Irritation");
+                    }
+                    break;
+                case "Irritation":
+                    if (MiniGameTimer > 29)
+                    {
+                        FadeHandler(false, "FindingFriends");
+                    }
+                    break;
+                case "FindingFriends":
+                    if (MiniGameTimer > 29)
+                    {
+                        FadeHandler(false, "Frame");
+                    }
+                    break;
+                default:
+                    Debug.Log("This scene doesn't have a timer.");
+                    break;
+            }
+        }
+    }
+
     //This is a hackey method we will use to end the game simply for SAT purposes.
     public void HACKENDGAME()
     {
         SceneManager.LoadScene("YouGotTested");
         CurrentConvoIndex = 0;
+    }
+
+    private void FadeHandler(bool fadingIn, string SceneToLoad)
+    {
+        if (fadingIn)
+        {
+            if (FadeMask != null)
+            {
+                FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, FadeMask.color.a - (2 * Time.deltaTime));
+                if (FadeMask.color.a < 0.1f)
+                    FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, 0);
+            }
+            else
+                SceneManager.LoadScene(SceneToLoad);
+        }
+        else
+        {
+            if (FadeMask != null)
+            {
+                FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, FadeMask.color.a + (2 * Time.deltaTime));
+                if (FadeMask.color.a > 0.9f)
+                    SceneManager.LoadScene(SceneToLoad);
+            }
+        }
     }
 }

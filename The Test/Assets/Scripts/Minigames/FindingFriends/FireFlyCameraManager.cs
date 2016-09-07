@@ -12,7 +12,7 @@ public class FireFlyCameraManager : MonoBehaviour
     {
         _goalSize = Camera.main.orthographicSize;
         _detectionBox = this.GetComponent<BoxCollider2D>();
-        _secondaryCamera = this.GetComponentInChildren<Camera>();
+        _secondaryCamera = GameObject.Find("SecondaryCamera").GetComponent<Camera>();
         _player = GameObject.Find("Player");
     }
 
@@ -22,6 +22,7 @@ public class FireFlyCameraManager : MonoBehaviour
         {
             Camera.main.orthographicSize += Time.deltaTime * 0.5f;
             _secondaryCamera.orthographicSize += Time.deltaTime * 0.5f;
+            Debug.Log(_secondaryCamera.name);
         }
         else if(_secondaryCamera.orthographicSize > _goalSize + 0.1f)
         {

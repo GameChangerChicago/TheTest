@@ -29,7 +29,7 @@ public class CollectablesManager : MonoBehaviour
 
     void Start()
     {
-        //_bloom = GameObject.Find("Bloom").transform;
+        _bloom = GameObject.Find("Bloom").transform;
     }
 
     void Update()

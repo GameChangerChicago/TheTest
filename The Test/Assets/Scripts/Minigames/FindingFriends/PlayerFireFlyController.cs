@@ -44,7 +44,7 @@ public class PlayerFireFlyController : MonoBehaviour
 
     private void PlayerMovement()
     {
-        _playerRigidbody.velocity = new Vector2((_targetPosition.x - _playerRigidbody.position.x) * 25 * Time.deltaTime, (_targetPosition.y - _playerRigidbody.position.y) * 25 * Time.deltaTime);
+        _playerRigidbody.velocity = new Vector2((_targetPosition.x - _playerRigidbody.position.x) * 50 * Time.deltaTime, (_targetPosition.y - _playerRigidbody.position.y) * 25 * Time.deltaTime);
 
         if (Vector2.Distance(_playerRigidbody.position, _targetPosition) < 0.5f)
         {
