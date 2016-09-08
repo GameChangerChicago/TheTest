@@ -27,11 +27,6 @@ public class CollectablesManager : MonoBehaviour
     private Transform _bloom;
     private bool _gemCollected;
 
-    void Start()
-    {
-        _bloom = GameObject.Find("Bloom").transform;
-    }
-
     void Update()
     {
         if(_coinsToMove.Count > 0)
@@ -89,5 +84,6 @@ public class CollectablesManager : MonoBehaviour
     public void GemCollected(GameObject gem)
     {
         _gemCollected = true;
+        _bloom = GameObject.Find("Bloom").transform;
     }
 }

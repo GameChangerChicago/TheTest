@@ -50,6 +50,7 @@ public class SubController : MonoBehaviour
     }
     private SubmarineStates _currentSubmarineState = SubmarineStates.MIDDLEROW;
     private SubmarineStates _lastSubmarineState;
+    private GameManager _theGameManager;
     private CollectablesManager _theCollectablesManager;
     private SpriteRenderer _myRenderer;
     private Vector2 _initialPos,
@@ -65,31 +66,31 @@ public class SubController : MonoBehaviour
         //Setting inital x targets for left, right, and middle positions
         _initialPos = this.transform.position;
 
+        _theGameManager = FindObjectOfType<GameManager>();
         _myRigidbody = GetComponent<Rigidbody2D>();
         _cameraRigidbody = Camera.main.GetComponent<Rigidbody2D>();
         _myRenderer = GetComponentInChildren<SpriteRenderer>();
         _theCollectablesManager = FindObjectOfType<CollectablesManager>();
-        _moving = true;
     }
     
     void Update()
     {
-        if (_moving)
+        if (_theGameManager.GameOn)
         {
             MovementHandler();
             RotatationHandler();
-            _timer += Time.deltaTime;
-            int timerInt = (int)_timer;
+            //_timer += Time.deltaTime;
+            //int timerInt = (int)_timer;
 
-            string timerString = (TimerLength - timerInt).ToString();
+            //string timerString = (TimerLength - timerInt).ToString();
 
-            if (TimerLength - timerInt > 0)
-                Timer.text = timerString;
-            else
-            {
-                Timer.text = "0";
-                FadeOut();
-            }
+            //if (TimerLength - timerInt > 0)
+            //    Timer.text = timerString;
+            //else
+            //{
+            //    Timer.text = "0";
+            //    FadeOut();
+            //}
         }
 
         //Disabled for actual builds
@@ -221,7 +222,7 @@ public class SubController : MonoBehaviour
         if(col.tag == "Gem")
         {
             _theCollectablesManager.GemCollected(col.gameObject);
-            _moving = false;
+            _theGameManager.GameOn = false;
         }
     }
 }

@@ -11,9 +11,16 @@ public class GameManager : MonoBehaviour
     public static int CurrentMapPositionIndex,
                       CurrentConvoIndex;
 
+    public GameObject CollectDiamond,
+                      GetBone,
+                      ProtectCookie,
+                      FindFF;
     public SpriteRenderer FadeMask;
     public int MiniGameTimer;
     public bool GameOn;
+
+    private SpriteRenderer _currentInstructions;
+    private bool _removeInstructions;
 
     void Awake()
     {
@@ -47,11 +54,14 @@ public class GameManager : MonoBehaviour
         CurrentConvoIndex = 1;
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
+            GameObject instructions = Instantiate(CollectDiamond, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
+            _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+
             if (CurrentConvoIndex == 1)
             {
                 FindObjectOfType<BackgroundManager>().AddNewSegment("Level 1-1");
             }
-            if(CurrentConvoIndex == 2)
+            if (CurrentConvoIndex == 2)
             {
                 FindObjectOfType<BackgroundManager>().AddNewSegment("Level 2-1");
             }
@@ -60,19 +70,35 @@ public class GameManager : MonoBehaviour
                 FindObjectOfType<BackgroundManager>().AddNewSegment("Level 3-1");
             }
         }
+        if (SceneManager.GetActiveScene().name == "RoomEscape")
+        {
+            GameObject instructions = Instantiate(GetBone, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
+            _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+        }
+        if (SceneManager.GetActiveScene().name == "Irritation")
+        {
+            GameObject instructions = Instantiate(ProtectCookie, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
+            _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+        }
+        if (SceneManager.GetActiveScene().name == "FindingFriends")
+        {
+            GameObject instructions = Instantiate(FindFF, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
+            _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+        }
     }
 
     void Update()
     {
-        if(GameOn)
+        if (GameOn)
         {
             MiniGameTimer += Mathf.RoundToInt(Time.deltaTime);
             string currentSceneName = SceneManager.GetActiveScene().name;
 
-            switch(currentSceneName)
+            switch (currentSceneName)
             {
                 case "Prioritizing":
-                    if(MiniGameTimer > 29)
+                    Debug.Log(MiniGameTimer);
+                    if (MiniGameTimer > 29)
                     {
                         FadeHandler(false, "RoomEscape");
                     }
@@ -100,6 +126,15 @@ public class GameManager : MonoBehaviour
                     break;
             }
         }
+        else if (Input.GetKeyDown(KeyCode.Mouse0) && _currentInstructions)
+        {
+            _removeInstructions = true;
+        }
+
+        if (_removeInstructions)
+        {
+            FadeHandler(true, "");
+        }
     }
 
     //This is a hackey method we will use to end the game simply for SAT purposes.
@@ -113,14 +148,16 @@ public class GameManager : MonoBehaviour
     {
         if (fadingIn)
         {
-            if (FadeMask != null)
+            if (_currentInstructions != null)
             {
-                FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, FadeMask.color.a - (2 * Time.deltaTime));
-                if (FadeMask.color.a < 0.1f)
-                    FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, 0);
+                _currentInstructions.color = new Color(_currentInstructions.color.r, _currentInstructions.color.g, _currentInstructions.color.b, _currentInstructions.color.a - (2 * Time.deltaTime));
+                if (_currentInstructions.color.a < 0.1f)
+                {
+                    _currentInstructions.color = new Color(_currentInstructions.color.r, _currentInstructions.color.g, _currentInstructions.color.b, 0);
+                    _currentInstructions = null;
+                    _removeInstructions = false;
+                }
             }
-            else
-                SceneManager.LoadScene(SceneToLoad);
         }
         else
         {
@@ -130,6 +167,8 @@ public class GameManager : MonoBehaviour
                 if (FadeMask.color.a > 0.9f)
                     SceneManager.LoadScene(SceneToLoad);
             }
+            else
+                SceneManager.LoadScene(SceneToLoad);
         }
     }
 }
