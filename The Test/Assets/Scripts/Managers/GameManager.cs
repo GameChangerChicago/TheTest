@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
                       CurrentConvoIndex;
+    public static bool CharacterSelected;
 
     public GameObject CollectDiamond,
                       GetBone,
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
     public int MiniGameTimer;
     public bool GameOn;
 
+    private MeshRenderer _fireflyLightRenderer;
+    private LightController _playerLightController;
     private SpriteRenderer _currentInstructions;
     private bool _removeInstructions;
 
@@ -51,7 +54,6 @@ public class GameManager : MonoBehaviour
         }
         #endregion
 
-        CurrentConvoIndex = 1;
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
             GameObject instructions = Instantiate(CollectDiamond, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
@@ -74,6 +76,34 @@ public class GameManager : MonoBehaviour
         {
             GameObject instructions = Instantiate(GetBone, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+            GameObject currentRELevel;
+
+            if (GameManager.CurrentCharacterType == CharacterType.MARLON)
+            {
+                if (CurrentConvoIndex == 0)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 2);
+                else if (CurrentConvoIndex == 1)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 3);
+                else if (CurrentConvoIndex == 2)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
+
+            }
+            if(GameManager.CurrentCharacterType == CharacterType.ISAAC)
+            {
+                if (CurrentConvoIndex == 0)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 3);
+                else if (CurrentConvoIndex == 1)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 4);
+                else if (CurrentConvoIndex == 2)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
+            }
+            if (GameManager.CurrentCharacterType == CharacterType.FELIX)
+            {
+                if (CurrentConvoIndex == 4)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 5);
+                else if (CurrentConvoIndex == 5)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
+            }
         }
         if (SceneManager.GetActiveScene().name == "Irritation")
         {
@@ -82,8 +112,23 @@ public class GameManager : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "FindingFriends")
         {
+            _fireflyLightRenderer = GameObject.Find("Player").GetComponentInChildren<MeshRenderer>();
+            _playerLightController = _fireflyLightRenderer.gameObject.GetComponent<LightController>();
+            _fireflyLightRenderer.enabled = false;
+            _playerLightController.enabled = false;
             GameObject instructions = Instantiate(FindFF, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
+        }
+    }
+
+    void Start()
+    {
+        if (SceneManager.GetActiveScene().name == "TempFrame")
+        {
+            if (CharacterSelected)
+            {
+                GameObject.Find("SimpleFrame").SetActive(false);
+            }
         }
     }
 
@@ -100,25 +145,40 @@ public class GameManager : MonoBehaviour
                     Debug.Log(MiniGameTimer);
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "RoomEscape");
+                        FadeHandler(false, "TempFrame");
                     }
                     break;
                 case "RoomEscape":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "Irritation");
+                        if (GameManager.CurrentCharacterType == CharacterType.ISAAC && GameManager.CurrentConvoIndex == 2)
+                        {
+                            FadeHandler(false, "FindingFriends");
+                        }
+                        else if (GameManager.CurrentCharacterType == CharacterType.FELIX && GameManager.CurrentConvoIndex == 4)
+                        {
+                            FadeHandler(false, "Irritation");
+                        }
+                        else
+                        {
+                            FadeHandler(false, "TempFrame");
+                        }
                     }
                     break;
                 case "Irritation":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "FindingFriends");
+                        FadeHandler(false, "TempFrame");
                     }
                     break;
                 case "FindingFriends":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "Frame");
+                        if(GameManager.CurrentCharacterType == CharacterType.ISAAC && GameManager.CurrentConvoIndex == 3)
+                        {
+                            FadeHandler(false, "Irritation");
+                        }
+                        FadeHandler(false, "TempFrame");
                     }
                     break;
                 default:
@@ -156,6 +216,13 @@ public class GameManager : MonoBehaviour
                     _currentInstructions.color = new Color(_currentInstructions.color.r, _currentInstructions.color.g, _currentInstructions.color.b, 0);
                     _currentInstructions = null;
                     _removeInstructions = false;
+                    GameOn = true;
+
+                    if(SceneManager.GetActiveScene().name == "FindingFriends")
+                    {
+                        _fireflyLightRenderer.enabled = true;
+                        _playerLightController.enabled = true;
+                    }
                 }
             }
         }

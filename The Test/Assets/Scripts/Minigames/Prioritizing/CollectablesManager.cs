@@ -85,5 +85,15 @@ public class CollectablesManager : MonoBehaviour
     {
         _gemCollected = true;
         _bloom = GameObject.Find("Bloom").transform;
+
+        if(GameManager.CurrentCharacterType.ToString() == "Felix")
+        {
+            GameManager.CurrentConvoIndex = 4;
+        }
+        else if(GameManager.CurrentCharacterType.ToString() == "Marlon")
+        {
+            GameManager.CharacterSelected = false;
+            SceneManager.LoadScene("TempFrame");
+        }
     }
 }

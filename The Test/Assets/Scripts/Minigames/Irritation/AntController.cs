@@ -44,15 +44,18 @@ public class AntController : MonoBehaviour
     }
     private bool _dragging;
 
+    private GameManager _theGameManager;
     private Animator _myAnimator;
     private Rigidbody2D _myRigidBody;
     private CookieManager _theCookieManager;
     private Transform _cookie;
     private Vector2 _lastPosition,
                     _deltaPosition;
+    private bool _instructionsDone;
 
     void Start()
     {
+        _theGameManager = FindObjectOfType<GameManager>();
         _myAnimator = this.GetComponent<Animator>();
         _myRigidBody = this.GetComponent<Rigidbody2D>();
         _theCookieManager = FindObjectOfType<CookieManager>();
@@ -66,6 +69,7 @@ public class AntController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             dragging = Physics2D.OverlapPoint(Camera.main.ScreenToWorldPoint(Input.mousePosition), LayerMask.GetMask("Ant")) == this.GetComponent<Collider2D>();
+            _instructionsDone = true;
         }
 
         if (Input.GetKeyUp(KeyCode.Mouse0))
@@ -78,20 +82,23 @@ public class AntController : MonoBehaviour
             _myRigidBody.drag += Time.deltaTime * 5;
         }
 
-        if(dragging)
+        if (_theGameManager.GameOn)
         {
-            Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            this.transform.position = new Vector3(currentPosition.x, currentPosition.y, this.transform.position.z);
-            _deltaPosition = new Vector2((currentPosition.x - _lastPosition.x) * Time.deltaTime, (currentPosition.y - _lastPosition.y) * Time.deltaTime);
-            _lastPosition = currentPosition;
-        }
-        else if(!eating)
-        {
-            MoveTowardCookie();
-        }
-        else
-        {
-            EatingHandler();
+            if (dragging)
+            {
+                Vector2 currentPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                this.transform.position = new Vector3(currentPosition.x, currentPosition.y, this.transform.position.z);
+                _deltaPosition = new Vector2((currentPosition.x - _lastPosition.x) * Time.deltaTime, (currentPosition.y - _lastPosition.y) * Time.deltaTime);
+                _lastPosition = currentPosition;
+            }
+            else if (!eating)
+            {
+                MoveTowardCookie();
+            }
+            else
+            {
+                EatingHandler();
+            }
         }
     }
 

@@ -104,15 +104,12 @@ public class BackgroundManager : MonoBehaviour
 
     public void AddNewSegment(string segmentName)
     {
-        float newSegPosition;
-
         if (_currentSegment)
         {
             _lastSegment = _currentSegment;
             _lastTopSegPos = _currentTopSegPos;
         }
 
-        Debug.Log(segmentName);
         _currentSegment = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/" + segmentName);
 
         if (_currentSegment)

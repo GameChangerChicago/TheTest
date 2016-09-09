@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class DialogManager : MonoBehaviour
 {
@@ -36,16 +36,16 @@ public class DialogManager : MonoBehaviour
 
     void Update()
     {
-        
-        if(Input.GetKeyDown(KeyCode.Mouse0))// && _dialogActive) This should be added back in once we're done with the SAT dialog test
+        if(Input.GetKeyDown(KeyCode.Mouse0) && _dialogActive)
         {
             if (!_dialogFinished)
                 LoadPieceOfDialog();
             else
             {
-                LoadMinigame();
+                _dialogActive = false;
                 ClearDialogContainer();
                 _dialogFinished = false;
+                LoadMinigame();
             }
         }
     }
@@ -54,15 +54,57 @@ public class DialogManager : MonoBehaviour
     {
         switch (GameManager.CurrentCharacterType)
         {
-            case CharacterType.Felix:
+            case CharacterType.FELIX:
                 if (currentConvoIndex <= 3)
                 {
                     SceneManager.LoadScene("Prioritizing");
                 }
+                else if(currentConvoIndex <= 5)
+                {
+                    SceneManager.LoadScene("RoomEscape");
+                }
+                else if(currentConvoIndex == 6)
+                {
+                    SceneManager.LoadScene("Irritation");
+                }
+                else if(currentConvoIndex == 7)
+                {
+                    GameManager.CharacterSelected = false;
+                    SceneManager.LoadScene("TempFrame");
+                }
                 break;
-            case CharacterType.Isaac:
+            case CharacterType.ISAAC:
+                if(currentConvoIndex <= 2)
+                {
+                    SceneManager.LoadScene("RoomEscape");
+                }
+                else if(currentConvoIndex == 3)
+                {
+                    SceneManager.LoadScene("FindingFriends");
+                }
+                else if(currentConvoIndex == 4)
+                {
+                    SceneManager.LoadScene("Irritation");
+                }
+                else if(currentConvoIndex == 5)
+                {
+                    GameManager.CharacterSelected = false;
+                    SceneManager.LoadScene("TempFrame");
+                }
                 break;
-            case CharacterType.Marlon:
+            case CharacterType.MARLON:
+                if (currentConvoIndex <= 2)
+                {
+                    SceneManager.LoadScene("RoomEscape");
+                }
+                else if(currentConvoIndex <= 4)
+                {
+                    SceneManager.LoadScene("FindingFriends");
+                }
+                else if(currentConvoIndex < 5)
+                {
+                    SceneManager.LoadScene("Prioritizing");
+                }
                 break;
             default:
                 Debug.LogWarning("Did you add a new character type? You'll have to update a lot of switch statements, you know...");
@@ -124,7 +166,6 @@ public class DialogManager : MonoBehaviour
         else //We let the dialog manager know the dialog is finished and tick forward the index of which convo you're on.
         {
             _dialogFinished = true;
-            _dialogActive = false;
             currentConvoIndex++;
         }
     }
