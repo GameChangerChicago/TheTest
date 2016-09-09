@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
                       ProtectCookie,
                       FindFF;
     public SpriteRenderer FadeMask;
-    public int MiniGameTimer;
+    public float MiniGameTimer;
     public bool GameOn;
 
     private MeshRenderer _fireflyLightRenderer;
@@ -136,13 +136,12 @@ public class GameManager : MonoBehaviour
     {
         if (GameOn)
         {
-            MiniGameTimer += Mathf.RoundToInt(Time.deltaTime);
+            MiniGameTimer += Time.deltaTime;
             string currentSceneName = SceneManager.GetActiveScene().name;
 
             switch (currentSceneName)
             {
                 case "Prioritizing":
-                    Debug.Log(MiniGameTimer);
                     if (MiniGameTimer > 29)
                     {
                         FadeHandler(false, "TempFrame");
