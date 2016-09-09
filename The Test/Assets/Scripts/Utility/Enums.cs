@@ -3,9 +3,9 @@ using System.Collections;
 
 public enum CharacterType
 {
-    FELIX,
-    ISAAC,
-    MARLON
+    Felix,
+    Isaac,
+    Marlon
 }
 
 public enum FrameType

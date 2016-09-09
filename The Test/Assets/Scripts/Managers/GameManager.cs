@@ -76,34 +76,34 @@ public class GameManager : MonoBehaviour
         {
             GameObject instructions = Instantiate(GetBone, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
-            GameObject currentRELevel;
+            GameObject currentRELevel = null;
 
-            if (GameManager.CurrentCharacterType == CharacterType.MARLON)
+            if (CurrentCharacterType == CharacterType.Marlon)
             {
                 if (CurrentConvoIndex == 0)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 2);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 2);
                 else if (CurrentConvoIndex == 1)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 3);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 3);
                 else if (CurrentConvoIndex == 2)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
-
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
-            if(GameManager.CurrentCharacterType == CharacterType.ISAAC)
+            if(CurrentCharacterType == CharacterType.Isaac)
             {
                 if (CurrentConvoIndex == 0)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 3);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 3);
                 else if (CurrentConvoIndex == 1)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 4);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 4);
                 else if (CurrentConvoIndex == 2)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
-            if (GameManager.CurrentCharacterType == CharacterType.FELIX)
+            else
             {
                 if (CurrentConvoIndex == 4)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 5);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 5);
                 else if (CurrentConvoIndex == 5)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level" + 1);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
+            Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
         }
         if (SceneManager.GetActiveScene().name == "Irritation")
         {
@@ -151,11 +151,11 @@ public class GameManager : MonoBehaviour
                 case "RoomEscape":
                     if (MiniGameTimer > 29)
                     {
-                        if (GameManager.CurrentCharacterType == CharacterType.ISAAC && GameManager.CurrentConvoIndex == 2)
+                        if (GameManager.CurrentCharacterType == CharacterType.Isaac && GameManager.CurrentConvoIndex == 2)
                         {
                             FadeHandler(false, "FindingFriends");
                         }
-                        else if (GameManager.CurrentCharacterType == CharacterType.FELIX && GameManager.CurrentConvoIndex == 4)
+                        else if (GameManager.CurrentCharacterType == CharacterType.Felix && GameManager.CurrentConvoIndex == 4)
                         {
                             FadeHandler(false, "Irritation");
                         }
@@ -174,7 +174,7 @@ public class GameManager : MonoBehaviour
                 case "FindingFriends":
                     if (MiniGameTimer > 29)
                     {
-                        if(GameManager.CurrentCharacterType == CharacterType.ISAAC && GameManager.CurrentConvoIndex == 3)
+                        if(GameManager.CurrentCharacterType == CharacterType.Isaac && GameManager.CurrentConvoIndex == 3)
                         {
                             FadeHandler(false, "Irritation");
                         }

@@ -155,22 +155,25 @@ public class RoomObjectController : MonoBehaviour
 
     public void LoseControl()
     {
-        ObjectToMove.UpdatePosition();
+        if (ObjectToMove)
+            ObjectToMove.UpdatePosition();
+
         _snappingToPosition = true;
 
         if (ObjectToMove.PlayerObject)
             ObjectToMove.GetComponent<Animator>().SetBool("Walking", false);
     }
 
+    //HACK: THIS SHOULD BE HANDLED BY THE GAMEMANAGER!!!
     private void FadeOut()
     {
         if (CameraMask != null)
         {
             CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
             if (CameraMask.color.a > 0.9f)
-                SceneManager.LoadScene("Frame");
+                SceneManager.LoadScene("OldFrame");
         }
         else
-            SceneManager.LoadScene("Frame");
+            SceneManager.LoadScene("OldFrame");
     }
 }

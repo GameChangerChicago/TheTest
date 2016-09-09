@@ -54,7 +54,7 @@ public class DialogManager : MonoBehaviour
     {
         switch (GameManager.CurrentCharacterType)
         {
-            case CharacterType.FELIX:
+            case CharacterType.Felix:
                 if (currentConvoIndex <= 3)
                 {
                     SceneManager.LoadScene("Prioritizing");
@@ -73,7 +73,7 @@ public class DialogManager : MonoBehaviour
                     SceneManager.LoadScene("TempFrame");
                 }
                 break;
-            case CharacterType.ISAAC:
+            case CharacterType.Isaac:
                 if(currentConvoIndex <= 2)
                 {
                     SceneManager.LoadScene("RoomEscape");
@@ -92,7 +92,7 @@ public class DialogManager : MonoBehaviour
                     SceneManager.LoadScene("TempFrame");
                 }
                 break;
-            case CharacterType.MARLON:
+            case CharacterType.Marlon:
                 if (currentConvoIndex <= 2)
                 {
                     SceneManager.LoadScene("RoomEscape");
@@ -122,9 +122,11 @@ public class DialogManager : MonoBehaviour
 
         //Creates a gameobject by pulling the correct dialog prefab from the resources folder
         GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
+        Debug.Log("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
         bool lastPieceOfDialog = false;
         if(!pieceOfDialogToLoad) //The final piece of dialog will be marked with an 'f' this bit lets us know when we're dealing with the last dialog piece
         {
+            
             pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex + "f");
             lastPieceOfDialog = true;
         }

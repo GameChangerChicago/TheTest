@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class SimpleFrameController : MonoBehaviour
@@ -19,15 +20,15 @@ public class SimpleFrameController : MonoBehaviour
     {
         if(characterName == "Marlon")
         {
-            GameManager.CurrentCharacterType = CharacterType.MARLON;
+            GameManager.CurrentCharacterType = CharacterType.Marlon;
         }
         if (characterName == "Felix")
         {
-            GameManager.CurrentCharacterType = CharacterType.FELIX;
+            GameManager.CurrentCharacterType = CharacterType.Felix;
         }
         if (characterName == "Isaac")
         {
-            GameManager.CurrentCharacterType = CharacterType.ISAAC;
+            GameManager.CurrentCharacterType = CharacterType.Isaac;
         }
         GameManager.CharacterSelected = true;
         CharacterNameDisplay.text = characterName;
@@ -35,7 +36,14 @@ public class SimpleFrameController : MonoBehaviour
 
     public void ContinueToDialog()
     {
-        SimpleFrame.SetActive(false);
-        _theDialogManager.LoadPieceOfDialog();
+        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+        {
+            SceneManager.LoadScene("RoomEscape");
+        }
+        else
+        {
+            SimpleFrame.SetActive(false);
+            _theDialogManager.LoadPieceOfDialog();
+        }
     }
 }
