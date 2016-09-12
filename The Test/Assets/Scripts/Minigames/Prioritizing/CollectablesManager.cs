@@ -24,8 +24,14 @@ public class CollectablesManager : MonoBehaviour
 
     private List<Transform> _coinsToMove = new List<Transform>();
     private List<float> _initalDistances = new List<float>();
+    private GameManager _theGameManager;
     private Transform _bloom;
     private bool _gemCollected;
+
+    void Start()
+    {
+        _theGameManager = FindObjectOfType<GameManager>();
+    }
 
     void Update()
     {
@@ -64,12 +70,13 @@ public class CollectablesManager : MonoBehaviour
 
     private void GameEndHandler()
     {
-        if (_bloom.localScale.x < 75)
+        if (_bloom.localScale.x < 80)
             _bloom.localScale = new Vector3(_bloom.localScale.x + ((25 + _bloom.localScale.x) * Time.deltaTime), _bloom.localScale.y + ((25 + _bloom.localScale.y) * Time.deltaTime), _bloom.localScale.z);
         else
         {
             //SceneManager.LoadScene("Frame");
-            FindObjectOfType<GameManager>().HACKENDGAME();
+            //FindObjectOfType<GameManager>().HACKENDGAME();
+            _theGameManager.FadeHandler(false, "TempFrame");
         }
 
     }

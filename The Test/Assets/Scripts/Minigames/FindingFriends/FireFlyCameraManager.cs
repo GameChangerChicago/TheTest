@@ -22,7 +22,6 @@ public class FireFlyCameraManager : MonoBehaviour
         {
             Camera.main.orthographicSize += Time.deltaTime * 0.5f;
             _secondaryCamera.orthographicSize += Time.deltaTime * 0.5f;
-            Debug.Log(_secondaryCamera.name);
         }
         else if(_secondaryCamera.orthographicSize > _goalSize + 0.1f)
         {

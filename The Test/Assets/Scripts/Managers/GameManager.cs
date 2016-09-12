@@ -59,17 +59,31 @@ public class GameManager : MonoBehaviour
             GameObject instructions = Instantiate(CollectDiamond, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
 
-            if (CurrentConvoIndex == 1)
+            if (CurrentCharacterType == CharacterType.Felix)
             {
-                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 1-1");
+                if (CurrentConvoIndex == 1)
+                {
+                    FindObjectOfType<BackgroundManager>().AddNewSegment("Level 1-1");
+                }
+                if (CurrentConvoIndex == 2)
+                {
+                    FindObjectOfType<BackgroundManager>().AddNewSegment("Level 2-1");
+                }
+                if (CurrentConvoIndex == 3)
+                {
+                    FindObjectOfType<BackgroundManager>().AddNewSegment("Level 3-1");
+                }
             }
-            if (CurrentConvoIndex == 2)
+            if (CurrentCharacterType == CharacterType.Marlon)
             {
-                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 2-1");
-            }
-            if (CurrentConvoIndex == 3)
-            {
-                FindObjectOfType<BackgroundManager>().AddNewSegment("Level 3-1");
+                if (CurrentConvoIndex == 5)
+                {
+                    FindObjectOfType<BackgroundManager>().AddNewSegment("Level 1-1");
+                }
+                else if (CurrentConvoIndex == 6)
+                {
+                    FindObjectOfType<BackgroundManager>().AddNewSegment("Level 3-1");
+                }
             }
         }
         if (SceneManager.GetActiveScene().name == "RoomEscape")
@@ -103,6 +117,7 @@ public class GameManager : MonoBehaviour
                 else if (CurrentConvoIndex == 5)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
+
             Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
         }
         if (SceneManager.GetActiveScene().name == "Irritation")
@@ -196,14 +211,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    //This is a hackey method we will use to end the game simply for SAT purposes.
-    public void HACKENDGAME()
-    {
-        SceneManager.LoadScene("YouGotTested");
-        CurrentConvoIndex = 0;
-    }
-
-    private void FadeHandler(bool fadingIn, string SceneToLoad)
+    public void FadeHandler(bool fadingIn, string SceneToLoad)
     {
         if (fadingIn)
         {

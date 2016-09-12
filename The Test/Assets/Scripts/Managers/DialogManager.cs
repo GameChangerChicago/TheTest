@@ -32,6 +32,11 @@ public class DialogManager : MonoBehaviour
     void Start()
     {
         _initialTopPointPos = DialogContainer.transform.position;
+
+        if(GameManager.CharacterSelected)
+        {
+            LoadPieceOfDialog();
+        }
     }
 
     void Update()
@@ -70,6 +75,7 @@ public class DialogManager : MonoBehaviour
                 else if(currentConvoIndex == 7)
                 {
                     GameManager.CharacterSelected = false;
+                    GameManager.CurrentConvoIndex = 0;
                     SceneManager.LoadScene("TempFrame");
                 }
                 break;
@@ -89,6 +95,7 @@ public class DialogManager : MonoBehaviour
                 else if(currentConvoIndex == 5)
                 {
                     GameManager.CharacterSelected = false;
+                    GameManager.CurrentConvoIndex = 0;
                     SceneManager.LoadScene("TempFrame");
                 }
                 break;
@@ -101,7 +108,7 @@ public class DialogManager : MonoBehaviour
                 {
                     SceneManager.LoadScene("FindingFriends");
                 }
-                else if(currentConvoIndex < 5)
+                else if(currentConvoIndex <= 5)
                 {
                     SceneManager.LoadScene("Prioritizing");
                 }
@@ -122,7 +129,6 @@ public class DialogManager : MonoBehaviour
 
         //Creates a gameobject by pulling the correct dialog prefab from the resources folder
         GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
-        Debug.Log("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
         bool lastPieceOfDialog = false;
         if(!pieceOfDialogToLoad) //The final piece of dialog will be marked with an 'f' this bit lets us know when we're dealing with the last dialog piece
         {

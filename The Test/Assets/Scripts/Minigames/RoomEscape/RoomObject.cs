@@ -28,7 +28,7 @@ public class RoomObject : MonoBehaviour
         {
             SpriteRenderer Floor = GameObject.Find("Grid").GetComponent<SpriteRenderer>();
 
-            _singleSquareDimensions = new Vector2((Floor.sprite.bounds.max.x - Floor.sprite.bounds.min.x) / _myController.CurrentGridCount.x, (Floor.sprite.bounds.max.y - Floor.sprite.bounds.min.y) / _myController.CurrentGridCount.y);
+            _singleSquareDimensions = new Vector2((Floor.bounds.max.x - Floor.bounds.min.x) / _myController.CurrentGridCount.x, (Floor.bounds.max.y - Floor.bounds.min.y) / _myController.CurrentGridCount.y);
         }
         _gridPositions.Clear();
 

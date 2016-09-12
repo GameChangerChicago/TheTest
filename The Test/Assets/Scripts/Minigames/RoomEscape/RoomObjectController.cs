@@ -171,9 +171,9 @@ public class RoomObjectController : MonoBehaviour
         {
             CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
             if (CameraMask.color.a > 0.9f)
-                SceneManager.LoadScene("OldFrame");
+                SceneManager.LoadScene("TempFrame");
         }
         else
-            SceneManager.LoadScene("OldFrame");
+            SceneManager.LoadScene("TempFrame");
     }
 }
