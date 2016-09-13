@@ -116,6 +116,8 @@ public class GameManager : MonoBehaviour
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 5);
                 else if (CurrentConvoIndex == 5)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
+                else
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
 
             Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
