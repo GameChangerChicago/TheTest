@@ -142,7 +142,6 @@ public class DialogManager : MonoBehaviour
             _dialogOffset += (pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.y / 2f) / 0.7f;
         else
         {
-            Debug.Log("GameOver");
             return;
         }
 
