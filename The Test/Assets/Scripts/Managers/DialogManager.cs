@@ -55,6 +55,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    //ASHLYN: This method is the one used for loading minigames. It looks at the current character and which convorsation you're on to figure out which scene to load next.
     private void LoadMinigame()
     {
         switch (GameManager.CurrentCharacterType)

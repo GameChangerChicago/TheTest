@@ -116,8 +116,6 @@ public class GameManager : MonoBehaviour
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 5);
                 else if (CurrentConvoIndex == 5)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
-                else
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
 
             Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
@@ -160,6 +158,7 @@ public class GameManager : MonoBehaviour
             MiniGameTimer += Time.deltaTime;
             string currentSceneName = SceneManager.GetActiveScene().name;
 
+            //ASHLYN: This switch is where all of the transitions out of the minigames happen. They are all watching MiniGameTimer and will call FadeHandler to bring up the next scene. Check FadeHandler for more.
             switch (currentSceneName)
             {
                 case "Prioritizing":
@@ -171,6 +170,7 @@ public class GameManager : MonoBehaviour
                 case "RoomEscape":
                     if (MiniGameTimer > 29)
                     {
+                        //ASHLYN: Certain situations require for a new minigame to be loaded rather than the frame. This will be based on which character you've selected and the conversation you had last.
                         if (GameManager.CurrentCharacterType == CharacterType.Isaac && GameManager.CurrentConvoIndex == 2)
                         {
                             FadeHandler(false, "FindingFriends");
@@ -217,6 +217,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    //ASHLYN: This method takes two paramaters: fadingIn determins whether we're fading in on a scene or out of one. Basically use false for changing scenes. You basically wont need to use this method when fadingIn == true.
+    //SceneToLoad is a just a string of the scene you're to load. Long story short: call the method as FadeHandler(false, "NameOfScene");
     public void FadeHandler(bool fadingIn, string SceneToLoad)
     {
         if (fadingIn)

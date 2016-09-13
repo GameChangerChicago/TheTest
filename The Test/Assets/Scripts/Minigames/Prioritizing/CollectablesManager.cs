@@ -68,21 +68,21 @@ public class CollectablesManager : MonoBehaviour
         }
     }
 
+    //ASHLYN: This method handles scene change if you get the diamond in the submarine game.
     private void GameEndHandler()
     {
         if (_bloom.localScale.x < 80)
             _bloom.localScale = new Vector3(_bloom.localScale.x + ((25 + _bloom.localScale.x) * Time.deltaTime), _bloom.localScale.y + ((25 + _bloom.localScale.y) * Time.deltaTime), _bloom.localScale.z);
         else
         {
-            Debug.Log("SUp!?!?");
-            if(GameManager.CurrentCharacterType == CharacterType.Marlon && GameManager.CurrentConvoIndex == 6)
+            //This bit is kinda tricky. Basically in this one situation we want to reset the temp frame. If ever you want to reset the frame (basically, make it so the player can select a character).
+            if (GameManager.CurrentCharacterType == CharacterType.Marlon && GameManager.CurrentConvoIndex == 6)
             {
                 GameManager.CharacterSelected = false;
             }
 
             _theGameManager.FadeHandler(false, "TempFrame");
         }
-
     }
 
     public void CoinCollected(GameObject coin)

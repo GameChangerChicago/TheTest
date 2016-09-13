@@ -10,6 +10,7 @@ public class RoomObjectController : MonoBehaviour
     public Vector2 CurrentGridCount;
     public bool GameOver;
 
+    private GameManager _theGameManager;
     private Vector2 _initialTouchPos,
                     _initialObjectPos,
                     _touchDelta;
@@ -17,7 +18,12 @@ public class RoomObjectController : MonoBehaviour
     private bool _horizontalLock,
                  _verticalLock,
                  _snappingToPosition;
-    
+
+    void Start()
+    {
+        _theGameManager = FindObjectOfType<GameManager>();
+    }
+
     void Update()
     {
         if (_snappingToPosition)
@@ -29,9 +35,10 @@ public class RoomObjectController : MonoBehaviour
             InputManager();
         }
 
-        if(GameOver)
+        //ASHLYN: This method ends the game when you collect the bone.
+        if (GameOver)
         {
-            FadeOut();
+            _theGameManager.FadeHandler(false, "TempFrame");//FadeOut();
         }
     }
 
