@@ -108,7 +108,7 @@ public class DialogManager : MonoBehaviour
                 {
                     SceneManager.LoadScene("FindingFriends");
                 }
-                else if(currentConvoIndex <= 5)
+                else if(currentConvoIndex <= 6)
                 {
                     SceneManager.LoadScene("Prioritizing");
                 }

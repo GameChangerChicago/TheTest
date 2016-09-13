@@ -74,8 +74,12 @@ public class CollectablesManager : MonoBehaviour
             _bloom.localScale = new Vector3(_bloom.localScale.x + ((25 + _bloom.localScale.x) * Time.deltaTime), _bloom.localScale.y + ((25 + _bloom.localScale.y) * Time.deltaTime), _bloom.localScale.z);
         else
         {
-            //SceneManager.LoadScene("Frame");
-            //FindObjectOfType<GameManager>().HACKENDGAME();
+            Debug.Log("SUp!?!?");
+            if(GameManager.CurrentCharacterType == CharacterType.Marlon && GameManager.CurrentConvoIndex == 6)
+            {
+                GameManager.CharacterSelected = false;
+            }
+
             _theGameManager.FadeHandler(false, "TempFrame");
         }
 
@@ -96,11 +100,6 @@ public class CollectablesManager : MonoBehaviour
         if(GameManager.CurrentCharacterType.ToString() == "Felix")
         {
             GameManager.CurrentConvoIndex = 4;
-        }
-        else if(GameManager.CurrentCharacterType.ToString() == "Marlon")
-        {
-            GameManager.CharacterSelected = false;
-            SceneManager.LoadScene("TempFrame");
         }
     }
 }

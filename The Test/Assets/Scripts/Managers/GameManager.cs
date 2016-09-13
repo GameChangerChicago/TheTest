@@ -144,6 +144,10 @@ public class GameManager : MonoBehaviour
             {
                 GameObject.Find("SimpleFrame").SetActive(false);
             }
+            else
+            {
+                CurrentConvoIndex = 0;
+            }
         }
     }
 

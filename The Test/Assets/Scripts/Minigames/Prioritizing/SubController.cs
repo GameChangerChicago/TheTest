@@ -190,23 +190,6 @@ public class SubController : MonoBehaviour
         }
     }
 
-    private void FadeOut()
-    {
-        if(GameManager.CurrentConvoIndex == 4)
-        {
-            GameManager.CurrentConvoIndex = 0;
-        }
-        
-        if (CameraMask != null)
-        {
-            CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
-            if (CameraMask.color.a > 0.9f)
-                SceneManager.LoadScene("Frame");
-        }
-        else
-            SceneManager.LoadScene("Frame");
-    }
-
     void OnTriggerEnter2D(Collider2D col)
     {
         if(col.tag == "Obstacle")
