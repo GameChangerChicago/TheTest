@@ -54,6 +54,15 @@ public class GameManager : MonoBehaviour
         }
         #endregion
 
+        if(SceneManager.GetActiveScene().name == "MapScene")
+        {
+            //GameObject player = Instantiate(the player)
+            foreach(BuildingFadeManager bfm in FindObjectsOfType<BuildingFadeManager>())
+            {
+                //bfm.Player = player
+            }
+        }
+
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
             GameObject instructions = Instantiate(CollectDiamond, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;

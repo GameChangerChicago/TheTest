@@ -61,6 +61,15 @@ TagManager:
   - name: GamePlayMap
     uniqueID: 2813318849
     locked: 0
+  - name: ExtraBuildingsB
+    uniqueID: 262389523
+    locked: 0
+  - name: StaticBuildings
+    uniqueID: 778948717
+    locked: 0
+  - name: ExtraBuildingsA
+    uniqueID: 3630496589
+    locked: 0
   - name: Player
     uniqueID: 1746740357
     locked: 0
