@@ -64,7 +64,7 @@ public class MapMovementManager : MonoBehaviour
     {
         if(_characterMoving)
         {
-            PegMovementHandler();
+            MapPieceMovementHandler();
         }
 
         if(Input.GetKeyDown(KeyCode.O))
@@ -82,7 +82,7 @@ public class MapMovementManager : MonoBehaviour
         }
     }
 
-    private bool PegMovementHandler()
+    private bool MapPieceMovementHandler()
     {
         if (Vector3.Distance(new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y, 0),
             new Vector3(_currentMapPaths[_currentMapIndex].position.x, _currentMapPaths[_currentMapIndex].position.y + 0.7f, 0)) > 0.1f)
