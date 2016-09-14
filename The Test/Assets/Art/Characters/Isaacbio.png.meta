@@ -1,7 +1,12 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
+<<<<<<< HEAD
 guid: 75bca6ced3758441084af4937a559254
 timeCreated: 1473872852
+=======
+guid: a7e1623d3d8db6e4a93e260191b09ba7
+timeCreated: 1473866608
+>>>>>>> origin/master
 =======
 guid: a7e1623d3d8db6e4a93e260191b09ba7
 timeCreated: 1473866608
@@ -36,22 +41,32 @@ TextureImporter:
   textureSettings:
     filterMode: -1
 <<<<<<< HEAD
+<<<<<<< HEAD
     aniso: -1
     mipBias: -1
     wrapMode: -1
   nPOTScale: 1
 =======
+=======
+>>>>>>> origin/master
     aniso: 16
     mipBias: -1
     wrapMode: 1
   nPOTScale: 0
+<<<<<<< HEAD
+>>>>>>> origin/master
+=======
 >>>>>>> origin/master
   lightmap: 0
   rGBM: 0
   compressionQuality: 50
   allowsAlphaSplitting: 0
 <<<<<<< HEAD
+<<<<<<< HEAD
   spriteMode: 0
+=======
+  spriteMode: 1
+>>>>>>> origin/master
 =======
   spriteMode: 1
 >>>>>>> origin/master
@@ -62,9 +77,15 @@ TextureImporter:
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spritePixelsToUnits: 100
 <<<<<<< HEAD
+<<<<<<< HEAD
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
   textureType: -1
+=======
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+>>>>>>> origin/master
 =======
   alphaIsTransparency: 1
   spriteTessellationDetail: -1
