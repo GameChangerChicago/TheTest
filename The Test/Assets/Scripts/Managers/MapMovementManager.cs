@@ -4,12 +4,13 @@ using System.Collections;
 
 public class MapMovementManager : MonoBehaviour
 {
-    public GameObject RedPlayerPeg,
-                      GreenPlayerPeg,
-                      PurplePlayerPeg;
-    public Transform[] RedMapPaths,
-                       GreenMapPaths,
-                       PurpleMapPaths;
+    public GameObject FelixMapPiece,
+                      IsaacMapPiece,
+                      MarlonMapPiece;
+    public Transform[] FelixMapPaths,
+                       IsaacMapPaths,
+                       MarlonMapPaths;
+    public Transform StartPos;
 
     protected GameObject currentPlayer
     {
@@ -18,16 +19,16 @@ public class MapMovementManager : MonoBehaviour
             switch(GameManager.CurrentCharacterType)
             {
                 case CharacterType.Felix:
-                    _currentPlayer = RedPlayerPeg;
-                    _currentMapPaths = RedMapPaths;
+                    _currentPlayer = FelixMapPiece;
+                    _currentMapPaths = FelixMapPaths;
                     break;
                 case CharacterType.Isaac:
-                    _currentPlayer = GreenPlayerPeg;
-                    _currentMapPaths = GreenMapPaths;
+                    _currentPlayer = IsaacMapPiece;
+                    _currentMapPaths = IsaacMapPaths;
                     break;
                 case CharacterType.Marlon:
-                    _currentPlayer = PurplePlayerPeg;
-                    _currentMapPaths = PurpleMapPaths;
+                    _currentPlayer = MarlonMapPiece;
+                    _currentMapPaths = MarlonMapPaths;
                     break;
                 default:
                     Debug.LogError("Do we have more than three character types? Check that.");
@@ -54,10 +55,7 @@ public class MapMovementManager : MonoBehaviour
         _theFrameController = FindObjectOfType<FrameController>();
         currentPlayer.transform.position = new Vector3(_currentMapPaths[GameManager.CurrentMapPositionIndex].position.x, _currentMapPaths[GameManager.CurrentMapPositionIndex].position.y + 0.7f, 0);
 
-        if (GameManager.CurrentFrame == FrameType.MAPFOLLOW)
-        {
-            _theCameraManager.TargetToFollow = currentPlayer.transform;
-        }
+        PlayerMapPieceSetup();
     }
     
     void Update()
@@ -85,7 +83,7 @@ public class MapMovementManager : MonoBehaviour
     private bool MapPieceMovementHandler()
     {
         if (Vector3.Distance(new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y, 0),
-            new Vector3(_currentMapPaths[_currentMapIndex].position.x, _currentMapPaths[_currentMapIndex].position.y + 0.7f, 0)) > 0.1f)
+                             new Vector3(_currentMapPaths[_currentMapIndex].position.x, _currentMapPaths[_currentMapIndex].position.y + 0.7f, 0)) > 0.1f)
         {
             currentPlayer.transform.Translate(new Vector3((_currentMapPaths[_currentMapIndex].position.x - _currentMapPaths[_currentMapIndex - 1].position.x) * Time.deltaTime,
                                                          ((_currentMapPaths[_currentMapIndex].position.y + 0.7f) - (_currentMapPaths[_currentMapIndex - 1].position.y + 0.7f)) * Time.deltaTime, 0));
@@ -118,5 +116,44 @@ public class MapMovementManager : MonoBehaviour
         _theCameraManager.TargetToFollow = currentPlayer.transform;
         _characterMoving = true;
 
+    }
+
+    private void PlayerMapPieceSetup()
+    {
+        if (GameManager.CurrentFrame == FrameType.MAPFOLLOW)
+        {
+            _theCameraManager.TargetToFollow = currentPlayer.transform;
+        }
+
+        GameObject player = null;
+        if (GameManager.CurrentCharacterType == CharacterType.Felix)
+        {
+            //if(GameManager.CurrentConvoIndex < )
+            player = (GameObject)Instantiate(FelixMapPiece, StartPos.position, Quaternion.identity);
+        }
+
+        if (GameManager.CurrentCharacterType == CharacterType.Isaac)
+        {
+            player = (GameObject)Instantiate(IsaacMapPiece, StartPos.position, Quaternion.identity);
+        }
+
+        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+        {
+            player = (GameObject)Instantiate(MarlonMapPiece, StartPos.position, Quaternion.identity);
+        }
+        _currentPlayer = player;
+
+        foreach (BuildingFadeManager bfm in FindObjectsOfType<BuildingFadeManager>())
+        {
+            if (player)
+            {
+                bfm.Player = player.GetComponent<SpriteRenderer>();
+            }
+            else
+            {
+                Debug.Log("The player wasn't set for some reason...");
+                break;
+            }
+        }
     }
 }
