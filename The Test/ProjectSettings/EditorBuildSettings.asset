@@ -21,3 +21,5 @@ EditorBuildSettings:
     path: Assets/Scenes/Minigames/RoomEscape.unity
   - enabled: 1
     path: Assets/Scenes/Minigames/FindingFriends.unity
+  - enabled: 1
+    path: Assets/Scenes/MapScene.unity

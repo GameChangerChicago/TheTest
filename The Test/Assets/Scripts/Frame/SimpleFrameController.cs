@@ -36,14 +36,15 @@ public class SimpleFrameController : MonoBehaviour
 
     public void ContinueToDialog()
     {
-        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
-        {
-            SceneManager.LoadScene("RoomEscape");
-        }
-        else
-        {
-            SimpleFrame.SetActive(false);
-            _theDialogManager.LoadPieceOfDialog();
-        }
+        SceneManager.LoadScene("MapScene");
+        //if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+        //{
+        //    SceneManager.LoadScene("RoomEscape");
+        //}
+        //else
+        //{
+        //    SimpleFrame.SetActive(false);
+        //    _theDialogManager.LoadPieceOfDialog();
+        //}
     }
 }
