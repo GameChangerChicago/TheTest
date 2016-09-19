@@ -53,7 +53,7 @@ public class MapMovementManager : MonoBehaviour
 
     void Start()
     {
-        //GameManager.CurrentCharacterType = CharacterType.Felix;
+        GameManager.CurrentCharacterType = CharacterType.Felix;
 
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();
@@ -93,6 +93,22 @@ public class MapMovementManager : MonoBehaviour
         {
             //Start here on Monday
             //Normalized Distance + an if else that to see if you're going left or right; up or down
+            float xDistance = Vector2.Distance(new Vector2(_currentMapPaths[_currentMapIndex].position.x, 0), new Vector2(_currentMapPaths[_currentMapIndex + 1].position.x, 0)),
+                  yDistance = Vector2.Distance(new Vector2(0, _currentMapPaths[_currentMapIndex].position.y), new Vector2(0, _currentMapPaths[_currentMapIndex + 1].position.x));
+
+            if (xDistance > yDistance)
+            {
+                xDistance /= xDistance;
+                yDistance /= xDistance;
+            }
+            else
+            {
+                xDistance /= yDistance;
+                yDistance /= yDistance;
+            }
+
+            //if()
+
             currentPlayer.transform.Translate(new Vector3((_currentMapPaths[_currentMapIndex].position.x - _currentMapPaths[_currentMapIndex + 1].position.x) * Time.deltaTime * 0.7f,
                                                          ((_currentMapPaths[_currentMapIndex + 1].position.y + 0.223f) - (_currentMapPaths[_currentMapIndex].position.y + 0.223f)) * Time.deltaTime * 0.7f, 0));
 
