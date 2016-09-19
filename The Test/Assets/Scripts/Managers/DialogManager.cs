@@ -27,7 +27,8 @@ public class DialogManager : MonoBehaviour
     private Vector3 _initialDialogPos = Vector3.zero,
                     _initialTopPointPos;
     //This field will only be needed for this SAT dialog test thing
-    private float _dialogOffset;
+    private float _dialogOffset,
+                  _delayModifier;
     private int _currentDialogPieceIndex;
     private bool _dialogFinished,
                  _dialogActive,
@@ -126,7 +127,8 @@ public class DialogManager : MonoBehaviour
 
     private IEnumerator DelayedLoadPieceOfDialog(SpriteRenderer dialogPieceRenderer, GameObject typingObj)
     {
-        yield return new WaitForSeconds(TypingDelay);
+        Debug.Log(_delayModifier);
+        yield return new WaitForSeconds(TypingDelay + _delayModifier);
         dialogPieceRenderer.enabled = true;
         GameObject.Destroy(typingObj);
         _typing = false;
@@ -165,6 +167,7 @@ public class DialogManager : MonoBehaviour
             GameObject typingObject = (GameObject)Instantiate(TypingAnimObj, new Vector3(LeftPoint.position.x + ((TypingAnimObj.GetComponent<SpriteRenderer>().sprite.bounds.max.x / 2) / 0.7f), _initialDialogPos.y - typingAnimOffset, _initialDialogPos.z), Quaternion.identity);
             SpriteRenderer renderer = pieceOfDialogToLoad.GetComponent<SpriteRenderer>();
             renderer.enabled = false;
+            _delayModifier = ((renderer.bounds.max.x - renderer.bounds.min.x) + (((renderer.bounds.max.y - renderer.bounds.min.y) - (TypingAnimObj.GetComponent<SpriteRenderer>().bounds.max.y - TypingAnimObj.GetComponent<SpriteRenderer>().bounds.min.y)) * 30)) * Time.deltaTime * 5;
             _typing = true;
             StartCoroutine(DelayedLoadPieceOfDialog(renderer, typingObject));
         }
