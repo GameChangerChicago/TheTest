@@ -53,7 +53,7 @@ public class MapMovementManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.CurrentCharacterType = CharacterType.Felix;
+        //GameManager.CurrentCharacterType = CharacterType.Felix;
 
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();

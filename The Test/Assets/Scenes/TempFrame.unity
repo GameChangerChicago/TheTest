@@ -464,9 +464,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DialogContainer: {fileID: 514163489}
+  TypingAnimObj: {fileID: 1000014100434752, guid: 4c558b916cd87464da6aa7f87b52c842,
+    type: 2}
   BottomPoint: {fileID: 89336808}
   LeftPoint: {fileID: 1752049735}
   RightPoint: {fileID: 401289204}
+  TypingDelay: 1
 --- !u!1 &401289203
 GameObject:
   m_ObjectHideFlags: 0
