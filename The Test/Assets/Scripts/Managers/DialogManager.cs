@@ -127,7 +127,6 @@ public class DialogManager : MonoBehaviour
 
     private IEnumerator DelayedLoadPieceOfDialog(SpriteRenderer dialogPieceRenderer, GameObject typingObj)
     {
-        Debug.Log(_delayModifier);
         yield return new WaitForSeconds(TypingDelay + _delayModifier);
         dialogPieceRenderer.enabled = true;
         GameObject.Destroy(typingObj);

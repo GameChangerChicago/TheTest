@@ -53,8 +53,6 @@ public class MapMovementManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.CurrentCharacterType = CharacterType.Felix;
-
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();
         _theFrameController = FindObjectOfType<FrameController>();
@@ -70,36 +68,20 @@ public class MapMovementManager : MonoBehaviour
         {
             MapPieceMovementHandler();
         }
-
-        if(Input.GetKeyDown(KeyCode.O))
-        {
-            ProceedToMapPoint(5);
-        }
-        if(Input.GetKeyDown(KeyCode.P))
-        {
-            ProceedToMapPoint(7);
-        }
-
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            SceneManager.LoadScene("Prioritizing");
-        }
     }
 
     private bool MapPieceMovementHandler()
     {
         if (Vector3.Distance(new Vector3(currentPlayer.transform.position.x, currentPlayer.transform.position.y, 0),
-                             new Vector3(_currentMapPaths[_currentMapIndex].position.x, _currentMapPaths[_currentMapIndex].position.y + 0.223f, 0)) > 0.1f)
+                             new Vector3(_currentMapPaths[_currentMapIndex + 1].position.x, _currentMapPaths[_currentMapIndex + 1].position.y + 0.223f, 0)) > 0.1f)
         {
-            //Start here on Monday
-            //Normalized Distance + an if else that to see if you're going left or right; up or down
             float xDistance = Vector2.Distance(new Vector2(_currentMapPaths[_currentMapIndex].position.x, 0), new Vector2(_currentMapPaths[_currentMapIndex + 1].position.x, 0)),
-                  yDistance = Vector2.Distance(new Vector2(0, _currentMapPaths[_currentMapIndex].position.y), new Vector2(0, _currentMapPaths[_currentMapIndex + 1].position.x));
-
+                  yDistance = Vector2.Distance(new Vector2(0, _currentMapPaths[_currentMapIndex].position.y), new Vector2(0, _currentMapPaths[_currentMapIndex + 1].position.y));
+                  
             if (xDistance > yDistance)
             {
-                xDistance /= xDistance;
                 yDistance /= xDistance;
+                xDistance /= xDistance;
             }
             else
             {
@@ -107,19 +89,24 @@ public class MapMovementManager : MonoBehaviour
                 yDistance /= yDistance;
             }
 
-            //if()
+            if (_currentMapPaths[_currentMapIndex].position.x > _currentMapPaths[_currentMapIndex + 1].position.x)
+            {
+                xDistance *= -1;
+            }
 
-            currentPlayer.transform.Translate(new Vector3((_currentMapPaths[_currentMapIndex].position.x - _currentMapPaths[_currentMapIndex + 1].position.x) * Time.deltaTime * 0.7f,
-                                                         ((_currentMapPaths[_currentMapIndex + 1].position.y + 0.223f) - (_currentMapPaths[_currentMapIndex].position.y + 0.223f)) * Time.deltaTime * 0.7f, 0));
+            if (_currentMapPaths[_currentMapIndex].position.y > _currentMapPaths[_currentMapIndex + 1].position.y)
+            {
+                yDistance *= -1;
+            }
 
-            //Vector3 movementDirection = new Vector3(_currentMapPaths[_currentMapIndex].position.x)
-            //Vector2.
-            //currentPlayer.transform.Translate()
+            currentPlayer.transform.Translate(new Vector3(xDistance * Time.deltaTime * 2f,
+                                                          yDistance * Time.deltaTime * 2f, 0));
+
             return false;
         }
         else
         {
-            if (_currentMapIndex < _currentMapTarget)
+            if (_currentMapIndex != _currentMapTarget - 1)
                 _currentMapIndex++;
             else
             {
@@ -133,11 +120,6 @@ public class MapMovementManager : MonoBehaviour
         }
     }
 
-    public void ProceedToMapPoint(int newMapPointTarget)
-    {
-        _currentMapTarget = newMapPointTarget;
-    }
-
     public IEnumerator StartMoving(float waitTime)
     {
         yield return new WaitForSeconds(waitTime);
@@ -148,9 +130,9 @@ public class MapMovementManager : MonoBehaviour
 
     private void FinishWalk()
     {
-        if(GameManager.CurrentCharacterType == CharacterType.Felix)
+        if (GameManager.CurrentCharacterType == CharacterType.Felix)
         {
-            if(GameManager.CurrentConvoIndex == 4)
+            if (GameManager.CurrentConvoIndex == 4)
             {
                 SceneManager.LoadScene("Irritation");
             }
@@ -160,29 +142,29 @@ public class MapMovementManager : MonoBehaviour
             }
         }
 
-        if(GameManager.CurrentCharacterType == CharacterType.Isaac)
+        if (GameManager.CurrentCharacterType == CharacterType.Isaac)
         {
             if (GameManager.CurrentConvoIndex == 0)
             {
                 SceneManager.LoadScene("RoomEscape");
             }
-            if(GameManager.CurrentConvoIndex == 1)
+            if (GameManager.CurrentConvoIndex == 1)
             {
                 SceneManager.LoadScene("FindingFriends");
             }
-            if(GameManager.CurrentConvoIndex == 2)
+            if (GameManager.CurrentConvoIndex == 2)
             {
                 SceneManager.LoadScene("Irritation");
             }
         }
 
-        if(GameManager.CurrentCharacterType == CharacterType.Marlon)
+        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
         {
-            if(GameManager.CurrentConvoIndex == 0)
+            if (GameManager.CurrentConvoIndex == 0)
             {
                 SceneManager.LoadScene("RoomEscape");
             }
-            if(GameManager.CurrentConvoIndex >= 1)
+            if (GameManager.CurrentConvoIndex >= 1)
             {
                 SceneManager.LoadScene("TempFrame");
             }
@@ -200,9 +182,10 @@ public class MapMovementManager : MonoBehaviour
         {
             if (GameManager.CurrentConvoIndex == 0)
             {
+                StartPos.position = FelixMapPaths[0].position;
                 _currentMapTarget = 1;
             }
-            if (GameManager.CurrentConvoIndex == 2)
+            if (GameManager.CurrentConvoIndex == 3)
             {
                 StartPos.position = FelixMapPaths[1].position;
                 _currentMapTarget = 2;
@@ -225,6 +208,7 @@ public class MapMovementManager : MonoBehaviour
         {
             if (GameManager.CurrentConvoIndex == 0)
             {
+                StartPos.position = IsaacMapPaths[0].position;
                 _currentMapTarget = 2;
             }
             if (GameManager.CurrentConvoIndex == 1)
@@ -250,6 +234,7 @@ public class MapMovementManager : MonoBehaviour
         {
             if (GameManager.CurrentConvoIndex == 0)
             {
+                StartPos.position = MarlonMapPaths[0].position;
                 _currentMapTarget = 2;
             }
             if (GameManager.CurrentConvoIndex == 2)

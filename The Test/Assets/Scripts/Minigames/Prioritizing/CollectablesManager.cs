@@ -81,7 +81,14 @@ public class CollectablesManager : MonoBehaviour
                 GameManager.CharacterSelected = false;
             }
 
-            _theGameManager.FadeHandler(false, "TempFrame");
+            if (GameManager.CurrentCharacterType == CharacterType.Felix && GameManager.CurrentConvoIndex == 3)
+            {
+                _theGameManager.FadeHandler(false, "MapScene");
+            }
+            else
+            {
+                _theGameManager.FadeHandler(false, "TempFrame");
+            }
         }
     }
 
@@ -99,7 +106,7 @@ public class CollectablesManager : MonoBehaviour
 
         if(GameManager.CurrentCharacterType.ToString() == "Felix")
         {
-            GameManager.CurrentConvoIndex = 4;
+            GameManager.CurrentConvoIndex = 3;
         }
     }
 }

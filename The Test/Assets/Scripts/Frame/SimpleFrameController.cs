@@ -36,16 +36,16 @@ public class SimpleFrameController : MonoBehaviour
 
     public void ContinueToDialog()
     {
-        //SceneManager.LoadScene("MapScene");
+        SceneManager.LoadScene("MapScene");
         //HACK: As pretty as this looks, this is a hack for a pre map game build
-        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
-        {
-            SceneManager.LoadScene("RoomEscape");
-        }
-        else
-        {
-            SimpleFrame.SetActive(false);
-            _theDialogManager.LoadPieceOfDialog();
-        }
+        //if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+        //{
+        //    SceneManager.LoadScene("RoomEscape");
+        //}
+        //else
+        //{
+        //    SimpleFrame.SetActive(false);
+        //    _theDialogManager.LoadPieceOfDialog();
+        //}
     }
 }
