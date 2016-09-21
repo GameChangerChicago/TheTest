@@ -32,6 +32,14 @@ public class RoomObject : MonoBehaviour
         }
         _gridPositions.Clear();
 
+        //BoxCollider2D myBoxCollider = this.GetComponent<BoxCollider2D>();
+        //myBoxCollider.
+        //if (myBoxCollider.IsTouchingLayers(LayerMask.GetMask("RoomObject", "Impassable")))
+        //{
+        //if(myBoxCollider.bounds.min.x)
+        //    Debug.Log("sup");
+        //}
+
         for (int i = 0; i < PositionCheckers.Length; i++)
         {
             _gridPositions.Add(new Vector2(Mathf.RoundToInt((PositionCheckers[i].position.x - _myController.TopLeftCornerPos.position.x) / _singleSquareDimensions.x),

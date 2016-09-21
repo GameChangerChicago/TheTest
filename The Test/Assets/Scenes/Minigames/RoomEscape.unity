@@ -211,7 +211,7 @@ GameObject:
   - 4: {fileID: 192894557}
   - 212: {fileID: 192894558}
   - 61: {fileID: 192894559}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WallBottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -290,7 +290,7 @@ GameObject:
   - 61: {fileID: 308269879}
   - 61: {fileID: 308269880}
   - 61: {fileID: 308269881}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WallTop
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,7 +396,7 @@ GameObject:
   - 4: {fileID: 308903399}
   - 212: {fileID: 308903400}
   - 61: {fileID: 308903401}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WallRight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +548,7 @@ GameObject:
   - 4: {fileID: 853235034}
   - 212: {fileID: 853235035}
   - 61: {fileID: 853235036}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: WallLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}

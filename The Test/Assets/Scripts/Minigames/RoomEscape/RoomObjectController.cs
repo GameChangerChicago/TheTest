@@ -68,22 +68,38 @@ public class RoomObjectController : MonoBehaviour
     {
         Vector2 currentTouchPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         _touchDelta = new Vector2(currentTouchPos.x - _initialTouchPos.x, currentTouchPos.y - _initialTouchPos.y);
-        if(!_horizontalLock && !_verticalLock && Mathf.Abs(_touchDelta.x) > 0.5f)
+        if (!_horizontalLock && !_verticalLock && Mathf.Abs(_touchDelta.x) > 0.5f)
         {
             _horizontalLock = true;
         }
-        if(!_horizontalLock && !_verticalLock && Mathf.Abs(_touchDelta.y) > 0.5f)
+        if (!_horizontalLock && !_verticalLock && Mathf.Abs(_touchDelta.y) > 0.5f)
         {
             _verticalLock = true;
         }
+        
+        float dragSpeed = 0;
 
-        if(_horizontalLock)
+        if (_horizontalLock)
         {
-            ObjectToMove.transform.position = new Vector3(_initialObjectPos.x + _touchDelta.x, _initialObjectPos.y, ObjectToMove.transform.position.z);
+            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(ObjectToMove.transform.position.x, 0), new Vector2(_initialObjectPos.x + _touchDelta.x, 0)) * 5), 0.01f, 0.8f);
+
+            if (ObjectToMove.transform.position.x > _initialObjectPos.x + _touchDelta.x)
+            {
+                dragSpeed *= -1;
+            }
+
+            ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x + dragSpeed, ObjectToMove.transform.position.y, ObjectToMove.transform.position.z);
         }
-        if(_verticalLock)
+        if (_verticalLock)
         {
-            ObjectToMove.transform.position = new Vector3(_initialObjectPos.x, _initialObjectPos.y + _touchDelta.y, ObjectToMove.transform.position.z);
+            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(0, ObjectToMove.transform.position.y), new Vector2(0, _initialObjectPos.y + _touchDelta.y)) * 5), 0.01f, 0.8f);
+
+            if (ObjectToMove.transform.position.y > _initialObjectPos.y + _touchDelta.y)
+            {
+                dragSpeed *= -1;
+            }
+
+            ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x, ObjectToMove.transform.position.y + dragSpeed, ObjectToMove.transform.position.z);
         }
     }
 

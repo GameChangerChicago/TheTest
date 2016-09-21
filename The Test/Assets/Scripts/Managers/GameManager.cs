@@ -98,7 +98,7 @@ public class GameManager : MonoBehaviour
             GameObject instructions = Instantiate(GetBone, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
             GameObject currentRELevel = null;
-
+            
             if (CurrentCharacterType == CharacterType.Marlon)
             {
                 if (CurrentConvoIndex == 0)
@@ -122,6 +122,8 @@ public class GameManager : MonoBehaviour
                 if (CurrentConvoIndex == 4)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 5);
                 else if (CurrentConvoIndex == 5)
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
+                else //Incase this level is being started out of context
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
 

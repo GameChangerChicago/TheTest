@@ -18,6 +18,7 @@ TagManager:
   - Background
   - FireflyFriend
   - PotentialFirefly
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -34,7 +35,7 @@ TagManager:
   - background2
   - FireFly
   - Impassable
-  - 
+  - RoomObject
   - 
   - 
   - 
