@@ -16,15 +16,29 @@ public class CookieManager : MonoBehaviour
         {
             if(_currentCookieIndex != value)
             {
-                for (int i = 0; i < CookieSprites.Length; i++)
+                if (value == -1)
                 {
-                    if(i != value)
+                    CookieSprites[5].SetActive(false);
+
+                    foreach(AntController ant in FindObjectsOfType<AntController>())
                     {
-                        CookieSprites[i].SetActive(false);
+                        ant.enabled = false;
                     }
-                    else
+
+                    _fading = true;
+                }
+                else
+                {
+                    for (int i = 0; i < CookieSprites.Length; i++)
                     {
-                        CookieSprites[i].SetActive(true);
+                        if (i != value)
+                        {
+                            CookieSprites[i].SetActive(false);
+                        }
+                        else
+                        {
+                            CookieSprites[i].SetActive(true);
+                        }
                     }
                 }
 
@@ -34,17 +48,32 @@ public class CookieManager : MonoBehaviour
     }
     private int _currentCookieIndex;
 
+    private GameManager _theGameManager;
+    private bool _fading;
+
+    void Start()
+    {
+        _theGameManager = FindObjectOfType<GameManager>();
+    }
+
     void Update()
     {
-        if(PercentEaten > 99)
+        if(_fading)
+            _theGameManager.FadeHandler(false, false, "TempFrame");
+
+        if (PercentEaten > 99.5)
+        {
+            currentCookieIndex = -1;
+        }
+        else if(PercentEaten > 90)
         {
             currentCookieIndex = 5;
         }
-        else if(PercentEaten > 75)
+        else if(PercentEaten > 60)
         {
             currentCookieIndex = 4;
         }
-        else if(PercentEaten > 50)
+        else if(PercentEaten > 40)
         {
             currentCookieIndex = 3;
         }

@@ -83,7 +83,7 @@ GameObject:
   - 61: {fileID: 61000012043088678}
   - 114: {fileID: 114000010643993852}
   - 50: {fileID: 50000013056227562}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Couch 4
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   - 61: {fileID: 61000010717860898}
   - 114: {fileID: 114000014015310794}
   - 50: {fileID: 50000012294197346}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Footrest 2 (1)
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -166,7 +166,7 @@ GameObject:
   - 61: {fileID: 61000014157863094}
   - 114: {fileID: 114000010958594482}
   - 50: {fileID: 50000014195974488}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Footrest 2
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - 61: {fileID: 61000013592663200}
   - 114: {fileID: 114000012598735140}
   - 50: {fileID: 50000012893088748}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: End Table (1)
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -219,7 +219,7 @@ GameObject:
   - 61: {fileID: 61000010146881278}
   - 114: {fileID: 114000011281937658}
   - 50: {fileID: 50000010705526262}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: End Table
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -268,7 +268,7 @@ GameObject:
   - 61: {fileID: 61000012716070100}
   - 114: {fileID: 114000012330420500}
   - 50: {fileID: 50000013557878390}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Couch 2
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -287,7 +287,7 @@ GameObject:
   - 61: {fileID: 61000013808943174}
   - 114: {fileID: 114000011757911662}
   - 50: {fileID: 50000013601047296}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Chair 2 (1)
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -306,7 +306,7 @@ GameObject:
   - 61: {fileID: 61000012344327306}
   - 114: {fileID: 114000012898476788}
   - 50: {fileID: 50000010202559650}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Table Stuff
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -372,7 +372,7 @@ GameObject:
   - 61: {fileID: 61000010664070862}
   - 114: {fileID: 114000010880514946}
   - 50: {fileID: 50000011677853606}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Chair 2
   m_TagString: RoomObject
   m_Icon: {fileID: 0}

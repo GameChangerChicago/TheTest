@@ -23,7 +23,7 @@ GameObject:
   - 61: {fileID: 61000012789399486}
   - 114: {fileID: 114000012756569384}
   - 50: {fileID: 50000010846661928}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Desk Chair
   m_TagString: RoomObject
   m_Icon: {fileID: 0}

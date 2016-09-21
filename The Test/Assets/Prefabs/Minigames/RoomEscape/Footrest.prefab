@@ -23,7 +23,7 @@ GameObject:
   - 61: {fileID: 61000010618920454}
   - 114: {fileID: 114000010156529150}
   - 50: {fileID: 50000012804829502}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Footrest
   m_TagString: RoomObject
   m_Icon: {fileID: 0}

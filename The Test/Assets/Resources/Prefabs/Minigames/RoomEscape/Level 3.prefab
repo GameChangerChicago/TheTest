@@ -38,7 +38,7 @@ GameObject:
   - 61: {fileID: 61000010873463316}
   - 114: {fileID: 114000014093279008}
   - 50: {fileID: 50000013106093904}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Desk Chair 2
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - 61: {fileID: 61000013251167714}
   - 114: {fileID: 114000010969810530}
   - 50: {fileID: 50000010061518128}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: End Table
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -181,7 +181,7 @@ GameObject:
   - 61: {fileID: 61000013073066080}
   - 114: {fileID: 114000013271490728}
   - 50: {fileID: 50000011569045838}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Chair
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -200,7 +200,7 @@ GameObject:
   - 61: {fileID: 61000010893556070}
   - 114: {fileID: 114000011454019304}
   - 50: {fileID: 50000013886890424}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Couch
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ GameObject:
   - 61: {fileID: 61000013946302182}
   - 114: {fileID: 114000013669605586}
   - 50: {fileID: 50000013740405042}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Footrest (1)
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -270,7 +270,7 @@ GameObject:
   - 61: {fileID: 61000012740359800}
   - 114: {fileID: 114000010584814088}
   - 50: {fileID: 50000011360796516}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Desk Stuff
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   - 61: {fileID: 61000011548854206}
   - 114: {fileID: 114000011256819976}
   - 50: {fileID: 50000013457858790}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Desk Chair
   m_TagString: RoomObject
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - 61: {fileID: 61000011387803820}
   - 114: {fileID: 114000010964342754}
   - 50: {fileID: 50000010972861298}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Footrest
   m_TagString: RoomObject
   m_Icon: {fileID: 0}

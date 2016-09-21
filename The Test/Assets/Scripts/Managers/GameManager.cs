@@ -9,18 +9,17 @@ public class GameManager : MonoBehaviour
     public static CharacterType CurrentCharacterType;
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
-        CurrentConvoIndex;
+                      CurrentConvoIndex;
     public static bool CharacterSelected;
 
     public GameObject CollectDiamond,
-        GetBone,
-        ProtectCookie,
-        FindFF;
-    public SpriteRenderer FadeMask;
+                      GetBone,
+                      ProtectCookie,
+                      FindFF;
+    public SpriteRenderer BlackFadeMask,
+                          WhiteFadeMask;
     public float MiniGameTimer;
     public bool GameOn;
-
-
 
     private MeshRenderer _fireflyLightRenderer;
     private LightController _playerLightController;
@@ -173,7 +172,7 @@ public class GameManager : MonoBehaviour
                 case "Prioritizing":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "TempFrame");
+                        FadeHandler(false, false, "TempFrame");
                     }
                     break;
                 case "RoomEscape":
@@ -182,22 +181,22 @@ public class GameManager : MonoBehaviour
                         //ASHLYN: Certain situations require for a new minigame to be loaded rather than the frame. This will be based on which character you've selected and the conversation you had last.
                         if (GameManager.CurrentCharacterType == CharacterType.Isaac && GameManager.CurrentConvoIndex == 2)
                         {
-                            FadeHandler(false, "FindingFriends");
+                            FadeHandler(false, false, "FindingFriends");
                         }
                         else if (GameManager.CurrentCharacterType == CharacterType.Felix && GameManager.CurrentConvoIndex == 4)
                         {
-                            FadeHandler(false, "Irritation");
+                            FadeHandler(false, false, "Irritation");
                         }
                         else
                         {
-                            FadeHandler(false, "TempFrame");
+                            FadeHandler(false, false, "TempFrame");
                         }
                     }
                     break;
                 case "Irritation":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "TempFrame");
+                        FadeHandler(false, true, "TempFrame");
                     }
                     break;
                 case "FindingFriends":
@@ -205,16 +204,16 @@ public class GameManager : MonoBehaviour
                     {
                         if (GameManager.CurrentCharacterType == CharacterType.Isaac && GameManager.CurrentConvoIndex == 3)
                         {
-                            FadeHandler(false, "Irritation");
+                            FadeHandler(false, false, "Irritation");
                         }
-                        FadeHandler(false, "TempFrame");
+                        FadeHandler(false, false, "TempFrame");
                     }
                     break;
                 case "PhoneScene":
 
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, "PhoneScreen");
+                        FadeHandler(false, false, "PhoneScreen");
                     }
                     break;
                 default:
@@ -229,13 +228,13 @@ public class GameManager : MonoBehaviour
 
         if (_removeInstructions)
         {
-            FadeHandler(true, "");
+            FadeHandler(true, false, "");
         }
     }
 
     //ASHLYN: This method takes two paramaters: fadingIn determins whether we're fading in on a scene or out of one. Basically use false for changing scenes. You basically wont need to use this method when fadingIn == true.
     //SceneToLoad is a just a string of the scene you're to load. Long story short: call the method as FadeHandler(false, "NameOfScene");
-    public void FadeHandler(bool fadingIn, string SceneToLoad)
+    public void FadeHandler(bool fadingIn, bool win, string SceneToLoad)
     {
         if (fadingIn)
         {
@@ -259,10 +258,16 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            if (FadeMask != null)
+            if (!win && BlackFadeMask != null)
             {
-                FadeMask.color = new Color(FadeMask.color.r, FadeMask.color.g, FadeMask.color.b, FadeMask.color.a + (2 * Time.deltaTime));
-                if (FadeMask.color.a > 0.9f)
+                BlackFadeMask.color = new Color(BlackFadeMask.color.r, BlackFadeMask.color.g, BlackFadeMask.color.b, BlackFadeMask.color.a + (2 * Time.deltaTime));
+                if (BlackFadeMask.color.a > 0.9f)
+                    SceneManager.LoadScene(SceneToLoad);
+            }
+            else if(win && WhiteFadeMask != null)
+            {
+                WhiteFadeMask.color = new Color(WhiteFadeMask.color.r, WhiteFadeMask.color.g, WhiteFadeMask.color.b, WhiteFadeMask.color.a + (2 * Time.deltaTime));
+                if (WhiteFadeMask.color.a > 0.9f)
                     SceneManager.LoadScene(SceneToLoad);
             }
             else

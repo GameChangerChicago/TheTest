@@ -38,7 +38,7 @@ public class RoomObjectController : MonoBehaviour
         //ASHLYN: This method ends the game when you collect the bone.
         if (GameOver)
         {
-            _theGameManager.FadeHandler(false, "TempFrame");//FadeOut();
+            _theGameManager.FadeHandler(false, true, "TempFrame");//FadeOut();
         }
     }
 

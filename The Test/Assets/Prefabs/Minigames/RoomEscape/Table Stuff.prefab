@@ -38,7 +38,7 @@ GameObject:
   - 61: {fileID: 61000013986425134}
   - 114: {fileID: 114000013018347024}
   - 50: {fileID: 50000011610192456}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Table Stuff
   m_TagString: RoomObject
   m_Icon: {fileID: 0}

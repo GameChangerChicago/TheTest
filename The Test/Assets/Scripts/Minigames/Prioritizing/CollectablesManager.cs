@@ -83,11 +83,11 @@ public class CollectablesManager : MonoBehaviour
 
             if (GameManager.CurrentCharacterType == CharacterType.Felix && GameManager.CurrentConvoIndex == 3)
             {
-                _theGameManager.FadeHandler(false, "MapScene");
+                _theGameManager.FadeHandler(false, true, "MapScene");
             }
             else
             {
-                _theGameManager.FadeHandler(false, "TempFrame");
+                _theGameManager.FadeHandler(false, true, "TempFrame");
             }
         }
     }
