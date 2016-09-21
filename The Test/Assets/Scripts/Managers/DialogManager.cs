@@ -8,8 +8,8 @@ public class DialogManager : MonoBehaviour
     public GameObject DialogContainer,
                       TypingAnimObj;
     public Transform BottomPoint,
-        LeftPoint,
-        RightPoint;
+                     LeftPoint,
+                     RightPoint;
     public float TypingDelay;
 
     protected int currentConvoIndex
@@ -142,12 +142,14 @@ public class DialogManager : MonoBehaviour
         }
 
         //Creates a gameobject by pulling the correct dialog prefab from the resources folder
-        GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex);
+        GameObject pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex),
+                   nextPieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + (_currentDialogPieceIndex + 1));
         bool lastPieceOfDialog = false;
         if (!pieceOfDialogToLoad)
         { //The final piece of dialog will be marked with an 'f' this bit lets us know when we're dealing with the last dialog piece
 
             pieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + _currentDialogPieceIndex + "f");
+            nextPieceOfDialogToLoad = Resources.Load<GameObject>("Prefabs/DialogPieces/" + GameManager.CurrentCharacterType.ToString() + "/" + currentConvoIndex + "/" + (_currentDialogPieceIndex + 1) + "f");
             lastPieceOfDialog = true;
         }
 
@@ -169,10 +171,21 @@ public class DialogManager : MonoBehaviour
             _delayModifier = ((renderer.bounds.max.x - renderer.bounds.min.x) + (((renderer.bounds.max.y - renderer.bounds.min.y) - (TypingAnimObj.GetComponent<SpriteRenderer>().bounds.max.y - TypingAnimObj.GetComponent<SpriteRenderer>().bounds.min.y)) * 30)) * Time.deltaTime * 5;
             _typing = true;
             StartCoroutine(DelayedLoadPieceOfDialog(renderer, typingObject));
+            if (nextPieceOfDialogToLoad)
+            {
+                if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
+                    Invoke("LoadPieceOfDialog", TypingDelay + _delayModifier);
+            }
         }
         else if (pieceOfDialogToLoad.tag == "RightSideDialog")
         {
             pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(RightPoint.position.x - ((pieceOfDialogToLoad.GetComponent<SpriteRenderer>().sprite.bounds.max.x / 2) / 0.7f), _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
+
+            if (nextPieceOfDialogToLoad)
+            {
+                if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
+                    Invoke("LoadPieceOfDialog", TypingDelay);
+            }
         }
         else
             Debug.LogWarning("You need to tag all dialog pieces with either LeftSideDialog or RightSideDialog.");
