@@ -53,6 +53,8 @@ public class MapMovementManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.CurrentCharacterType = CharacterType.Marlon;
+
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();
         _theFrameController = FindObjectOfType<FrameController>();

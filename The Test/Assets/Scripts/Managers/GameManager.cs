@@ -65,6 +65,10 @@ public class GameManager : MonoBehaviour
             GameObject instructions = Instantiate(CollectDiamond, new Vector3(Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
             _currentInstructions = instructions.GetComponent<SpriteRenderer>();
 
+            //HACK!!
+            CurrentCharacterType = CharacterType.Felix;
+            CurrentConvoIndex = 1;
+
             if (CurrentCharacterType == CharacterType.Felix)
             {
                 if (CurrentConvoIndex == 1)

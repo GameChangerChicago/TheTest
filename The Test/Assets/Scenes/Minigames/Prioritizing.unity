@@ -131,6 +131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Background: {fileID: 1000010860439790, guid: b910fa487b55c4748a74b00b8acc0210, type: 2}
+  Infinite: 1
 --- !u!1 &1035016016
 GameObject:
   m_ObjectHideFlags: 0

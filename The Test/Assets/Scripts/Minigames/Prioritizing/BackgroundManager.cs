@@ -4,6 +4,8 @@ using System.Collections;
 public class BackgroundManager : MonoBehaviour
 {
     public GameObject Background;
+    public bool Infinite;
+    private GameManager _theGameManager;
     private GameObject _currentBackground,
                        _lastBackground,
                        _currentSegment,
@@ -12,15 +14,17 @@ public class BackgroundManager : MonoBehaviour
                            _lastBackgroundSR;
     private string _currentSegmentName;
     private float _currentTopSegPos = -999,
-                  _lastTopSegPos = -999;
+                  _lastTopSegPos = 0;
+    private int _segmentsLoaded;
     private bool _noMoreSegments;
 
     void Start()
     {
+        _theGameManager = FindObjectOfType<GameManager>();
         _currentBackground = (GameObject)Instantiate(Background, this.transform.position, Quaternion.identity);
         _currentBackgroundSR = _currentBackground.GetComponent<SpriteRenderer>();
 
-        switch(GameManager.CurrentPhoneType)
+        switch (GameManager.CurrentPhoneType)
         {
             case PhoneTypes.ANDROID1:
                 _currentBackground.transform.localScale = new Vector3(2.08f, 2.08f, 1);
@@ -47,8 +51,11 @@ public class BackgroundManager : MonoBehaviour
     
     void Update()
     {
-        BackgroundHandlder();
-        GameSegmentHandler();
+        if (_theGameManager.GameOn)
+        {
+            BackgroundHandlder();
+            GameSegmentHandler();
+        }
     }
 
     private void BackgroundHandlder()
@@ -93,12 +100,32 @@ public class BackgroundManager : MonoBehaviour
             GameManager.Destroy(_lastSegment);
         }
 
-        if(camTopSegTopDiff < 0 && !_noMoreSegments)
+        if (camTopSegTopDiff < 0 && !_noMoreSegments)
+        {
+            if (Infinite)
+            {
+                int randSeg = Random.Range(1, 4),
+                    randLvl = Random.Range(1, 4);
+
+                if (_segmentsLoaded < 3)
+                {
+                    _currentSegmentName = "" + randLvl + (char)_currentSegmentName[1] + randSeg;
+                    _segmentsLoaded++;
+                }
+                else
+                {
+                    _currentSegmentName = "" + randLvl + (char)_currentSegmentName[1] + "D";
+                    _segmentsLoaded = 0;
+                }
+            }
+
+            AddNewSegment("Level " + _currentSegmentName);
+        }
+        else
         {
             int currentSegIndex = (int)char.GetNumericValue(_currentSegmentName[2]);
             currentSegIndex++;
             _currentSegmentName = "" + (char)_currentSegmentName[0] + (char)_currentSegmentName[1] + currentSegIndex;
-            AddNewSegment("Level " + _currentSegmentName);
         }
     }
 
@@ -109,14 +136,11 @@ public class BackgroundManager : MonoBehaviour
             _lastSegment = _currentSegment;
             _lastTopSegPos = _currentTopSegPos;
         }
-
+        
         _currentSegment = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/" + segmentName);
 
         if (_currentSegment)
         {
-            _currentSegment = (GameObject)Instantiate(_currentSegment);
-            _currentSegmentName = "" + (char)_currentSegment.name[6] + (char)_currentSegment.name[7] + (char)_currentSegment.name[8];
-
             foreach (SpriteRenderer sr in _currentSegment.GetComponentsInChildren<SpriteRenderer>())
             {
                 if (sr.transform.position.y + sr.bounds.extents.y > _currentTopSegPos)
@@ -124,6 +148,13 @@ public class BackgroundManager : MonoBehaviour
                     _currentTopSegPos = sr.transform.position.y + sr.bounds.extents.y;
                 }
             }
+
+            _currentTopSegPos = _lastTopSegPos + (_currentTopSegPos - _currentSegment.transform.position.y);
+
+            Debug.Log(_currentTopSegPos);
+
+            _currentSegment = (GameObject)Instantiate(_currentSegment, new Vector3(_currentSegment.transform.position.x, _currentTopSegPos, _currentSegment.transform.position.z), Quaternion.identity);
+            _currentSegmentName = "" + (char)_currentSegment.name[6] + (char)_currentSegment.name[7] + (char)_currentSegment.name[8];
         }
         else
         {
