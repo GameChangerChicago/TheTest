@@ -12,6 +12,42 @@ public class MapMovementManager : MonoBehaviour
                        MarlonMapPaths;
     public Transform StartPos;
 
+    protected bool facingRight
+    {
+        get
+        {
+            return _facingRight;
+        }
+        set
+        {
+            if(_facingRight != value)
+            {
+                currentPlayer.transform.localScale = new Vector3(currentPlayer.transform.localScale.x * -1, currentPlayer.transform.localScale.y, currentPlayer.transform.localScale.z);
+
+                _facingRight = value;
+            }
+        }
+    }
+    private bool _facingRight;
+
+    protected bool facingDown
+    {
+        get
+        {
+            return _facingDown;
+        }
+        set
+        {
+            if (_facingDown != value)
+            {
+                _charactorAnimator.SetBool("FaceDown", value);
+
+                _facingDown = value;
+            }
+        }
+    }
+    private bool _facingDown;
+
     protected GameObject currentPlayer
     {
         get
@@ -53,8 +89,6 @@ public class MapMovementManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.CurrentCharacterType = CharacterType.Marlon;
-
         _theGameManager = FindObjectOfType<GameManager>();
         _theCameraManager = FindObjectOfType<CameraManager>();
         _theFrameController = FindObjectOfType<FrameController>();
@@ -93,12 +127,22 @@ public class MapMovementManager : MonoBehaviour
 
             if (_currentMapPaths[_currentMapIndex].position.x > _currentMapPaths[_currentMapIndex + 1].position.x)
             {
-                xDistance *= -1;
+                facingRight = false;
             }
+            else
+            {
+                facingRight = true;
+            }
+            xDistance *= -1;
 
             if (_currentMapPaths[_currentMapIndex].position.y > _currentMapPaths[_currentMapIndex + 1].position.y)
             {
                 yDistance *= -1;
+                facingDown = true;
+            }
+            else
+            {
+                facingDown = false;
             }
 
             currentPlayer.transform.Translate(new Vector3(xDistance * Time.deltaTime * 2f,
