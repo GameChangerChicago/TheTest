@@ -4,7 +4,6 @@ using System.Collections;
 public class BackgroundManager : MonoBehaviour
 {
     public GameObject Background;
-    public bool Infinite;
     private GameManager _theGameManager;
     private GameObject _currentBackground,
                        _lastBackground,
@@ -16,10 +15,16 @@ public class BackgroundManager : MonoBehaviour
     private float _currentTopSegPos = -999,
                   _lastTopSegPos = 0;
     private int _segmentsLoaded;
-    private bool _noMoreSegments;
+    private bool _noMoreSegments,
+                 _infinite;
 
     void Start()
     {
+        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+            _infinite = true;
+        else
+            _infinite = false;
+            
         _theGameManager = FindObjectOfType<GameManager>();
         _currentBackground = (GameObject)Instantiate(Background, this.transform.position, Quaternion.identity);
         _currentBackgroundSR = _currentBackground.GetComponent<SpriteRenderer>();
@@ -102,7 +107,7 @@ public class BackgroundManager : MonoBehaviour
 
         if (camTopSegTopDiff < 0 && !_noMoreSegments)
         {
-            if (Infinite)
+            if (_infinite)
             {
                 int randSeg = Random.Range(1, 4),
                     randLvl = Random.Range(1, 4);
@@ -136,24 +141,44 @@ public class BackgroundManager : MonoBehaviour
             _lastSegment = _currentSegment;
             _lastTopSegPos = _currentTopSegPos;
         }
+        else
+        {
+            SubController theSub = FindObjectOfType<SubController>();
+            _lastTopSegPos = theSub.transform.position.y;
+        }
         
         _currentSegment = Resources.Load<GameObject>("Prefabs/Minigames/Prioritizing/" + segmentName);
 
         if (_currentSegment)
         {
+            _currentSegment = (GameObject)Instantiate(_currentSegment, new Vector2(_currentSegment.transform.position.x, 500), Quaternion.identity);
+            float currentBotSegPos = 999,
+                  newSegPos = 999;
+
             foreach (SpriteRenderer sr in _currentSegment.GetComponentsInChildren<SpriteRenderer>())
             {
                 if (sr.transform.position.y + sr.bounds.extents.y > _currentTopSegPos)
                 {
                     _currentTopSegPos = sr.transform.position.y + sr.bounds.extents.y;
                 }
+
+                Debug.Log("sr.pos: " + sr.transform.position.y + " - sr.extents: " + sr.bounds.extents.y + " < " + currentBotSegPos);
+                if (sr.transform.position.y - sr.bounds.extents.y < currentBotSegPos)
+                {
+                    currentBotSegPos = sr.transform.position.y - sr.bounds.extents.y;
+                }
             }
 
-            _currentTopSegPos = _lastTopSegPos + (_currentTopSegPos - _currentSegment.transform.position.y);
+            //Debug.Log("Last Top: " + _lastTopSegPos + " + ((Current Top: " + _currentTopSegPos + " - Current Bot: " + currentBotSegPos + ") / " + 2);
 
-            Debug.Log(_currentTopSegPos);
+            Debug.Log("Last Top Pos: " + _lastTopSegPos + " (" + _currentSegment.transform.position.y + " - " + currentBotSegPos + ")");
+            newSegPos = _lastTopSegPos + (_currentSegment.transform.position.y - currentBotSegPos);
+            _currentTopSegPos = newSegPos + (_currentTopSegPos - _currentSegment.transform.position.y);
 
-            _currentSegment = (GameObject)Instantiate(_currentSegment, new Vector3(_currentSegment.transform.position.x, _currentTopSegPos, _currentSegment.transform.position.z), Quaternion.identity);
+            //Debug.Log("Current Top: " + _currentTopSegPos);
+            //Debug.Log("New Pos: " + newSegPos);
+
+            _currentSegment.transform.position = new Vector3(_currentSegment.transform.position.x, newSegPos, _currentSegment.transform.position.z);
             _currentSegmentName = "" + (char)_currentSegment.name[6] + (char)_currentSegment.name[7] + (char)_currentSegment.name[8];
         }
         else
