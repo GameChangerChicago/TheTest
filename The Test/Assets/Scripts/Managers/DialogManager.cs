@@ -114,9 +114,15 @@ public class DialogManager : MonoBehaviour
                 {
                     SceneManager.LoadScene("FindingFriends");
                 }
-                else if (currentConvoIndex <= 6)
+                else if (currentConvoIndex == 5)
                 {
                     SceneManager.LoadScene("Prioritizing");
+                }
+                else if(currentConvoIndex == 6)
+                {
+                    GameManager.CharacterSelected = false;
+                    GameManager.CurrentConvoIndex = 0;
+                    SceneManager.LoadScene("TempFrame");
                 }
                 break;
             default:

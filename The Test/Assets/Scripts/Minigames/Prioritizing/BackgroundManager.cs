@@ -20,6 +20,8 @@ public class BackgroundManager : MonoBehaviour
 
     void Start()
     {
+        GameManager.CurrentCharacterType = CharacterType.Marlon;
+        
         if (GameManager.CurrentCharacterType == CharacterType.Marlon)
             _infinite = true;
         else
@@ -151,9 +153,9 @@ public class BackgroundManager : MonoBehaviour
 
         if (_currentSegment)
         {
-            _currentSegment = (GameObject)Instantiate(_currentSegment, new Vector2(_currentSegment.transform.position.x, 500), Quaternion.identity);
-            float currentBotSegPos = 999,
-                  newSegPos = 999;
+            _currentSegment = (GameObject)Instantiate(_currentSegment, new Vector2(_currentSegment.transform.position.x, 10000), Quaternion.identity);
+            float currentBotSegPos = 99999,
+                  newSegPos = 99999;
 
             foreach (SpriteRenderer sr in _currentSegment.GetComponentsInChildren<SpriteRenderer>())
             {
@@ -161,22 +163,14 @@ public class BackgroundManager : MonoBehaviour
                 {
                     _currentTopSegPos = sr.transform.position.y + sr.bounds.extents.y;
                 }
-
-                Debug.Log("sr.pos: " + sr.transform.position.y + " - sr.extents: " + sr.bounds.extents.y + " < " + currentBotSegPos);
                 if (sr.transform.position.y - sr.bounds.extents.y < currentBotSegPos)
                 {
                     currentBotSegPos = sr.transform.position.y - sr.bounds.extents.y;
                 }
             }
 
-            //Debug.Log("Last Top: " + _lastTopSegPos + " + ((Current Top: " + _currentTopSegPos + " - Current Bot: " + currentBotSegPos + ") / " + 2);
-
-            Debug.Log("Last Top Pos: " + _lastTopSegPos + " (" + _currentSegment.transform.position.y + " - " + currentBotSegPos + ")");
             newSegPos = _lastTopSegPos + (_currentSegment.transform.position.y - currentBotSegPos);
             _currentTopSegPos = newSegPos + (_currentTopSegPos - _currentSegment.transform.position.y);
-
-            //Debug.Log("Current Top: " + _currentTopSegPos);
-            //Debug.Log("New Pos: " + newSegPos);
 
             _currentSegment.transform.position = new Vector3(_currentSegment.transform.position.x, newSegPos, _currentSegment.transform.position.z);
             _currentSegmentName = "" + (char)_currentSegment.name[6] + (char)_currentSegment.name[7] + (char)_currentSegment.name[8];

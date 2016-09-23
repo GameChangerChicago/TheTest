@@ -58,7 +58,8 @@ public class GameManager : MonoBehaviour
 
         //Mason: Temp solution to test transition between phone and game scenes without character select. If you are seeing this, please feel free to remove.
         //Ashlyn: This is ok, just comment stuff like this out before making commits.
-        //CurrentCharacterType = CharacterType.Isaac;
+        CurrentCharacterType = CharacterType.Marlon;
+        CurrentConvoIndex = 5;
 
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
@@ -116,13 +117,11 @@ public class GameManager : MonoBehaviour
                 else if (CurrentConvoIndex == 2)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
-            else
+            if (CurrentCharacterType == CharacterType.Felix)
             {
                 if (CurrentConvoIndex == 4)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 5);
                 else if (CurrentConvoIndex == 5)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
-                else //Incase this level is being started out of context
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
 
@@ -170,7 +169,7 @@ public class GameManager : MonoBehaviour
             switch (currentSceneName)
             {
                 case "Prioritizing":
-                    if (MiniGameTimer > 29)
+                    if (MiniGameTimer > 29 && CurrentCharacterType != CharacterType.Marlon)
                     {
                         FadeHandler(false, false, "TempFrame");
                     }
