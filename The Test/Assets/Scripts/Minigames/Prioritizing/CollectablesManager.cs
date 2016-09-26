@@ -50,6 +50,8 @@ public class CollectablesManager : MonoBehaviour
     {
         for (int i = 0; i < _coinsToMove.Count; i++)
         {
+            //Debug.Log("Coins to move: " + _coinsToMove);
+            //Debug.Log("Coin Collection Spot: " + CoinCollectionSpot);
             float distance = Vector2.Distance(_coinsToMove[i].position, CoinCollectionSpot.position),
                   distanceDifference = _initalDistances[i] - distance;
             

@@ -43,12 +43,31 @@ public class SubController : MonoBehaviour
                         Debug.LogWarning("The only thing I could think of that would cause this to happen is if we add more that three rows in the sub game.");
                         break;
                 }
+
                 _lastSubmarineState = _currentSubmarineState;
                 _currentSubmarineState = value;
             }
         }
     }
     private SubmarineStates _currentSubmarineState = SubmarineStates.MIDDLEROW;
+
+    protected bool movingLeft
+    {
+        get
+        {
+            return _movingLeft;
+        }
+
+        set
+        {
+            if(value != _movingLeft)
+            {
+                _movingLeft = value;
+            }
+        }
+    }
+    private bool _movingLeft;
+
     private SubmarineStates _lastSubmarineState;
     private GameManager _theGameManager;
     private CollectablesManager _theCollectablesManager;
@@ -127,8 +146,8 @@ public class SubController : MonoBehaviour
                 {
                     _currentMoveDistance.x += LateralAccelerationRate * Time.deltaTime;
                 }
-
-                this.transform.Translate(-_currentMoveDistance.x, 0, 0);
+                movingLeft = true;
+                this.transform.Translate(-Mathf.Abs(_currentMoveDistance.x), 0, 0);
             }
             else if (this.transform.position.x < _currentXTarget - 0.5f)
             {
@@ -136,7 +155,7 @@ public class SubController : MonoBehaviour
                 {
                     _currentMoveDistance.x += LateralAccelerationRate * Time.deltaTime;
                 }
-
+                movingLeft = false;
                 this.transform.Translate(_currentMoveDistance.x, 0, 0);
             }
             else
@@ -194,7 +213,18 @@ public class SubController : MonoBehaviour
     {
         if(col.tag == "Obstacle")
         {
-            currentSubmarineState = _lastSubmarineState;
+            if(!movingLeft && this.transform.position.x > Camera.main.transform.position.x && _lastSubmarineState == SubmarineStates.LEFTROW)
+            {
+                currentSubmarineState = SubmarineStates.MIDDLEROW;
+            }
+            else if(movingLeft && this.transform.position.x < Camera.main.transform.position.x && _lastSubmarineState == SubmarineStates.RIGHTROW)
+            {
+                currentSubmarineState = SubmarineStates.MIDDLEROW;
+            }
+            else
+            {
+                currentSubmarineState = _lastSubmarineState;
+            }
         }
 
         if(col.tag == "Coin")
