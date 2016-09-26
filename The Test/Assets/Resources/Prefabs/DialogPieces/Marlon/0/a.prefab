@@ -40,7 +40,7 @@ GameObject:
   - 223: {fileID: 223000012276191012}
   - 222: {fileID: 222000012041694460}
   m_Layer: 0
-  m_Name: 0
+  m_Name: a
   m_TagString: LeftSideDialog
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

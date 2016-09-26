@@ -55,18 +55,18 @@ public class FireFlyController : MonoBehaviour
 
     private void UpdateMyRandomValue()
     {
-        if (_following && Vector2.Distance(this.transform.position, _playerRigidbody.position) > 1)
+        if (_following && Vector2.Distance(this.transform.position, _playerRigidbody.position) > 0.5f)
         {
             if (this.transform.position.x > _playerRigidbody.position.x)
             {
                 //Top Right Quad
                 if (this.transform.position.y > _playerRigidbody.position.y)
                 {
-                    _randomModifier = new Vector2(Random.Range(-0.5f, -0.1f), Random.Range(-0.5f, -0.1f));
+                    _randomModifier = new Vector2(Random.Range(-0.3f, -0.1f), Random.Range(-0.3f, -0.1f));
                 }
                 else //Bottom Right Quad
                 {
-                    _randomModifier = new Vector2(Random.Range(-0.5f, -0.1f), Random.Range(0.1f, 0.5f));
+                    _randomModifier = new Vector2(Random.Range(-0.3f, -0.1f), Random.Range(0.1f, 0.3f));
                 }
             }
             else
@@ -74,11 +74,11 @@ public class FireFlyController : MonoBehaviour
                 //Top Left Quad
                 if (this.transform.position.y > _playerRigidbody.position.y)
                 {
-                    _randomModifier = new Vector2(Random.Range(0.1f, 0.5f), Random.Range(-0.5f, -0.1f));
+                    _randomModifier = new Vector2(Random.Range(0.1f, 0.3f), Random.Range(-0.3f, -0.1f));
                 }
                 else //Bottom Left Quad
                 {
-                    _randomModifier = new Vector2(Random.Range(0.1f, 0.5f), Random.Range(0.1f, 0.5f));
+                    _randomModifier = new Vector2(Random.Range(0.1f, 0.3f), Random.Range(0.1f, 0.3f));
                 }
             }
         }
