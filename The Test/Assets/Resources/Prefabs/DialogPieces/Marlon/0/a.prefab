@@ -123,8 +123,8 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'I was thinking about what you told me yesterday...I love you always, you
-    know that. I''m just trying to understand. '
+  m_Text: "I was thinking about what you told me yesterday\u2026 I love you always,
+    you know that. I\u2019m just trying to understand. "
 --- !u!222 &222000012041694460
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -217,7 +217,7 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 28.28894, y: 38.827454}
+  m_AnchoredPosition: {x: -191, y: -64}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000012063238928
