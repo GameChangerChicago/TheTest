@@ -10,6 +10,41 @@ public class RoomObjectController : MonoBehaviour
     public Vector2 CurrentGridCount;
     public bool GameOver;
 
+    public CardinalDirections ObjectDragDirection
+    {
+        get
+        {
+            if(_horizontalLock)
+            {
+                if(_touchDelta.x > 0)
+                {
+                    return CardinalDirections.RIGHT;
+                }
+                else
+                {
+                    return CardinalDirections.LEFT;
+                }
+            }
+            else if(_verticalLock)
+            {
+                if (_touchDelta.y > 0)
+                {
+                    return CardinalDirections.UP;
+                }
+                else
+                {
+                    return CardinalDirections.DOWN;
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Hmm, if neither lock has happened than you should be trying to get this property.");
+                return CardinalDirections.DOWN;
+            }
+        }
+    }
+    private CardinalDirections _objectDragDirection;
+
     private GameManager _theGameManager;
     private Vector2 _initialTouchPos,
                     _initialObjectPos,
@@ -132,7 +167,7 @@ public class RoomObjectController : MonoBehaviour
         {
             case CardinalDirections.UP:
                 if (ObjectToMove.transform.position.y < targetLoc.y - 0.1f)
-                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x, ObjectToMove.transform.position.y + (distanceToTravel * Time.deltaTime * 10), ObjectToMove.transform.position.z);
+                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x, ObjectToMove.transform.position.y + (distanceToTravel * Time.deltaTime * 20), ObjectToMove.transform.position.z);
                 else
                 {
                     ObjectToMove.transform.position = targetLoc;
@@ -152,7 +187,7 @@ public class RoomObjectController : MonoBehaviour
                 break;
             case CardinalDirections.LEFT:
                 if (ObjectToMove.transform.position.x > targetLoc.x + 0.1f)
-                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x - (distanceToTravel * Time.deltaTime * 10), ObjectToMove.transform.position.y, ObjectToMove.transform.position.z);
+                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x - (distanceToTravel * Time.deltaTime * 20), ObjectToMove.transform.position.y, ObjectToMove.transform.position.z);
                 else
                 {
                     ObjectToMove.transform.position = targetLoc;
@@ -162,7 +197,7 @@ public class RoomObjectController : MonoBehaviour
                 break;
             case CardinalDirections.RIGHT:
                 if (ObjectToMove.transform.position.x < targetLoc.x - 0.1f)
-                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x + (distanceToTravel * Time.deltaTime * 10), ObjectToMove.transform.position.y, ObjectToMove.transform.position.z);
+                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x + (distanceToTravel * Time.deltaTime * 20), ObjectToMove.transform.position.y, ObjectToMove.transform.position.z);
                 else
                 {
                     ObjectToMove.transform.position = targetLoc;

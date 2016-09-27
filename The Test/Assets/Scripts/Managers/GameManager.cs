@@ -125,6 +125,8 @@ public class GameManager : MonoBehaviour
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
 
+            currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
+
             Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
         }
         if (SceneManager.GetActiveScene().name == "Irritation")
