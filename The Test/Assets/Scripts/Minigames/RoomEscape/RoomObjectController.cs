@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 public class RoomObjectController : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class RoomObjectController : MonoBehaviour
     }
     private CardinalDirections _objectDragDirection;
 
+    private List<RoomObject> _roomObjects = new List<RoomObject>();
     private GameManager _theGameManager;
     private Vector2 _initialTouchPos,
                     _initialObjectPos,
@@ -116,7 +118,7 @@ public class RoomObjectController : MonoBehaviour
 
         if (_horizontalLock)
         {
-            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(ObjectToMove.transform.position.x, 0), new Vector2(_initialObjectPos.x + _touchDelta.x, 0)) * 5), 0.01f, 0.8f);
+            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(ObjectToMove.transform.position.x, 0), new Vector2(_initialObjectPos.x + _touchDelta.x, 0)) * 15), 0.01f, 0.8f);
 
             if (ObjectToMove.transform.position.x > _initialObjectPos.x + _touchDelta.x)
             {
@@ -127,7 +129,7 @@ public class RoomObjectController : MonoBehaviour
         }
         if (_verticalLock)
         {
-            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(0, ObjectToMove.transform.position.y), new Vector2(0, _initialObjectPos.y + _touchDelta.y)) * 5), 0.01f, 0.8f);
+            dragSpeed = Mathf.Clamp(Time.deltaTime * (Vector2.Distance(new Vector2(0, ObjectToMove.transform.position.y), new Vector2(0, _initialObjectPos.y + _touchDelta.y)) * 15), 0.01f, 0.8f);
 
             if (ObjectToMove.transform.position.y > _initialObjectPos.y + _touchDelta.y)
             {
@@ -177,7 +179,7 @@ public class RoomObjectController : MonoBehaviour
                 break;
             case CardinalDirections.DOWN:
                 if (ObjectToMove.transform.position.y > targetLoc.y + 0.1f)
-                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x, ObjectToMove.transform.position.y - (distanceToTravel * Time.deltaTime * 10), ObjectToMove.transform.position.z);
+                    ObjectToMove.transform.position = new Vector3(ObjectToMove.transform.position.x, ObjectToMove.transform.position.y - (distanceToTravel * Time.deltaTime * 20), ObjectToMove.transform.position.z);
                 else
                 {
                     ObjectToMove.transform.position = targetLoc;
@@ -222,16 +224,28 @@ public class RoomObjectController : MonoBehaviour
             ObjectToMove.GetComponent<Animator>().SetBool("Walking", false);
     }
 
-    //HACK: THIS SHOULD BE HANDLED BY THE GAMEMANAGER!!!
-    private void FadeOut()
+    public bool OverlapChecker(RoomObject objectBeingDragged)
     {
-        if (CameraMask != null)
+        if (_roomObjects.Count == 0)
+            _roomObjects.AddRange(FindObjectsOfType<RoomObject>());
+
+        _roomObjects.Remove(objectBeingDragged);
+        List<Vector2> objectGridPos = objectBeingDragged.GridPositions;
+
+        foreach (RoomObject ro in _roomObjects)
         {
-            CameraMask.color = new Color(CameraMask.color.r, CameraMask.color.g, CameraMask.color.b, CameraMask.color.a + (2 * Time.deltaTime));
-            if (CameraMask.color.a > 0.9f)
-                SceneManager.LoadScene("TempFrame");
+            for (int i = 0; i < ro.GridPositions.Count; i++)
+            {
+                for (int j = 0; j < objectGridPos.Count; j++)
+                {
+                    if (objectGridPos[j] == ro.GridPositions[i])
+                    {
+                        return true;
+                    }
+                }
+            }
         }
-        else
-            SceneManager.LoadScene("TempFrame");
+
+        return false;
     }
 }
