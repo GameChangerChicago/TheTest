@@ -203,7 +203,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AmoutToChangeLight: 0.7
+  MaxLightSize: 0
   FriendCountGoal: 0
+  StrongLight: 1
 --- !u!114 &114000011248362930
 MonoBehaviour:
   m_ObjectHideFlags: 1

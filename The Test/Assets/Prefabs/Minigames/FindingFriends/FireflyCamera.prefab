@@ -203,8 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c5f4ff799f09e1498c4c431ef7a3d09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  FireflyFriend: {fileID: 1000013616182974, guid: ffad0806fa9fa48c6bf6a6518a5014cd,
+  FireflyFriendEasyMode: {fileID: 1000013616182974, guid: ffad0806fa9fa48c6bf6a6518a5014cd,
     type: 2}
+  FireflyFriendHardMode: {fileID: 1000013616182974, guid: 03bb8e2faf8602d4c8fde872247221a0,
+    type: 2}
+  HardMode: 0
 --- !u!124 &124000011989208900
 Behaviour:
   m_ObjectHideFlags: 1

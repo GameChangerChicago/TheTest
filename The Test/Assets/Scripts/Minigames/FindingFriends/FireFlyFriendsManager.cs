@@ -4,13 +4,19 @@ using System.Collections.Generic;
 
 public class FireFlyFriendsManager : MonoBehaviour
 {
-    public GameObject FireflyFriend;
+    public GameObject FireflyFriendEasyMode,
+                      FireflyFriendHardMode;
+    public bool HardMode;
     private GameObject _colliderToSend;
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.tag == "PotentialFirefly")
         {
-            GameObject newFF = (GameObject)Instantiate(FireflyFriend, new Vector2(col.transform.position.x, col.transform.position.y), Quaternion.identity);
+            GameObject newFF;
+            if (!HardMode)
+                newFF = (GameObject)Instantiate(FireflyFriendEasyMode, new Vector2(col.transform.position.x, col.transform.position.y), Quaternion.identity);
+            else
+                newFF = (GameObject)Instantiate(FireflyFriendHardMode, new Vector2(col.transform.position.x, col.transform.position.y), Quaternion.identity);
             newFF.GetComponent<FireFlyController>().MyInstantiator = (BoxCollider2D)col;
             col.enabled = false;
         }

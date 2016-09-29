@@ -3,8 +3,10 @@ using System.Collections;
 
 public class LightController : MonoBehaviour
 {
-    public float AmoutToChangeLight;
+    public float AmoutToChangeLight,
+                 MaxLightSize;
     public int FriendCountGoal;
+    public bool StrongLight;
 
     protected bool lightIncreasing
     {
@@ -18,11 +20,27 @@ public class LightController : MonoBehaviour
             {
                 if(value)
                 {
-                    _targetLightSize = _myLight.LightRadius + AmoutToChangeLight;
+                    if (StrongLight)
+                    {
+                        _targetLightSize = _myLight.LightRadius + AmoutToChangeLight;
+                    }
+                    else
+                    {
+                        _targetLightSize = Mathf.Clamp(_myLight.LightRadius + (AmoutToChangeLight * (Random.Range(0.1f, 0.5f))), 0.1f, MaxLightSize);
+                        Debug.Log("Increase to: " + _targetLightSize);
+                    }
                 }
                 else
                 {
-                    _targetLightSize = _myLight.LightRadius - AmoutToChangeLight;
+                    if (StrongLight)
+                    {
+                        _targetLightSize = _myLight.LightRadius - AmoutToChangeLight;
+                    }
+                    else
+                    {
+                        _targetLightSize = Mathf.Clamp(_myLight.LightRadius - (AmoutToChangeLight * (Random.Range(0.5f, 0.9f))), 0.1f, MaxLightSize);
+                        Debug.Log("Decrease to: " + _targetLightSize);
+                    }
 
                     //if (this.transform.parent.name == "Player")
                     //    Debug.Log("Current Light: " + _myLight.LightRadius + " Change Ammount: " + AmoutToChangeLight);
