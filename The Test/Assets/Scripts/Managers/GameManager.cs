@@ -173,7 +173,11 @@ public class GameManager : MonoBehaviour
                 case "Prioritizing":
                     if (MiniGameTimer > 29 && CurrentCharacterType != CharacterType.Marlon)
                     {
-                        FadeHandler(false, false, "TempFrame");
+                        FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
+                    }
+                    else if(MiniGameTimer > 299 && CurrentCharacterType == CharacterType.Marlon)
+                    {
+                        FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
                     }
                     break;
                 case "RoomEscape":
@@ -190,14 +194,14 @@ public class GameManager : MonoBehaviour
                         }
                         else
                         {
-                            FadeHandler(false, false, "TempFrame");
+                            FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
                         }
                     }
                     break;
                 case "Irritation":
                     if (MiniGameTimer > 29)
                     {
-                        FadeHandler(false, true, "TempFrame");
+                        FadeHandler(false, true, CurrentCharacterType.ToString() + "Frame");
                     }
                     break;
                 case "FindingFriends":
@@ -207,7 +211,7 @@ public class GameManager : MonoBehaviour
                         {
                             FadeHandler(false, false, "Irritation");
                         }
-                        FadeHandler(false, false, "TempFrame");
+                        FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
                     }
                     break;
                 case "PhoneScene":
