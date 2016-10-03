@@ -7,20 +7,23 @@ using System.Collections.Generic;
 public class CollectablesManager : MonoBehaviour
 {
     public Transform CoinCollectionSpot;
-    public Image CoinCounter;
+    public Animator FirstDigit,
+                    SecondDigit;
 
     protected int coinCount
     {
         get
         {
-            return _cointCount;
+            return _coinCount;
         }
         set
         {
-            _cointCount = value;
+            StartCoroutine("UpdateCoinCounter", value);
+
+            _coinCount = value;
         }
     }
-    private int _cointCount;
+    private int _coinCount;
 
     private List<Transform> _coinsToMove = new List<Transform>();
     private List<float> _initalDistances = new List<float>();
@@ -92,6 +95,17 @@ public class CollectablesManager : MonoBehaviour
                 _theGameManager.FadeHandler(false, true, "TempFrame");
             }
         }
+    }
+
+    private IEnumerator UpdateCoinCounter(int value)
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        int firstDigit = value % 10,
+            secondDigit = value / 10;
+
+        FirstDigit.SetInteger("number", firstDigit);
+        SecondDigit.SetInteger("number", secondDigit);
     }
 
     public void CoinCollected(GameObject coin)
