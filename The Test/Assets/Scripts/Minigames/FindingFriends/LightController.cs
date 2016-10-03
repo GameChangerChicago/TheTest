@@ -27,7 +27,6 @@ public class LightController : MonoBehaviour
                     else
                     {
                         _targetLightSize = Mathf.Clamp(_myLight.LightRadius + (AmoutToChangeLight * (Random.Range(0.1f, 0.5f))), 0.1f, MaxLightSize);
-                        Debug.Log("Increase to: " + _targetLightSize);
                     }
                 }
                 else
@@ -39,7 +38,6 @@ public class LightController : MonoBehaviour
                     else
                     {
                         _targetLightSize = Mathf.Clamp(_myLight.LightRadius - (AmoutToChangeLight * (Random.Range(0.5f, 0.9f))), 0.1f, MaxLightSize);
-                        Debug.Log("Decrease to: " + _targetLightSize);
                     }
 
                     //if (this.transform.parent.name == "Player")

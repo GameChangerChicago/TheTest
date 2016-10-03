@@ -48,7 +48,7 @@ MonoBehaviour:
   ProtectCookie: {fileID: 1000010454019702, guid: bfa1bfe400519a549ac69900073dfa24,
     type: 2}
   FindFF: {fileID: 1000010618273934, guid: eff3fb24584f3624a91ff7cd6f45c2ed, type: 2}
-  BlackFadeMask: {fileID: 212000012909284610}
+  BlackFadeMask: {fileID: 212000012063452740}
   WhiteFadeMask: {fileID: 212000012909284610}
   MiniGameTimer: 0
   GameOn: 0

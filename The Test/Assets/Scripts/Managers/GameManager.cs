@@ -5,7 +5,7 @@ using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static PhoneTypes CurrentPhoneType;
+    public static PhoneTypes CurrentPhoneType = PhoneTypes.UNIDENTIFIED;
     public static CharacterType CurrentCharacterType;
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
@@ -30,36 +30,39 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         #region DeviceResolution
-        if (Camera.main.aspect > 0.74f)
-        { //iPad
-            CurrentPhoneType = PhoneTypes.IPAD;
-        }
-        else if (Camera.main.aspect > 0.6665f)
-        { //iPhone 4
-            CurrentPhoneType = PhoneTypes.IPHONE4;
-        }
-        else if (Camera.main.aspect > 0.624f)
-        { //Android 1
-            CurrentPhoneType = PhoneTypes.ANDROID1;
-        }
-        else if (Camera.main.aspect > 0.5859374f)
-        { //Android 2
-            CurrentPhoneType = PhoneTypes.ANDROID2;
-        }
-        else if (Camera.main.aspect > 0.5624f)
-        { //iPhone5
-            CurrentPhoneType = PhoneTypes.IPHONE5;
-        }
-        else
-        { //Android 3
-            CurrentPhoneType = PhoneTypes.ANDROID3;
+        if (CurrentPhoneType != PhoneTypes.UNIDENTIFIED && Camera.main != null)
+        {
+            if (Camera.main.aspect > 0.74f)
+            { //iPad
+                CurrentPhoneType = PhoneTypes.IPAD;
+            }
+            else if (Camera.main.aspect > 0.6665f)
+            { //iPhone 4
+                CurrentPhoneType = PhoneTypes.IPHONE4;
+            }
+            else if (Camera.main.aspect > 0.624f)
+            { //Android 1
+                CurrentPhoneType = PhoneTypes.ANDROID1;
+            }
+            else if (Camera.main.aspect > 0.5859374f)
+            { //Android 2
+                CurrentPhoneType = PhoneTypes.ANDROID2;
+            }
+            else if (Camera.main.aspect > 0.5624f)
+            { //iPhone5
+                CurrentPhoneType = PhoneTypes.IPHONE5;
+            }
+            else
+            { //Android 3
+                CurrentPhoneType = PhoneTypes.ANDROID3;
+            }
         }
         #endregion
 
         //Mason: Temp solution to test transition between phone and game scenes without character select. If you are seeing this, please feel free to remove.
         //Ashlyn: This is ok, just comment stuff like this out before making commits.
-        CurrentCharacterType = CharacterType.Marlon;
-        CurrentConvoIndex = 5;
+        //CurrentCharacterType = CharacterType.Marlon;
+        //CurrentConvoIndex = 3;
 
         if (SceneManager.GetActiveScene().name == "Prioritizing")
         {
@@ -136,6 +139,23 @@ public class GameManager : MonoBehaviour
         }
         if (SceneManager.GetActiveScene().name == "FindingFriends")
         {
+            GameObject fFLevel = new GameObject();
+            if (CurrentCharacterType == CharacterType.Marlon)
+            {
+                if (CurrentConvoIndex == 3)
+                    fFLevel = Resources.Load<GameObject>("Prefabs/Minigames/FindingFriends/Level 1 Hard");
+                if (CurrentConvoIndex == 4)
+                    fFLevel = Resources.Load<GameObject>("Prefabs/Minigames/FindingFriends/Level 1 Easy");
+            }
+            else if (CurrentCharacterType == CharacterType.Isaac)
+            {
+                if (CurrentConvoIndex == 2)
+                    fFLevel = Resources.Load<GameObject>("Prefabs/Minigames/FindingFriends/Level 1 Hard");
+                if (CurrentConvoIndex == 3)
+                    fFLevel = Resources.Load<GameObject>("Prefabs/Minigames/FindingFriends/Level 1 Easy");
+            }
+            fFLevel = (GameObject)Instantiate(fFLevel, fFLevel.transform.position, Quaternion.identity);
+
             _fireflyLightRenderer = GameObject.Find("Player").GetComponentInChildren<MeshRenderer>();
             _playerLightController = _fireflyLightRenderer.gameObject.GetComponent<LightController>();
             _fireflyLightRenderer.enabled = false;
