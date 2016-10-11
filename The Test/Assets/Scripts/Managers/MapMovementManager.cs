@@ -176,45 +176,46 @@ public class MapMovementManager : MonoBehaviour
 
     private void FinishWalk()
     {
-        if (GameManager.CurrentCharacterType == CharacterType.Felix)
-        {
-            if (GameManager.CurrentConvoIndex == 4)
-            {
-                SceneManager.LoadScene("Irritation");
-            }
-            else
-            {
-                SceneManager.LoadScene("TempFrame");
-            }
-        }
+        SceneManager.LoadScene(GameManager.CurrentCharacterType.ToString() + "Frame");
+        //if (GameManager.CurrentCharacterType == CharacterType.Felix)
+        //{
+        //    if (GameManager.CurrentConvoIndex == 4)
+        //    {
+        //        SceneManager.LoadScene("Irritation");
+        //    }
+        //    else
+        //    {
+        //        SceneManager.LoadScene("TempFrame");
+        //    }
+        //}
 
-        if (GameManager.CurrentCharacterType == CharacterType.Isaac)
-        {
-            if (GameManager.CurrentConvoIndex == 0)
-            {
-                SceneManager.LoadScene("RoomEscape");
-            }
-            if (GameManager.CurrentConvoIndex == 1)
-            {
-                SceneManager.LoadScene("FindingFriends");
-            }
-            if (GameManager.CurrentConvoIndex == 2)
-            {
-                SceneManager.LoadScene("Irritation");
-            }
-        }
+        //if (GameManager.CurrentCharacterType == CharacterType.Isaac)
+        //{
+        //    if (GameManager.CurrentConvoIndex == 0)
+        //    {
+        //        SceneManager.LoadScene("RoomEscape");
+        //    }
+        //    if (GameManager.CurrentConvoIndex == 1)
+        //    {
+        //        SceneManager.LoadScene("FindingFriends");
+        //    }
+        //    if (GameManager.CurrentConvoIndex == 2)
+        //    {
+        //        SceneManager.LoadScene("Irritation");
+        //    }
+        //}
 
-        if (GameManager.CurrentCharacterType == CharacterType.Marlon)
-        {
-            if (GameManager.CurrentConvoIndex == 0)
-            {
-                SceneManager.LoadScene("RoomEscape");
-            }
-            if (GameManager.CurrentConvoIndex >= 1)
-            {
-                SceneManager.LoadScene("TempFrame");
-            }
-        }
+        //if (GameManager.CurrentCharacterType == CharacterType.Marlon)
+        //{
+        //    if (GameManager.CurrentConvoIndex == 0)
+        //    {
+        //        SceneManager.LoadScene("RoomEscape");
+        //    }
+        //    if (GameManager.CurrentConvoIndex >= 1)
+        //    {
+        //        SceneManager.LoadScene("TempFrame");
+        //    }
+        //}
     }
 
     private void PlayerMapPieceSetup()
