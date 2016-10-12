@@ -37,11 +37,6 @@ public class DialogManager : MonoBehaviour
     void Start()
     {
         _initialTopPointPos = DialogContainer.transform.position;
-
-        if (GameManager.CharacterSelected)
-        {
-            LoadPieceOfDialog();
-        }
     }
 
     void Update()
@@ -53,7 +48,6 @@ public class DialogManager : MonoBehaviour
             else
             {
                 _dialogActive = false;
-                ClearDialogContainer();
                 _dialogFinished = false;
                 LoadMinigame();
             }
