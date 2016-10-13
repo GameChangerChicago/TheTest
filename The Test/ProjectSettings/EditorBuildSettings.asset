@@ -11,10 +11,18 @@ EditorBuildSettings:
     path: Assets/Scenes/OldFrame.unity
   - enabled: 0
     path: Assets/Scenes/YouGotTested.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PhoneScene.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TempFrame.unity
+  - enabled: 1
+    path: Assets/Scenes/CharacterSelection.unity
+  - enabled: 1
+    path: Assets/Scenes/Frame/FelixFrame.unity
+  - enabled: 1
+    path: Assets/Scenes/Frame/IsaacFrame.unity
+  - enabled: 1
+    path: Assets/Scenes/Frame/MarlonFrame.unity
   - enabled: 1
     path: Assets/Scenes/Minigames/Prioritizing.unity
   - enabled: 1
@@ -25,9 +33,3 @@ EditorBuildSettings:
     path: Assets/Scenes/Minigames/FindingFriends.unity
   - enabled: 1
     path: Assets/Scenes/MapScene.unity
-  - enabled: 1
-    path: Assets/Scenes/Frame/FelixFrame.unity
-  - enabled: 1
-    path: Assets/Scenes/Frame/IsaacFrame.unity
-  - enabled: 1
-    path: Assets/Scenes/Frame/MarlonFrame.unity

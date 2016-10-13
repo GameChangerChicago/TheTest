@@ -80,19 +80,13 @@ public class CollectablesManager : MonoBehaviour
             _bloom.localScale = new Vector3(_bloom.localScale.x + ((25 + _bloom.localScale.x) * Time.deltaTime), _bloom.localScale.y + ((25 + _bloom.localScale.y) * Time.deltaTime), _bloom.localScale.z);
         else
         {
-            //This bit is kinda tricky. Basically in this one situation we want to reset the temp frame. If ever you want to reset the frame (basically, make it so the player can select a character).
-            if (GameManager.CurrentCharacterType == CharacterType.Marlon && GameManager.CurrentConvoIndex == 6)
-            {
-                GameManager.CharacterSelected = false;
-            }
-
             if (GameManager.CurrentCharacterType == CharacterType.Felix && GameManager.CurrentConvoIndex == 3)
             {
                 _theGameManager.FadeHandler(false, true, "MapScene");
             }
             else
             {
-                _theGameManager.FadeHandler(false, true, "TempFrame");
+                _theGameManager.FadeHandler(false, true, GameManager.CurrentCharacterType.ToString() + "Frame");
             }
         }
     }
@@ -119,6 +113,13 @@ public class CollectablesManager : MonoBehaviour
     {
         _gemCollected = true;
         _bloom = GameObject.Find("Bloom").transform;
+
+        GameManager.MessageIconActive = true;
+
+        if(GameManager.CurrentCharacterType == CharacterType.Marlon)
+        {
+            GameManager.MapIconActive = true;
+        }
 
         if(GameManager.CurrentCharacterType.ToString() == "Felix")
         {

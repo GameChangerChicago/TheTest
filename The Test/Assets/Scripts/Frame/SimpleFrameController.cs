@@ -30,7 +30,7 @@ public class SimpleFrameController : MonoBehaviour
         {
             GameManager.CurrentCharacterType = CharacterType.Isaac;
         }
-        GameManager.CharacterSelected = true;
+
         CharacterNameDisplay.text = characterName;
     }
 

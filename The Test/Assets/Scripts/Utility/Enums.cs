@@ -33,12 +33,10 @@ public enum CardinalDirections
 
 public enum PhoneTypes
 {
-	ANDROID1,
-	ANDROID2,
-	ANDROID3,
 	IPHONE4,
 	IPHONE5,
-	IPAD,
+    IPHONE6,
+    GALAXYS7,
 	UNIDENTIFIED
 }
 

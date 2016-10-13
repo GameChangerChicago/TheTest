@@ -10,7 +10,10 @@ public class GameManager : MonoBehaviour
     public static FrameType CurrentFrame;
     public static int CurrentMapPositionIndex,
         CurrentConvoIndex;
-    public static bool CharacterSelected;
+    public static bool MapIconActive,
+                       GameIconActive,
+                       MessageIconActive,
+                       ContactsIconActive;
 
     public GameObject CollectDiamond,
         GetBone,
@@ -30,31 +33,29 @@ public class GameManager : MonoBehaviour
     void Awake()
     {
         #region DeviceResolution
-        if (CurrentPhoneType != PhoneTypes.UNIDENTIFIED && Camera.main != null)
+        if (CurrentPhoneType == PhoneTypes.UNIDENTIFIED && Camera.main != null)
         {
-            if (Camera.main.aspect > 0.74f)
-            { //iPad
-                CurrentPhoneType = PhoneTypes.IPAD;
+            float currentAspect = Camera.main.aspect;
+
+            //Galaxy S7
+            if(currentAspect == 1440f / 2560f)
+            {
+                CurrentPhoneType = PhoneTypes.GALAXYS7;
             }
-            else if (Camera.main.aspect > 0.6665f)
-            { //iPhone 4
-                CurrentPhoneType = PhoneTypes.IPHONE4;
+            //iPhone6
+            if (currentAspect == 750 / 1334)
+            {
+                CurrentPhoneType = PhoneTypes.IPHONE6;
             }
-            else if (Camera.main.aspect > 0.624f)
-            { //Android 1
-                CurrentPhoneType = PhoneTypes.ANDROID1;
-            }
-            else if (Camera.main.aspect > 0.5859374f)
-            { //Android 2
-                CurrentPhoneType = PhoneTypes.ANDROID2;
-            }
-            else if (Camera.main.aspect > 0.5624f)
-            { //iPhone5
+            //iPhone5
+            if (currentAspect == 640 / 1136)
+            {
                 CurrentPhoneType = PhoneTypes.IPHONE5;
             }
-            else
-            { //Android 3
-                CurrentPhoneType = PhoneTypes.ANDROID3;
+            //iPhone4
+            if(currentAspect == 640 / 960)
+            {
+                CurrentPhoneType = PhoneTypes.IPHONE4;
             }
         }
         #endregion
@@ -105,11 +106,11 @@ public class GameManager : MonoBehaviour
             if (CurrentCharacterType == CharacterType.Marlon)
             {
                 if (CurrentConvoIndex == 0)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 2);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
                 else if (CurrentConvoIndex == 1)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 3);
                 else if (CurrentConvoIndex == 2)
-                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
+                    currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 4);
             }
             if (CurrentCharacterType == CharacterType.Isaac)
             {
@@ -127,8 +128,6 @@ public class GameManager : MonoBehaviour
                 else if (CurrentConvoIndex == 5)
                     currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
             }
-
-            currentRELevel = Resources.Load<GameObject>("Prefabs/Minigames/RoomEscape/Level " + 1);
 
             Instantiate(currentRELevel, currentRELevel.transform.position, Quaternion.identity);
         }
@@ -167,17 +166,17 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        if (SceneManager.GetActiveScene().name == "TempFrame")
-        {
-            if (CharacterSelected)
-            {
-                GameObject.Find("SimpleFrame").SetActive(false);
-            }
-            else
-            {
-                CurrentConvoIndex = 0;
-            }
-        }
+        //if (SceneManager.GetActiveScene().name == "TempFrame")
+        //{
+        //    if (CharacterSelected)
+        //    {
+        //        GameObject.Find("SimpleFrame").SetActive(false);
+        //    }
+        //    else
+        //    {
+        //        CurrentConvoIndex = 0;
+        //    }
+        //}
     }
 
     void Update()
@@ -186,13 +185,25 @@ public class GameManager : MonoBehaviour
         {
             MiniGameTimer += Time.deltaTime;
 
-            if(MiniGameTimer > 29 && CurrentCharacterType != CharacterType.Marlon)
+            if(CurrentCharacterType == CharacterType.Marlon && SceneManager.GetActiveScene().name == "Prioritizing")
             {
-                FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
+                if (MiniGameTimer > 299)
+                {
+                    FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
+                }
             }
-            else if(MiniGameTimer > 299 && SceneManager.GetActiveScene().name == "Prioritizing")
+            else
             {
-                FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
+                if (MiniGameTimer > 29)
+                {
+                    if (CurrentCharacterType != CharacterType.Marlon && SceneManager.GetActiveScene().name == "FindingFriends" && CurrentConvoIndex == 4)
+                    {
+                        MapIconActive = true;
+                    }
+
+                    MessageIconActive = true;
+                    FadeHandler(false, false, CurrentCharacterType.ToString() + "Frame");
+                }
             }
 
             //ASHLYN: This switch is where all of the transitions out of the minigames happen. They are all watching MiniGameTimer and will call FadeHandler to bring up the next scene. Check FadeHandler for more.

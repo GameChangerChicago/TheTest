@@ -82,6 +82,11 @@ public class RoomObject : MonoBehaviour
         if(PlayerObject && col.tag == "RoomGoal")
         {
             _myController.GameOver = true;
+            GameManager.MessageIconActive = true;
+            if(GameManager.CurrentCharacterType == CharacterType.Marlon && GameManager.CurrentConvoIndex == 2)
+            {
+                GameManager.MapIconActive = true;
+            }
         }
         else if((!PlayerObject && col.tag != "RoomGoal") || (PlayerObject && col.tag != "Door"))
         {

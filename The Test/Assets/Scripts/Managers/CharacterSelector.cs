@@ -20,29 +20,31 @@ public class CharacterSelector : MonoBehaviour
 		ArrayIndex = 0;
 		SelectedCharacter = CharacterArray [ArrayIndex];
 		SelectedCharacter.SetActive (true);
-		CharacterName = SelectedCharacter.ToString ();
+		CharacterName = SelectedCharacter.name;
 
 		_theGameManager = FindObjectOfType<GameManager> ();
 		_theDialogManager = FindObjectOfType<DialogManager> ();
 	}
 
-	public void PlayerSelectButton (string characterName)
-	{
-		if (CharacterName == "Marlon") {
-			GameManager.CurrentCharacterType = CharacterType.Marlon;
-		}
-		if (characterName == "Felix") {
-			GameManager.CurrentCharacterType = CharacterType.Felix;
-		} 
-		if (characterName == "Isaac") {
-			GameManager.CurrentCharacterType = CharacterType.Isaac;
-		}
-		GameManager.CharacterSelected = true;
-
-	}
+    private void UpdateCharacter()
+    {
+        if (CharacterName == "Marlon")
+        {
+            GameManager.CurrentCharacterType = CharacterType.Marlon;
+        }
+        if (CharacterName == "Felix")
+        {
+            GameManager.CurrentCharacterType = CharacterType.Felix;
+        }
+        if (CharacterName == "Isaac")
+        {
+            GameManager.CurrentCharacterType = CharacterType.Isaac;
+        }
+    }
 
 	public void ContinueToDialog ()
 	{
+        UpdateCharacter();
 		SceneManager.LoadScene ("MapScene");
 		//HACK: As pretty as this looks, this is a hack for a pre map game build
 		//if (GameManager.CurrentCharacterType == CharacterType.Marlon)
@@ -58,7 +60,7 @@ public class CharacterSelector : MonoBehaviour
 
 	public void Update ()
 	{
-		Debug.Log (ArrayIndex); 
+		//Debug.Log (ArrayIndex); 
 	}
 
 	public void NextChoice ()
@@ -73,7 +75,7 @@ public class CharacterSelector : MonoBehaviour
 			PreviousCharacter.SetActive (false);
 			SelectedCharacter = CharacterArray [ArrayIndex];
 			SelectedCharacter.SetActive (true);
-			CharacterName = SelectedCharacter.ToString ();
+			CharacterName = SelectedCharacter.name;
 		
 		}
 		if (ArrayIndex == 2) {
@@ -96,7 +98,7 @@ public class CharacterSelector : MonoBehaviour
 			PreviousCharacter.SetActive (false);
 			SelectedCharacter = CharacterArray [ArrayIndex];
 			SelectedCharacter.SetActive (true);
-			CharacterName = SelectedCharacter.ToString ();
+			CharacterName = SelectedCharacter.name;
 		} 
 
 		if (ArrayIndex == 0) {

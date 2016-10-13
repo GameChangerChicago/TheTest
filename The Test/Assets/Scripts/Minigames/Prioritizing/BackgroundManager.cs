@@ -33,23 +33,14 @@ public class BackgroundManager : MonoBehaviour
 
         switch (GameManager.CurrentPhoneType)
         {
-            case PhoneTypes.ANDROID1:
-                _currentBackground.transform.localScale = new Vector3(2.08f, 2.08f, 1);
-                break;
-            case PhoneTypes.ANDROID2:
-                _currentBackground.transform.localScale = new Vector3(1.95f, 1.95f, 1);
-                break;
-            case PhoneTypes.ANDROID3:
-                _currentBackground.transform.localScale = new Vector3(1.87f, 1.87f, 1);
-                break;
             case PhoneTypes.IPHONE4:
                 _currentBackground.transform.localScale = new Vector3(2.2f, 2.2f, 1);
                 break;
             case PhoneTypes.IPHONE5:
                 _currentBackground.transform.localScale = new Vector3(1.87f, 1.87f, 1);
                 break;
-            case PhoneTypes.IPAD:
-                _currentBackground.transform.localScale = new Vector3(2.5f, 2.5f, 1);
+            case PhoneTypes.GALAXYS7:
+                _currentBackground.transform.localScale = new Vector3(1.87f, 1.87f, 1);
                 break;
             default:
                 break;

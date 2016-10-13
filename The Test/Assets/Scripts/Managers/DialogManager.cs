@@ -24,6 +24,7 @@ public class DialogManager : MonoBehaviour
         }
     }
 
+    private MenuController _theMenuController;
     private Vector3 _initialDialogPos = Vector3.zero,
         _initialTopPointPos;
     //This field will only be needed for this SAT dialog test thing
@@ -37,6 +38,7 @@ public class DialogManager : MonoBehaviour
     void Start()
     {
         _initialTopPointPos = DialogContainer.transform.position;
+        _theMenuController = FindObjectOfType<MenuController>();
     }
 
     void Update()
@@ -49,11 +51,13 @@ public class DialogManager : MonoBehaviour
             {
                 _dialogActive = false;
                 _dialogFinished = false;
-                LoadMinigame();
+                _theMenuController.ToHomeScreen();
+                //LoadMinigame();
             }
         }
     }
 
+    //NOTE: I'd like to stream line this...
     //ASHLYN: This method is the one used for loading minigames. It looks at the current character and which convorsation you're on to figure out which scene to load next.
     public void LoadMinigame()
     {
@@ -74,9 +78,8 @@ public class DialogManager : MonoBehaviour
                 }
                 else if (currentConvoIndex == 7)
                 {
-                    GameManager.CharacterSelected = false;
                     GameManager.CurrentConvoIndex = 0;
-                    SceneManager.LoadScene("TempFrame");
+                    //SceneManager.LoadScene("TempFrame");
                 }
                 break;
             case CharacterType.Isaac:
@@ -94,9 +97,8 @@ public class DialogManager : MonoBehaviour
                 }
                 else if (currentConvoIndex == 5)
                 {
-                    GameManager.CharacterSelected = false;
                     GameManager.CurrentConvoIndex = 0;
-                    SceneManager.LoadScene("TempFrame");
+                    //SceneManager.LoadScene("TempFrame");
                 }
                 break;
             case CharacterType.Marlon:
@@ -114,9 +116,8 @@ public class DialogManager : MonoBehaviour
                 }
                 else if (currentConvoIndex == 6)
                 {
-                    GameManager.CharacterSelected = false;
                     GameManager.CurrentConvoIndex = 0;
-                    SceneManager.LoadScene("TempFrame");
+                    //SceneManager.LoadScene("TempFrame");
                 }
                 break;
             default:
@@ -163,7 +164,7 @@ public class DialogManager : MonoBehaviour
         }
 
 
-        Debug.Log("Dialog Offset: " + _dialogOffset);
+        //Debug.Log("Dialog Offset: " + _dialogOffset);
         if (pieceOfDialogToLoad.tag == "LeftSideDialog")
         {
             //float typingAnimOffset = _dialogOffset - ((pieceOfDialogToLoad.GetComponent<RectTransform> ().rect.yMax / 2f) / 0.7f) + ((TypingAnimObj.GetComponent<SpriteRenderer> ().sprite.bounds.max.y / 2f) / 0.7f);
@@ -176,29 +177,29 @@ public class DialogManager : MonoBehaviour
             //StartCoroutine (DelayedLoadPieceOfDialog (renderer.gameObject, typingObject));
             pieceOfDialogToLoad.transform.SetParent(DialogContainer.transform, true);
 
-
-            if (nextPieceOfDialogToLoad)
-            {
-                if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
-                    Invoke("LoadPieceOfDialog", TypingDelay + _delayModifier);
-            }
+            //Disabling auto dialog for now
+            //if (nextPieceOfDialogToLoad)
+            //{
+            //    if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
+            //        Invoke("LoadPieceOfDialog", TypingDelay + _delayModifier);
+            //}
         }
         else if (pieceOfDialogToLoad.tag == "RightSideDialog")
         {
             pieceOfDialogToLoad = (GameObject)Instantiate(pieceOfDialogToLoad, new Vector3(RightPoint.GetComponent<RectTransform>().position.x - (pieceOfDialogToLoad.GetComponent<RectTransform>().rect.width / 2f / 0.7f), _initialDialogPos.y - _dialogOffset, _initialDialogPos.z), Quaternion.identity);
 
-            Debug.Log("Rect Rect Position X: " + pieceOfDialogToLoad.GetComponent<RectTransform>().rect.position.x);
+            //Debug.Log("Rect Rect Position X: " + pieceOfDialogToLoad.GetComponent<RectTransform>().rect.position.x);
             //Vector3 TempLocalPosition = pieceOfDialogToLoad.transform.position;
 
             pieceOfDialogToLoad.transform.SetParent(DialogContainer.transform, true);
-
-
+            
             //	pieceOfDialogToLoad.transform.localPosition = new Vector3 (TempLocalPosition.x, pieceOfDialogToLoad.transform.localPosition.y);
-            if (nextPieceOfDialogToLoad)
-            {
-                if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
-                    Invoke("LoadPieceOfDialog", TypingDelay);
-            }
+            //Disabling auto dialog for now
+            //if (nextPieceOfDialogToLoad)
+            //{
+            //    if (nextPieceOfDialogToLoad.tag == "LeftSideDialog")
+            //        Invoke("LoadPieceOfDialog", TypingDelay);
+            //}
         }
         else
             Debug.LogWarning("You need to tag all dialog pieces with either LeftSideDialog or RightSideDialog.");
@@ -220,15 +221,19 @@ public class DialogManager : MonoBehaviour
         {
             _currentDialogPieceIndex++;
             _dialogOffset += ammountToIncreaseOffset;// + 0.1f;
+
+            FrameButtonManager FrameButtMan = FindObjectOfType<FrameButtonManager>();
+            if (FrameButtMan)
+            {
+                FrameButtMan.MessageIconActive = false;
+                FrameButtMan.GameIconActive = true;
+            }
         }
         else
         { //We let the dialog manager know the dialog is finished and tick forward the index of which convo you're on.
             _dialogFinished = true;
             currentConvoIndex++;
         }
-
-
-
     }
 
     //This method is only needed for this SAT dialog test thing.
