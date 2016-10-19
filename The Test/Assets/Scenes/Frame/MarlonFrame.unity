@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37356424, g: 0.3811201, b: 0.35887662, a: 1}
+  m_IndirectSpecularColor: {r: 0.37356466, g: 0.38112077, b: 0.35887608, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -545,8 +545,8 @@ RectTransform:
   m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 197.5, y: 158.5}
-  m_SizeDelta: {x: 395, y: 317}
+  m_AnchoredPosition: {x: 267.5, y: 152}
+  m_SizeDelta: {x: 535, y: 304}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &99380030
 GameObject:
@@ -1800,7 +1800,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &615573988
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2074,7 +2074,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &628060022
 Transform:
   m_ObjectHideFlags: 0
@@ -2921,7 +2921,7 @@ GameObject:
   - 222: {fileID: 1043599480}
   - 114: {fileID: 1043599479}
   m_Layer: 5
-  m_Name: MessageNotification
+  m_Name: MessagesNotification
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3740,7 +3740,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1409478379
 RectTransform:
   m_ObjectHideFlags: 0
