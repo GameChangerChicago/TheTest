@@ -26,26 +26,23 @@ public class CharacterSelector : MonoBehaviour
 		_theDialogManager = FindObjectOfType<DialogManager> ();
 	}
 
-    private void UpdateCharacter()
-    {
-        if (CharacterName == "Marlon")
-        {
-            GameManager.CurrentCharacterType = CharacterType.Marlon;
-        }
-        if (CharacterName == "Felix")
-        {
-            GameManager.CurrentCharacterType = CharacterType.Felix;
-        }
-        if (CharacterName == "Isaac")
-        {
-            GameManager.CurrentCharacterType = CharacterType.Isaac;
-        }
-    }
+	private void UpdateCharacter ()
+	{
+		if (CharacterName == "Marlon") {
+			GameManager.CurrentCharacterType = CharacterType.Marlon;
+		}
+		if (CharacterName == "Felix") {
+			GameManager.CurrentCharacterType = CharacterType.Felix;
+		}
+		if (CharacterName == "Isaac") {
+			GameManager.CurrentCharacterType = CharacterType.Isaac;
+		}
+	}
 
 	public void ContinueToDialog ()
 	{
-        UpdateCharacter();
-		SceneManager.LoadScene ("MapScene");
+		UpdateCharacter ();
+		_theGameManager.LoadScene ("MapScene");
 		//HACK: As pretty as this looks, this is a hack for a pre map game build
 		//if (GameManager.CurrentCharacterType == CharacterType.Marlon)
 		//{

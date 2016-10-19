@@ -35,19 +35,19 @@ public enum PhoneTypes
 {
 	IPHONE4,
 	IPHONE5,
-    IPHONE6,
-    GALAXYS7,
+	IPHONE6,
+	GALAXYS7,
 	UNIDENTIFIED
 }
 
 public enum CharacterConvo
 {
-	Mom = 1,
-	Todd = 2,
-	Kara = 3,
-	Lorna = 4,
-	David = 5,
-	Glenn = 6,
-	Sadie = 7,
+	Mom,
+	Todd,
+	Kara,
+	Lorna,
+	David,
+	Glenn,
+	Sadie
 
 }
