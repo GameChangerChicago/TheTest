@@ -73,9 +73,9 @@ public class GameManager : MonoBehaviour
 
 		//Mason: Temp solution to test transition between phone and game scenes without character select. If you are seeing this, please feel free to remove.
 		//Ashlyn: This is ok, just comment stuff like this out before making commits.
-		//CurrentCharacterType = CharacterType.Isaac;
+		//CurrentCharacterType = CharacterType.Marlon;
 		//CurrentConvoIndex = 0;
-		//CurrentCharacterConvo = CharacterConvo.Lorna;
+		//CurrentCharacterConvo = CharacterConvo.Mom;
 
 		/*TransitionScreen.SetActive (true);
 		TransitionScreen.GetComponent<CanvasGroup> ().alpha = 1f;*/

@@ -153,8 +153,8 @@ public class DialogManager : MonoBehaviour
 
 
 
-		if (pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<RectTransform> ().rect.yMax / 2f) / 0.7f) < BottomPoint.position.y) {
-			float containerOffset = Vector2.Distance (new Vector2 (0, pieceOfDialogToLoad.GetComponent<RectTransform> ().rect.yMax), new Vector2 (0, BottomPoint.GetComponent<RectTransform> ().position.y));
+		if (pieceOfDialogToLoad.transform.position.y - ((pieceOfDialogToLoad.GetComponent<RectTransform> ().rect.yMax)) < BottomPoint.position.y) {
+			float containerOffset = Vector2.Distance (new Vector2 (0, pieceOfDialogToLoad.GetComponent<RectTransform> ().position.y), new Vector2 (0, BottomPoint.GetComponent<RectTransform> ().position.y));
 			DialogContainer.transform.position = new Vector3 (DialogContainer.transform.position.x, DialogContainer.transform.position.y + containerOffset, pieceOfDialogToLoad.transform.position.z);
 			_dialogOffset -= containerOffset;
 		}
