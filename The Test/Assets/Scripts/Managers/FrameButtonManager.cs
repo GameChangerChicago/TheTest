@@ -195,77 +195,83 @@ public class FrameButtonManager : MonoBehaviour
 		Pedometer.GetComponent<Image> ().fillAmount = 0;
 
 
-		//Here you'll be able to set which icons should be active on start based on character and current convo index.
-		//Convo index increments at the end of the message convo if you're curious about that
-		switch (GameManager.CurrentCharacterType) {
-		case CharacterType.Marlon:
-			
-			if (GameManager.CurrentConvoIndex <= 1 || GameManager.CurrentConvoIndex >= 5) {
+        //Here you'll be able to set which icons should be active on start based on character and current convo index.
+        //Convo index increments at the end of the message convo if you're curious about that
+        switch (GameManager.CurrentCharacterType)
+        {
+            case CharacterType.Marlon:
 
-				GameManager.CurrentCharacterConvo = CharacterConvo.Mom;
+                if (GameManager.CurrentConvoIndex <= 1 || GameManager.CurrentConvoIndex >= 5)
+                {
 
-				MapIconActive = false;
-				GameIconActive = true;
-				MessageIconActive = true;
-				ContactsIconActive = false;
+                    GameManager.CurrentCharacterConvo = CharacterConvo.Mom;
 
-				_messageNotification.SetActive (true);
-				_gameNotification.SetActive (false);
+                    MapIconActive = false;
+                    GameIconActive = true;
+                    MessageIconActive = true;
+                    ContactsIconActive = false;
 
-			
-			}
-			if (GameManager.CurrentConvoIndex <= 4) {
-
-				if (GameManager.CurrentConvoIndex == 2)
-					GameManager.CurrentCharacterConvo = CharacterConvo.Todd;
-				else if (GameManager.CurrentConvoIndex == 3)
-					GameManager.CurrentCharacterConvo = CharacterConvo.Kara;
-				else
-					GameManager.CurrentCharacterConvo = CharacterConvo.Mom;
-				
-				MapIconActive = false;
-				GameIconActive = false;
-				_messageNotification.SetActive (true);
-				_gameNotification.SetActive (false);
-			}
-			break;
-		case CharacterType.Isaac:
-			{
-				if (GameManager.CurrentConvoIndex <= 1) 
-					GameManager.CurrentCharacterConvo = CharacterConvo.Lorna;
-				else 
-					GameManager.CurrentCharacterConvo = CharacterConvo.David;
-				
-
-				MapIconActive = false;
-				GameIconActive = true;
-				MessageIconActive = true;
-				ContactsIconActive = false;
-
-				_messageNotification.SetActive (true);
-				_gameNotification.SetActive (false);
-				
-			}
-			break;
-		case CharacterType.Felix:{
-				if (GameManager.CurrentConvoIndex >= 5 || GameManager.CurrentConvoIndex <= 6 )
-					GameManager.CurrentCharacterConvo = CharacterConvo.Sadie;
-				else
-					GameManager.CurrentCharacterConvo = CharacterConvo.Glenn;
+                    _messageNotification.SetActive(true);
+                    _gameNotification.SetActive(false);
 
 
-				MapIconActive = false;
-				GameIconActive = true;
-				MessageIconActive = true;
-				ContactsIconActive = false;
+                }
+                if (GameManager.CurrentConvoIndex <= 4)
+                {
 
-				_messageNotification.SetActive (true);
-				_gameNotification.SetActive (false);
-			}
-			break;
-		default:
-			break;
-		}
+                    if (GameManager.CurrentConvoIndex == 2)
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Todd;
+                    else if (GameManager.CurrentConvoIndex == 3)
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Kara;
+                    else
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Mom;
+
+                    MapIconActive = false;
+                    GameIconActive = false;
+                    _messageNotification.SetActive(true);
+                    _gameNotification.SetActive(false);
+                }
+                break;
+            case CharacterType.Isaac:
+                {
+                    if (GameManager.CurrentConvoIndex <= 1)
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Lorna;
+                    else
+                        GameManager.CurrentCharacterConvo = CharacterConvo.David;
+
+
+                    MapIconActive = false;
+                    GameIconActive = true;
+                    MessageIconActive = true;
+                    ContactsIconActive = false;
+
+                    _messageNotification.SetActive(true);
+                    _gameNotification.SetActive(false);
+
+                }
+                break;
+            case CharacterType.Felix:
+                {
+                    if (GameManager.CurrentConvoIndex >= 5 || GameManager.CurrentConvoIndex <= 6)
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Sadie;
+                    else
+                        GameManager.CurrentCharacterConvo = CharacterConvo.Glenn;
+                        
+                    MapIconActive = false;
+                    if (GameManager.CurrentConvoIndex == 0)
+                        GameIconActive = false;
+                    else
+                        GameIconActive = true;
+                    MessageIconActive = true;
+                    ContactsIconActive = false;
+
+                    _messageNotification.SetActive(true);
+                    _gameNotification.SetActive(false);
+                }
+                break;
+            default:
+                break;
+        }
 
 		StartCoroutine (UpdatePedometer ((GameManager.CurrentConvoIndex + 1) / GameManager.NumberOfSections));
 

@@ -109,12 +109,9 @@ public class CollectablesManager : MonoBehaviour
 
 		GameManager.MessageIconActive = true;
 
-		if (GameManager.CurrentCharacterType == CharacterType.Marlon) {
-			GameManager.MapIconActive = true;
-		}
-
-		if (GameManager.CurrentCharacterType.ToString () == "Felix") {
-			GameManager.CurrentConvoIndex = 3;
-		}
+        if (GameManager.CurrentCharacterType.ToString() == "Felix")
+        {
+            GameManager.CurrentConvoIndex = 3;
+        }
 	}
 }

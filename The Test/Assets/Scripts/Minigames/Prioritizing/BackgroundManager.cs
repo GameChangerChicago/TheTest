@@ -20,8 +20,6 @@ public class BackgroundManager : MonoBehaviour
 
     void Start()
     {
-        GameManager.CurrentCharacterType = CharacterType.Marlon;
-        
         if (GameManager.CurrentCharacterType == CharacterType.Marlon)
             _infinite = true;
         else
@@ -100,8 +98,8 @@ public class BackgroundManager : MonoBehaviour
 
         if (camTopSegTopDiff < 0 && !_noMoreSegments)
         {
-            if (_infinite)
-            {
+            //if (_infinite)
+            //{
                 int randSeg = Random.Range(1, 4),
                     randLvl = Random.Range(1, 4);
 
@@ -115,15 +113,15 @@ public class BackgroundManager : MonoBehaviour
                     _currentSegmentName = "" + randLvl + (char)_currentSegmentName[1] + "D";
                     _segmentsLoaded = 0;
                 }
-            }
+            //}
+            //else
+            //{
+            //    int currentSegIndex = (int)char.GetNumericValue(_currentSegmentName[2]);
+            //    currentSegIndex++;
+            //    _currentSegmentName = "" + (char)_currentSegmentName[0] + (char)_currentSegmentName[1] + currentSegIndex;
+            //}
 
             AddNewSegment("Level " + _currentSegmentName);
-        }
-        else
-        {
-            int currentSegIndex = (int)char.GetNumericValue(_currentSegmentName[2]);
-            currentSegIndex++;
-            _currentSegmentName = "" + (char)_currentSegmentName[0] + (char)_currentSegmentName[1] + currentSegIndex;
         }
     }
 

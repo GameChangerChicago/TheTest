@@ -67,21 +67,21 @@ public class GameManager : MonoBehaviour
 				CurrentPhoneType = PhoneTypes.IPHONE4;
 			}
 		}
-		#endregion
+        #endregion
 
 
+        //Mason: Temp solution to test transition between phone and game scenes without character select. If you are seeing this, please feel free to remove.
+        //Ashlyn: This is ok, just comment stuff like this out before making commits.
+        //CurrentCharacterType = CharacterType.Marlon;
+        //CurrentConvoIndex = 0;
+        //CurrentCharacterConvo = CharacterConvo.Mom;
 
-		//Mason: Temp solution to test transition between phone and game scenes without character select. If you are seeing this, please feel free to remove.
-		//Ashlyn: This is ok, just comment stuff like this out before making commits.
-		//CurrentCharacterType = CharacterType.Marlon;
-		//CurrentConvoIndex = 0;
-		//CurrentCharacterConvo = CharacterConvo.Mom;
-
-		/*TransitionScreen.SetActive (true);
+        /*TransitionScreen.SetActive (true);
 		TransitionScreen.GetComponent<CanvasGroup> ().alpha = 1f;*/
 
-		if (SceneManager.GetActiveScene ().name == "Prioritizing") {
-			GameObject instructions = Instantiate (CollectDiamond, new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
+        if (SceneManager.GetActiveScene ().name == "Prioritizing")
+        {
+            GameObject instructions = Instantiate (CollectDiamond, new Vector3 (Camera.main.transform.position.x, Camera.main.transform.position.y, 1), Quaternion.identity) as GameObject;
 			_currentInstructions = instructions.GetComponent<SpriteRenderer> ();
 
 			if (CurrentCharacterType == CharacterType.Felix) {
@@ -170,14 +170,17 @@ public class GameManager : MonoBehaviour
 		if (GameOn) {
 			MiniGameTimer += Time.deltaTime;
 
-			if (CurrentCharacterType == CharacterType.Marlon && SceneManager.GetActiveScene ().name == "Prioritizing") {
+            Debug.Log(CurrentCharacterType.ToString());
+
+            if (CurrentCharacterType == CharacterType.Marlon && SceneManager.GetActiveScene ().name == "Prioritizing") {
 				if (MiniGameTimer > 299) {
 					GameOn = false;
 
 					LoadScene (CurrentCharacterType.ToString () + "Frame");
 				}
 			} else {
-				if (MiniGameTimer > 29) {
+                Debug.Log(MiniGameTimer);
+				if (MiniGameTimer > 44) {
 					if (CurrentCharacterType != CharacterType.Marlon && SceneManager.GetActiveScene ().name == "FindingFriends" && CurrentConvoIndex == 4) {
 						MapIconActive = true;
 					}
